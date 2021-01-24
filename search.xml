@@ -69,6 +69,83 @@
       </tags>
   </entry>
   <entry>
+    <title>Java比较器</title>
+    <url>/p/32876.html</url>
+    <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>Java中的对象，在正常的情况下只能使用“==”、“！=”来比较地址值，而不能使用“&gt;”、“&lt;”。但是在开发过程中，我们需要对多个对象不同的属性进行排序，这就需要比较对象之间的大小。比如，淘宝搜索某商品，会呈现一个综合排序，我们可以根据销量、好评等进行再次排序。</p>
+<a id="more"></a>
+
+<h2 id="Comparable接口"><a href="#Comparable接口" class="headerlink" title="Comparable接口"></a>Comparable接口</h2><ul>
+<li>该接口对实现它的每个类的对象强加一个整体排序。这个排序被称为类的<em>自然排序</em> ，类的<code>compareTo</code>方法被称为其<em>自然比较方法</em> 。</li>
+<li>String、包装类等实现了Comparable接口，重写了compareTo(obj)方法，给出了比较两个对象大小的方法。</li>
+<li>重写compareTo(obj)方法的规则：如果当前的对象this大于形参obj，返回正整数；如果当前对象this小于形参obj，返回负整数；如果相等返回0。</li>
+<li>默认从小到大排序。</li>
+<li><a href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Collections.html#sort-java.util.List-"><code>Collections.sort</code></a> （和<a href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Arrays.html#sort-java.lang.Object:A-"><code>Arrays.sort</code></a> ）可以自动对实现此接口的对象进行列表（和数组）排序。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String[] arr1 = <span class="keyword">new</span> String[]&#123;<span class="string">&quot;pencil&quot;</span>,<span class="string">&quot;pen&quot;</span>,<span class="string">&quot;eraser&quot;</span>,<span class="string">&quot;computer&quot;</span>,<span class="string">&quot;mouse&quot;</span>,<span class="string">&quot;ipad&quot;</span>&#125;;</span><br><span class="line">    Arrays.sort(arr1);</span><br><span class="line">    System.out.println(Arrays.toString(arr1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[computer, eraser, ipad, mouse, pen, pencil]</span><br></pre></td></tr></table></figure>
+<h2 id="自定义类实现Comparable接口"><a href="#自定义类实现Comparable接口" class="headerlink" title="自定义类实现Comparable接口"></a>自定义类实现Comparable接口</h2><p>自定义类想要排序需要实现Comparable接口，重写compareTo()方法，在该方法中指明如何排序。不然会报错：java.lang.ClassCastException。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Goods</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Goods</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> price;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Goods</span><span class="params">(String name, <span class="keyword">double</span> price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrice</span><span class="params">(<span class="keyword">double</span> price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Goods o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.price &gt; o.price)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.price &lt; o.price)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.name.compareTo(o.name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GoodsTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Goods[] arr = <span class="keyword">new</span> Goods[<span class="number">5</span>];</span><br><span class="line">    arr[<span class="number">0</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;philips&quot;</span>, <span class="number">1000</span>);</span><br><span class="line">    arr[<span class="number">1</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;lenovo&quot;</span>, <span class="number">2000</span>);</span><br><span class="line">    arr[<span class="number">2</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;apple&quot;</span>, <span class="number">6000</span>);</span><br><span class="line">    arr[<span class="number">3</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;sony&quot;</span>, <span class="number">3000</span>);</span><br><span class="line">    arr[<span class="number">4</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">5000</span>);</span><br><span class="line">    System.out.println(<span class="string">&quot;排序前：&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">        System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">    &#125;</span><br><span class="line">    Arrays.sort(arr);</span><br><span class="line">    System.out.println(<span class="string">&quot;排序后：&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">        System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">排序前：</span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">apple:<span class="number">6000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">排序后：</span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">apple:<span class="number">6000.0</span></span><br></pre></td></tr></table></figure>
+<h2 id="Comparator接口"><a href="#Comparator接口" class="headerlink" title="Comparator接口"></a>Comparator接口</h2><ul>
+<li><strong>定制排序</strong>：当元素的类型没有实现java.lang.Comparable接口而又不方便修改代码，或者实现了java.lang.Comparable接口的排序规则不适合当前的操作，考虑使用Comparator接口。</li>
+<li>重写int compare(T o1, T o2)方法，比较o1和o2的大小，如果返回正整数，则o1&gt;o2；如果返回负整数，则o1&lt;o2；如果返回0，则相等。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String[] arr1 = <span class="keyword">new</span> String[]&#123;<span class="string">&quot;pencil&quot;</span>,<span class="string">&quot;pen&quot;</span>,<span class="string">&quot;eraser&quot;</span>,<span class="string">&quot;computer&quot;</span>,<span class="string">&quot;mouse&quot;</span>,<span class="string">&quot;ipad&quot;</span>&#125;;</span><br><span class="line">    Arrays.sort(arr1,</span><br><span class="line">            <span class="keyword">new</span> Comparator()&#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Object o1, Object o2)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (o1 <span class="keyword">instanceof</span> String &amp;&amp; o2 <span class="keyword">instanceof</span> String)&#123;</span><br><span class="line">                        String s1 = (String) o1;</span><br><span class="line">                        String s2 = (String) o2;</span><br><span class="line">                        <span class="keyword">return</span> -s1.compareTo(s2);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;输入类型不一致&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">    System.out.println(Arrays.toString(arr1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[pencil, pen, mouse, ipad, eraser, computer]</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Goods[] arr = <span class="keyword">new</span> Goods[<span class="number">6</span>];</span><br><span class="line">        arr[<span class="number">0</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;philips&quot;</span>, <span class="number">1000</span>);</span><br><span class="line">        arr[<span class="number">1</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;lenovo&quot;</span>, <span class="number">2000</span>);</span><br><span class="line">        arr[<span class="number">2</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;apple&quot;</span>, <span class="number">6000</span>);</span><br><span class="line">        arr[<span class="number">3</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;sony&quot;</span>, <span class="number">3000</span>);</span><br><span class="line">        arr[<span class="number">4</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">5000</span>);</span><br><span class="line">        arr[<span class="number">5</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">8000</span>);</span><br><span class="line">        Arrays.sort(arr,</span><br><span class="line">                <span class="keyword">new</span> Comparator()&#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Object o1, Object o2)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">if</span> (o1 <span class="keyword">instanceof</span> Goods &amp;&amp; o2 <span class="keyword">instanceof</span> Goods)&#123;</span><br><span class="line">                            Goods g1 = (Goods) o1;</span><br><span class="line">                            Goods g2 = (Goods) o2;</span><br><span class="line">                            <span class="keyword">if</span> (g1.getName().equals(g2.getName()))&#123;</span><br><span class="line">                                <span class="keyword">return</span> -Double.compare(g1.getPrice(),g2.getPrice());</span><br><span class="line">                            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                                <span class="keyword">return</span> g1.getName().compareTo(g2.getName());</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">            System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">apple:<span class="number">6000.0</span></span><br><span class="line">huawei:<span class="number">8000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br></pre></td></tr></table></figure>
+<h1 id="Comparable和Comparator区别和联系"><a href="#Comparable和Comparator区别和联系" class="headerlink" title="Comparable和Comparator区别和联系"></a>Comparable和Comparator区别和联系</h1><ul>
+<li>Comparable是排序接口，若一个类实现了Comparable接口，就意味着“该类支持排序”。而Comparator是比较器，我们若需要控制某个类的次序，可以建立一个“该类的比较器”来进行排序。</li>
+<li>Comparable接口的方式一旦确定，保证Comparable接口实现类的对象在任何位置都可以比较大小；Comparator接口属于临时性比较。</li>
+<li>Comparable相当于“内部比较器”，而Comparator相当于“外部比较器”。</li>
+<li>两种方法各有优劣， 用Comparable 简单， 只要实现Comparable 接口的对象直接就成为一个可以比较的对象，但是需要修改源代码。 用Comparator 的好处是不需要修改源代码， 而是另外实现一个比较器， 当某个自定义的对象需要作比较的时候，把比较器和对象一起传递过去就可以比大小了， 并且在Comparator 里面用户可以自己实现复杂的可以通用的逻辑，使其可以匹配一些比较简单的对象，那样就可以节省很多重复劳动了。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>比较器</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>比较器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>String类与其他结构之间的转换</title>
+    <url>/p/37668.html</url>
+    <content><![CDATA[<h3 id="String类与其他结构之间的转换"><a href="#String类与其他结构之间的转换" class="headerlink" title="String类与其他结构之间的转换"></a>String类与其他结构之间的转换</h3><h4 id="String与基本数据类型、包装类之间的转换"><a href="#String与基本数据类型、包装类之间的转换" class="headerlink" title="String与基本数据类型、包装类之间的转换"></a>String与基本数据类型、包装类之间的转换</h4><a id="more"></a>
+
+<h5 id="String类-–-gt-基本数据类型、包装类："><a href="#String类-–-gt-基本数据类型、包装类：" class="headerlink" title="String类 –&gt; 基本数据类型、包装类："></a>String类 –&gt; 基本数据类型、包装类：</h5><p><strong>调用包装类的静态方法：parseXxx(str)</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"><span class="comment">//        int num = (int) s1;//error</span></span><br><span class="line">        <span class="keyword">int</span> b1 = Integer.parseInt(s1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="基本数据类型、包装类-–-gt-String类："><a href="#基本数据类型、包装类-–-gt-String类：" class="headerlink" title="基本数据类型、包装类 –&gt; String类："></a>基本数据类型、包装类 –&gt; String类：</h5><p><strong>调用String重载的valueOf(xxx)</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//两种都可以</span></span><br><span class="line">String c1 = String.valueOf(b1);</span><br><span class="line">String c2 = b1 + <span class="string">&quot;&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="String与字符数组转换"><a href="#String与字符数组转换" class="headerlink" title="String与字符数组转换"></a>String与字符数组转换</h4><h5 id="String-–-gt-char-："><a href="#String-–-gt-char-：" class="headerlink" title="String –&gt; char[]："></a>String –&gt; char[]：</h5><p><strong>调用String中的toCharArray()方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">char</span>[] c1 = s1.toCharArray();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; c1.length; i++) &#123;</span><br><span class="line">        System.out.println(c1[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="char-–-gt-String："><a href="#char-–-gt-String：" class="headerlink" title="char[] –&gt; String："></a>char[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> [] arr1 = <span class="keyword">new</span> <span class="keyword">char</span>[] &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>&#125;;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(arr1);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
+<h4 id="String与字节数组转换"><a href="#String与字节数组转换" class="headerlink" title="String与字节数组转换"></a>String与字节数组转换</h4><h5 id="String-–-gt-byte-："><a href="#String-–-gt-byte-：" class="headerlink" title="String –&gt; byte[]："></a>String –&gt; byte[]：</h5><p><strong>调用String的getBytes()方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = s1.getBytes();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bytes.length; i++) &#123;</span><br><span class="line">        System.out.println(bytes[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="byte-–-gt-String："><a href="#byte-–-gt-String：" class="headerlink" title="byte[] –&gt; String："></a>byte[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s2 = <span class="keyword">new</span> String(bytes);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
+<p><strong>注</strong>：String与字节数组转换可以看作一个编解码的过程，在此过程中，必须保证使用的字符集相同，否则会出现乱码。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>StringBuffer和StringBuilder</title>
     <url>/p/31461.html</url>
     <content><![CDATA[<h3 id="StringBuffer、StringBuilder和String的异同？"><a href="#StringBuffer、StringBuilder和String的异同？" class="headerlink" title="StringBuffer、StringBuilder和String的异同？"></a>StringBuffer、StringBuilder和String的异同？</h3><a id="more"></a>
@@ -149,83 +226,6 @@
 <li>返回指定字符串在此字符串中第一次出现的索引值</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(String str)</span></span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java比较器</title>
-    <url>/p/32876.html</url>
-    <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>Java中的对象，在正常的情况下只能使用“==”、“！=”来比较地址值，而不能使用“&gt;”、“&lt;”。但是在开发过程中，我们需要对多个对象不同的属性进行排序，这就需要比较对象之间的大小。比如，淘宝搜索某商品，会呈现一个综合排序，我们可以根据销量、好评等进行再次排序。</p>
-<a id="more"></a>
-
-<h2 id="Comparable接口"><a href="#Comparable接口" class="headerlink" title="Comparable接口"></a>Comparable接口</h2><ul>
-<li>该接口对实现它的每个类的对象强加一个整体排序。这个排序被称为类的<em>自然排序</em> ，类的<code>compareTo</code>方法被称为其<em>自然比较方法</em> 。</li>
-<li>String、包装类等实现了Comparable接口，重写了compareTo(obj)方法，给出了比较两个对象大小的方法。</li>
-<li>重写compareTo(obj)方法的规则：如果当前的对象this大于形参obj，返回正整数；如果当前对象this小于形参obj，返回负整数；如果相等返回0。</li>
-<li>默认从小到大排序。</li>
-<li><a href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Collections.html#sort-java.util.List-"><code>Collections.sort</code></a> （和<a href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Arrays.html#sort-java.lang.Object:A-"><code>Arrays.sort</code></a> ）可以自动对实现此接口的对象进行列表（和数组）排序。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String[] arr1 = <span class="keyword">new</span> String[]&#123;<span class="string">&quot;pencil&quot;</span>,<span class="string">&quot;pen&quot;</span>,<span class="string">&quot;eraser&quot;</span>,<span class="string">&quot;computer&quot;</span>,<span class="string">&quot;mouse&quot;</span>,<span class="string">&quot;ipad&quot;</span>&#125;;</span><br><span class="line">    Arrays.sort(arr1);</span><br><span class="line">    System.out.println(Arrays.toString(arr1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[computer, eraser, ipad, mouse, pen, pencil]</span><br></pre></td></tr></table></figure>
-<h2 id="自定义类实现Comparable接口"><a href="#自定义类实现Comparable接口" class="headerlink" title="自定义类实现Comparable接口"></a>自定义类实现Comparable接口</h2><p>自定义类想要排序需要实现Comparable接口，重写compareTo()方法，在该方法中指明如何排序。不然会报错：java.lang.ClassCastException。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Goods</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Goods</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> price;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Goods</span><span class="params">(String name, <span class="keyword">double</span> price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrice</span><span class="params">(<span class="keyword">double</span> price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Goods o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.price &gt; o.price)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.price &lt; o.price)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.name.compareTo(o.name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GoodsTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Goods[] arr = <span class="keyword">new</span> Goods[<span class="number">5</span>];</span><br><span class="line">    arr[<span class="number">0</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;philips&quot;</span>, <span class="number">1000</span>);</span><br><span class="line">    arr[<span class="number">1</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;lenovo&quot;</span>, <span class="number">2000</span>);</span><br><span class="line">    arr[<span class="number">2</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;apple&quot;</span>, <span class="number">6000</span>);</span><br><span class="line">    arr[<span class="number">3</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;sony&quot;</span>, <span class="number">3000</span>);</span><br><span class="line">    arr[<span class="number">4</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">5000</span>);</span><br><span class="line">    System.out.println(<span class="string">&quot;排序前：&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">        System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">    &#125;</span><br><span class="line">    Arrays.sort(arr);</span><br><span class="line">    System.out.println(<span class="string">&quot;排序后：&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">        System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">排序前：</span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">apple:<span class="number">6000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">排序后：</span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">apple:<span class="number">6000.0</span></span><br></pre></td></tr></table></figure>
-<h2 id="Comparator接口"><a href="#Comparator接口" class="headerlink" title="Comparator接口"></a>Comparator接口</h2><ul>
-<li><strong>定制排序</strong>：当元素的类型没有实现java.lang.Comparable接口而又不方便修改代码，或者实现了java.lang.Comparable接口的排序规则不适合当前的操作，考虑使用Comparator接口。</li>
-<li>重写int compare(T o1, T o2)方法，比较o1和o2的大小，如果返回正整数，则o1&gt;o2；如果返回负整数，则o1&lt;o2；如果返回0，则相等。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String[] arr1 = <span class="keyword">new</span> String[]&#123;<span class="string">&quot;pencil&quot;</span>,<span class="string">&quot;pen&quot;</span>,<span class="string">&quot;eraser&quot;</span>,<span class="string">&quot;computer&quot;</span>,<span class="string">&quot;mouse&quot;</span>,<span class="string">&quot;ipad&quot;</span>&#125;;</span><br><span class="line">    Arrays.sort(arr1,</span><br><span class="line">            <span class="keyword">new</span> Comparator()&#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Object o1, Object o2)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (o1 <span class="keyword">instanceof</span> String &amp;&amp; o2 <span class="keyword">instanceof</span> String)&#123;</span><br><span class="line">                        String s1 = (String) o1;</span><br><span class="line">                        String s2 = (String) o2;</span><br><span class="line">                        <span class="keyword">return</span> -s1.compareTo(s2);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;输入类型不一致&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">    System.out.println(Arrays.toString(arr1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[pencil, pen, mouse, ipad, eraser, computer]</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Goods[] arr = <span class="keyword">new</span> Goods[<span class="number">6</span>];</span><br><span class="line">        arr[<span class="number">0</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;philips&quot;</span>, <span class="number">1000</span>);</span><br><span class="line">        arr[<span class="number">1</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;lenovo&quot;</span>, <span class="number">2000</span>);</span><br><span class="line">        arr[<span class="number">2</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;apple&quot;</span>, <span class="number">6000</span>);</span><br><span class="line">        arr[<span class="number">3</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;sony&quot;</span>, <span class="number">3000</span>);</span><br><span class="line">        arr[<span class="number">4</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">5000</span>);</span><br><span class="line">        arr[<span class="number">5</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">8000</span>);</span><br><span class="line">        Arrays.sort(arr,</span><br><span class="line">                <span class="keyword">new</span> Comparator()&#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Object o1, Object o2)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">if</span> (o1 <span class="keyword">instanceof</span> Goods &amp;&amp; o2 <span class="keyword">instanceof</span> Goods)&#123;</span><br><span class="line">                            Goods g1 = (Goods) o1;</span><br><span class="line">                            Goods g2 = (Goods) o2;</span><br><span class="line">                            <span class="keyword">if</span> (g1.getName().equals(g2.getName()))&#123;</span><br><span class="line">                                <span class="keyword">return</span> -Double.compare(g1.getPrice(),g2.getPrice());</span><br><span class="line">                            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                                <span class="keyword">return</span> g1.getName().compareTo(g2.getName());</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">            System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">apple:<span class="number">6000.0</span></span><br><span class="line">huawei:<span class="number">8000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br></pre></td></tr></table></figure>
-<h1 id="Comparable和Comparator区别和联系"><a href="#Comparable和Comparator区别和联系" class="headerlink" title="Comparable和Comparator区别和联系"></a>Comparable和Comparator区别和联系</h1><ul>
-<li>Comparable是排序接口，若一个类实现了Comparable接口，就意味着“该类支持排序”。而Comparator是比较器，我们若需要控制某个类的次序，可以建立一个“该类的比较器”来进行排序。</li>
-<li>Comparable接口的方式一旦确定，保证Comparable接口实现类的对象在任何位置都可以比较大小；Comparator接口属于临时性比较。</li>
-<li>Comparable相当于“内部比较器”，而Comparator相当于“外部比较器”。</li>
-<li>两种方法各有优劣， 用Comparable 简单， 只要实现Comparable 接口的对象直接就成为一个可以比较的对象，但是需要修改源代码。 用Comparator 的好处是不需要修改源代码， 而是另外实现一个比较器， 当某个自定义的对象需要作比较的时候，把比较器和对象一起传递过去就可以比大小了， 并且在Comparator 里面用户可以自己实现复杂的可以通用的逻辑，使其可以匹配一些比较简单的对象，那样就可以节省很多重复劳动了。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>比较器</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>比较器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>String类与其他结构之间的转换</title>
-    <url>/p/37668.html</url>
-    <content><![CDATA[<h3 id="String类与其他结构之间的转换"><a href="#String类与其他结构之间的转换" class="headerlink" title="String类与其他结构之间的转换"></a>String类与其他结构之间的转换</h3><h4 id="String与基本数据类型、包装类之间的转换"><a href="#String与基本数据类型、包装类之间的转换" class="headerlink" title="String与基本数据类型、包装类之间的转换"></a>String与基本数据类型、包装类之间的转换</h4><a id="more"></a>
-
-<h5 id="String类-–-gt-基本数据类型、包装类："><a href="#String类-–-gt-基本数据类型、包装类：" class="headerlink" title="String类 –&gt; 基本数据类型、包装类："></a>String类 –&gt; 基本数据类型、包装类：</h5><p><strong>调用包装类的静态方法：parseXxx(str)</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"><span class="comment">//        int num = (int) s1;//error</span></span><br><span class="line">        <span class="keyword">int</span> b1 = Integer.parseInt(s1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="基本数据类型、包装类-–-gt-String类："><a href="#基本数据类型、包装类-–-gt-String类：" class="headerlink" title="基本数据类型、包装类 –&gt; String类："></a>基本数据类型、包装类 –&gt; String类：</h5><p><strong>调用String重载的valueOf(xxx)</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//两种都可以</span></span><br><span class="line">String c1 = String.valueOf(b1);</span><br><span class="line">String c2 = b1 + <span class="string">&quot;&quot;</span>;</span><br></pre></td></tr></table></figure>
-<h4 id="String与字符数组转换"><a href="#String与字符数组转换" class="headerlink" title="String与字符数组转换"></a>String与字符数组转换</h4><h5 id="String-–-gt-char-："><a href="#String-–-gt-char-：" class="headerlink" title="String –&gt; char[]："></a>String –&gt; char[]：</h5><p><strong>调用String中的toCharArray()方法</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">char</span>[] c1 = s1.toCharArray();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; c1.length; i++) &#123;</span><br><span class="line">        System.out.println(c1[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="char-–-gt-String："><a href="#char-–-gt-String：" class="headerlink" title="char[] –&gt; String："></a>char[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> [] arr1 = <span class="keyword">new</span> <span class="keyword">char</span>[] &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>&#125;;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(arr1);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
-<h4 id="String与字节数组转换"><a href="#String与字节数组转换" class="headerlink" title="String与字节数组转换"></a>String与字节数组转换</h4><h5 id="String-–-gt-byte-："><a href="#String-–-gt-byte-：" class="headerlink" title="String –&gt; byte[]："></a>String –&gt; byte[]：</h5><p><strong>调用String的getBytes()方法</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = s1.getBytes();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bytes.length; i++) &#123;</span><br><span class="line">        System.out.println(bytes[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="byte-–-gt-String："><a href="#byte-–-gt-String：" class="headerlink" title="byte[] –&gt; String："></a>byte[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s2 = <span class="keyword">new</span> String(bytes);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
-<p><strong>注</strong>：String与字节数组转换可以看作一个编解码的过程，在此过程中，必须保证使用的字符集相同，否则会出现乱码。</p>
-]]></content>
       <categories>
         <category>Java</category>
         <category>Java基础</category>
@@ -464,6 +464,35 @@
       </tags>
   </entry>
   <entry>
+    <title>字符串反转</title>
+    <url>/p/34837.html</url>
+    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
+<a id="more"></a>
+
+<p><strong>解法一：转换为char[]</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>①将字符串转换为char[]类型；</p>
+<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
+<p>③将不需要反转的头和尾再按顺序加上。</p>
+<p><strong>解法二：使用String的拼接</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
+<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>多线程的创建方式</title>
     <url>/p/24227.html</url>
     <content><![CDATA[<h3 id="多线程的创建方式"><a href="#多线程的创建方式" class="headerlink" title="多线程的创建方式"></a>多线程的创建方式</h3><a id="more"></a>
@@ -540,91 +569,6 @@
       <tags>
         <tag>Java</tag>
         <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符集</title>
-    <url>/p/40261.html</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>我们在计算机屏幕上看到的是实体化的文字，而在计算机存储介质中存放的实际是二进制的比特流。那么在这两者之间的转换规则就需要一个统一的标准。简单的说字符集就规定了某个文字对应的二进制数字存放方式（编码）和某串二进制数值代表了哪个文字（解码）的转换关系。</p>
-<a id="more"></a> 
-
-<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><ul>
-<li><strong>ASCII：</strong>美国标准信息交换码，用一个字节的7位表示（128个）；</li>
-<li><strong>ISO8859-1：</strong>拉丁码表。欧洲码表，用一个字节的8位表示；</li>
-<li><strong>GB2312：</strong>中国的中文编码表。最多两个字节编码所有字符；</li>
-<li><strong>GBK：</strong>中国的中文编码表升级，融合了更多的中文文字符号，最多两个字节编码；</li>
-<li><strong>Unicode：</strong>国际标准码，融合了目前人类使用的所有字符，为每个字符分配唯一的字符码，所有的文字都使用两个字节来表示；</li>
-<li><strong>UTF-8：</strong>变长的国际标准码，定义了庞大的、全球通用的字符集，为每个字符规定了唯一确定的编码，可用1-4个字节来表示一个字符。</li>
-</ul>
-<h1 id="字库表、编码字符集、字符编码"><a href="#字库表、编码字符集、字符编码" class="headerlink" title="字库表、编码字符集、字符编码"></a>字库表、编码字符集、字符编码</h1><p><strong>字库表（character repertoire）</strong>：相当于所有可读或者可显示字符的数据库，字库表决定了整个字符集能够展现表示的所有字符的范围。</p>
-<p><strong>编码字符集（coded character set</strong>）：用一个编码值<code>code point</code>来表示一个字符在字库中的位置。</p>
-<p><strong>字符编码（character encoding form）</strong>：将编码字符集和实际存储数值之间的转换关系。一般来说都会直接将code point的值作为编码后的值直接存储。例如在ASCII中<code>A</code>在表中排第65位，而编码后<code>A</code>的数值是<code>0100 0001</code>也即十进制的65的二进制转换结果。</p>
-<p><code>字库表</code>和<code>编码字符集</code>看来是必不可少的，那既然字库表中的每一个字符都有一个自己的序号，直接把序号作为存储内容就好了。为什么还要多此一举通过<code>字符编码</code>把序号转换成另外一种存储格式呢？其实原因也比较容易理解：统一字库表的目的是为了能够涵盖世界上所有的字符，但实际使用过程中会发现真正用的上的字符相对整个字库表来说比例非常低。例如中文地区的程序几乎不会需要日语字符，而一些英语国家甚至简单的ASCII字库表就能满足基本需求。而如果把每个字符都用字库表中的序号来存储的话，每个字符就需要3个字节（这里以Unicode字库为例），这样对于原本用仅占一个字符的ASCII编码的英语地区国家显然是一个额外成本（存储体积是原来的三倍）。算的直接一些，同样一块硬盘，用ASCII可以存1500篇文章，而用3字节Unicode序号存储只能存500篇。于是就出现了UTF-8这样的变长编码。在UTF-8编码中原本只需要一个字节的ASCII字符，仍然只占一个字节。而像中文及日语这样的复杂字符就需要2个到3个字节来存储。</p>
-<h1 id="UTF-8和Unicode的关系"><a href="#UTF-8和Unicode的关系" class="headerlink" title="UTF-8和Unicode的关系"></a>UTF-8和Unicode的关系</h1><p>Unicode就是上文中提到的编码字符集，而UTF-8就是字符编码，即Unicode规则字库的一种实现形式。随着互联网的发展，对同一字库集的要求越来越迫切，Unicode标准也就自然而然的出现。它几乎涵盖了各个国家语言可能出现的符号和文字，并将为他们编号。Unicode的编号从0000开始一直到10FFFF共分为16个Plane，每个Plane中有65536个字符。而UTF-8则只实现了第一个Plane，可见UTF-8虽然是一个当今接受度最广的字符集编码，但是它并没有涵盖整个Unicode的字库。</p>
-<h2 id="UTF-8编码简介"><a href="#UTF-8编码简介" class="headerlink" title="UTF-8编码简介"></a>UTF-8编码简介</h2><ul>
-<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的 Unicode 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的。</li>
-<li>对于n字节的符号（n &gt; 1），第一个字节的前n位都设为1，第n + 1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的 Unicode 码。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Unicode符号范围（十六进制）</th>
-<th>UTF-8编码方式（二进制）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0000 0000-0000 0007F</td>
-<td>0xxxxxxx</td>
-</tr>
-<tr>
-<td>0000 0080-0000 07FF</td>
-<td>110xxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td>0000 0800-0000 FFFF</td>
-<td>1110xxxx 10xxxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td>0001 0000-0010 FFFF</td>
-<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>IO流</category>
-      </categories>
-      <tags>
-        <tag>字符集</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符串反转</title>
-    <url>/p/34837.html</url>
-    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
-<a id="more"></a>
-
-<p><strong>解法一：转换为char[]</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>①将字符串转换为char[]类型；</p>
-<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
-<p>③将不需要反转的头和尾再按顺序加上。</p>
-<p><strong>解法二：使用String的拼接</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
-<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -755,6 +699,62 @@
       </tags>
   </entry>
   <entry>
+    <title>字符集</title>
+    <url>/p/40261.html</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>我们在计算机屏幕上看到的是实体化的文字，而在计算机存储介质中存放的实际是二进制的比特流。那么在这两者之间的转换规则就需要一个统一的标准。简单的说字符集就规定了某个文字对应的二进制数字存放方式（编码）和某串二进制数值代表了哪个文字（解码）的转换关系。</p>
+<a id="more"></a> 
+
+<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><ul>
+<li><strong>ASCII：</strong>美国标准信息交换码，用一个字节的7位表示（128个）；</li>
+<li><strong>ISO8859-1：</strong>拉丁码表。欧洲码表，用一个字节的8位表示；</li>
+<li><strong>GB2312：</strong>中国的中文编码表。最多两个字节编码所有字符；</li>
+<li><strong>GBK：</strong>中国的中文编码表升级，融合了更多的中文文字符号，最多两个字节编码；</li>
+<li><strong>Unicode：</strong>国际标准码，融合了目前人类使用的所有字符，为每个字符分配唯一的字符码，所有的文字都使用两个字节来表示；</li>
+<li><strong>UTF-8：</strong>变长的国际标准码，定义了庞大的、全球通用的字符集，为每个字符规定了唯一确定的编码，可用1-4个字节来表示一个字符。</li>
+</ul>
+<h1 id="字库表、编码字符集、字符编码"><a href="#字库表、编码字符集、字符编码" class="headerlink" title="字库表、编码字符集、字符编码"></a>字库表、编码字符集、字符编码</h1><p><strong>字库表（character repertoire）</strong>：相当于所有可读或者可显示字符的数据库，字库表决定了整个字符集能够展现表示的所有字符的范围。</p>
+<p><strong>编码字符集（coded character set</strong>）：用一个编码值<code>code point</code>来表示一个字符在字库中的位置。</p>
+<p><strong>字符编码（character encoding form）</strong>：将编码字符集和实际存储数值之间的转换关系。一般来说都会直接将code point的值作为编码后的值直接存储。例如在ASCII中<code>A</code>在表中排第65位，而编码后<code>A</code>的数值是<code>0100 0001</code>也即十进制的65的二进制转换结果。</p>
+<p><code>字库表</code>和<code>编码字符集</code>看来是必不可少的，那既然字库表中的每一个字符都有一个自己的序号，直接把序号作为存储内容就好了。为什么还要多此一举通过<code>字符编码</code>把序号转换成另外一种存储格式呢？其实原因也比较容易理解：统一字库表的目的是为了能够涵盖世界上所有的字符，但实际使用过程中会发现真正用的上的字符相对整个字库表来说比例非常低。例如中文地区的程序几乎不会需要日语字符，而一些英语国家甚至简单的ASCII字库表就能满足基本需求。而如果把每个字符都用字库表中的序号来存储的话，每个字符就需要3个字节（这里以Unicode字库为例），这样对于原本用仅占一个字符的ASCII编码的英语地区国家显然是一个额外成本（存储体积是原来的三倍）。算的直接一些，同样一块硬盘，用ASCII可以存1500篇文章，而用3字节Unicode序号存储只能存500篇。于是就出现了UTF-8这样的变长编码。在UTF-8编码中原本只需要一个字节的ASCII字符，仍然只占一个字节。而像中文及日语这样的复杂字符就需要2个到3个字节来存储。</p>
+<h1 id="UTF-8和Unicode的关系"><a href="#UTF-8和Unicode的关系" class="headerlink" title="UTF-8和Unicode的关系"></a>UTF-8和Unicode的关系</h1><p>Unicode就是上文中提到的编码字符集，而UTF-8就是字符编码，即Unicode规则字库的一种实现形式。随着互联网的发展，对同一字库集的要求越来越迫切，Unicode标准也就自然而然的出现。它几乎涵盖了各个国家语言可能出现的符号和文字，并将为他们编号。Unicode的编号从0000开始一直到10FFFF共分为16个Plane，每个Plane中有65536个字符。而UTF-8则只实现了第一个Plane，可见UTF-8虽然是一个当今接受度最广的字符集编码，但是它并没有涵盖整个Unicode的字库。</p>
+<h2 id="UTF-8编码简介"><a href="#UTF-8编码简介" class="headerlink" title="UTF-8编码简介"></a>UTF-8编码简介</h2><ul>
+<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的 Unicode 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的。</li>
+<li>对于n字节的符号（n &gt; 1），第一个字节的前n位都设为1，第n + 1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的 Unicode 码。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Unicode符号范围（十六进制）</th>
+<th>UTF-8编码方式（二进制）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000 0000-0000 0007F</td>
+<td>0xxxxxxx</td>
+</tr>
+<tr>
+<td>0000 0080-0000 07FF</td>
+<td>110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0000 0800-0000 FFFF</td>
+<td>1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0001 0000-0010 FFFF</td>
+<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>IO流</category>
+      </categories>
+      <tags>
+        <tag>字符集</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>枚举类</title>
     <url>/p/20039.html</url>
     <content><![CDATA[<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><ul>
@@ -839,84 +839,6 @@
       <tags>
         <tag>Java</tag>
         <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>注解</title>
-    <url>/p/49545.html</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
-<li>JDK5.0开始引入的一种注释机制。</li>
-<li>代码中的特殊标记，这些标记可以在编译，类加载，运行时被读取，并执行相应的处理。通过使用Annotation，可以在不改变原有罗技的情况下，在源文件中嵌入一些补充信息。</li>
-<li>Annotation可以像修饰符一样被使用，可用于修饰包，类，构造器，方法，成员变量，参数，局部变量的声明。</li>
-</ul>
-<a id="more"></a>
-
-<h1 id="常用Annotation示例"><a href="#常用Annotation示例" class="headerlink" title="常用Annotation示例"></a>常用Annotation示例</h1><ul>
-<li><strong>@Override：</strong>限定重写父类方法，该注解<strong>只能用于方法</strong>；</li>
-<li><strong>@Deprecated：</strong>用于表示所修饰的元素（类、方法等）已过时。通常是因为所修饰的结构危险或存在更好的选择；</li>
-<li><strong>@SuppressWarnings：</strong>抑制编译器警告。</li>
-</ul>
-<h2 id="Override使用"><a href="#Override使用" class="headerlink" title="@Override使用"></a>@Override使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">annotationTest1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Person p = <span class="keyword">new</span> Person(<span class="string">&quot;Lena&quot;</span>,<span class="number">15</span>);</span><br><span class="line">        p.walk();</span><br><span class="line">        Student s = <span class="keyword">new</span> Student(<span class="string">&quot;Cindy&quot;</span>,<span class="number">12</span>);</span><br><span class="line">        s.walk();</span><br><span class="line">        s.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人吃饭&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;学生走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;22222&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">人走路</span><br><span class="line">学生走路</span><br><span class="line"><span class="number">22222</span></span><br></pre></td></tr></table></figure>
-<p><strong>注：</strong>如果去掉@Override，则编译的时候不会报错。</p>
-<h2 id="Deprecated使用"><a href="#Deprecated使用" class="headerlink" title="@Deprecated使用"></a>@Deprecated使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java.util.Date date = <span class="keyword">new</span> java.util.Date(<span class="number">1992</span>,<span class="number">12</span>,<span class="number">5</span>);<span class="comment">//已过时，但是可以使用</span></span><br><span class="line">System.out.println(date);<span class="comment">//Thu Jan 05 00:00:00 CST 3893</span></span><br></pre></td></tr></table></figure>
-<p><strong>注：</strong>过时还能够使用。</p>
-<h2 id="SuppressWarnings使用"><a href="#SuppressWarnings使用" class="headerlink" title="@SuppressWarnings使用"></a>@SuppressWarnings使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings(&quot;unused&quot;)</span></span><br><span class="line"><span class="keyword">int</span> num = <span class="number">9</span>;</span><br></pre></td></tr></table></figure>
-<p>指示编译器去忽略注解中声明的警告。声明了一个新的变量int，如果没有使用，在IDEA中会显示灰色。使用@SuppressWarnings(“unused”)之后变成正常黑色。</p>
-<p>未注解：</p>
-<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205621901.png" alt="image-20201230205621901"></p>
-<p>注解后：</p>
-<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205638577.png" alt="image-20201230205638577"></p>
-<h1 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h1><ul>
-<li>自定义新的注解类型使用@interface关键字。</li>
-<li>自定义注解自动继承了java.lang.annotation.Annotation接口。</li>
-<li>Annotation的成员变量在Annotation定义中以无参数方法的形式来声明。其方法名和返回值定义了该成员的名字和类型，称之为配置参数。类型只能是8种基本数据类型、String类型、enum类型、Annotation类型、以上所有类型的数组。</li>
-<li>只有一个成员变量时，建议使用value。</li>
-<li>可以指定成员的默认值，使用default定义。</li>
-<li>如果自定义的注解没有成员，表明是一个<strong>标识作用</strong>。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(value = &quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(&quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
-<p>或者可以指定成员的默认值，使用default定义</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &quot;hi&quot;</span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation()</span><span class="comment">//使用默认值</span></span><br></pre></td></tr></table></figure>
-<h1 id="JDK提供的4种元注解"><a href="#JDK提供的4种元注解" class="headerlink" title="JDK提供的4种元注解"></a>JDK提供的4种元注解</h1><ul>
-<li>JDK中的元Annotation用于修饰其他Annotation定义</li>
-<li>JDK5.0提供了4个元注解：@Retention、@Documented、@Target、@Inherited</li>
-</ul>
-<h2 id="4个元注解的解释说明"><a href="#4个元注解的解释说明" class="headerlink" title="4个元注解的解释说明"></a>4个元注解的解释说明</h2><h3 id="Retention："><a href="#Retention：" class="headerlink" title="@Retention："></a><strong>@Retention：</strong></h3><p>标识这个注解怎么保存，是只在代码中，还是编入class文件中，或者是在运行时可以通过反射访问。</p>
-<p>有3种状态：</p>
-<ul>
-<li><strong>SOURCE</strong>：Annotations are to be discarded by the compiler.</li>
-<li><strong>CLASS：**</strong>默认保存状态**。Annotations are to be recorded in the class file by the compiler but need not be retained by the VM at run time.  This is the default behavior.</li>
-<li><strong>RUNTIME：只有声明为RUNTIME的注解才能通过反射获取</strong>。Annotations are to be recorded in the class file by the compiler and retained by the VM at run time, so they may be read reflectively.</li>
-</ul>
-<h3 id="Target："><a href="#Target：" class="headerlink" title="@Target："></a><strong>@Target：</strong></h3><p>用于指定被修饰的Annotation能用于修饰哪些程序元素。@Target也有一个成员变量。</p>
-<ul>
-<li><strong>TYPE：</strong>接口、类、枚举、注解</li>
-<li><strong>FIELD：</strong>字段、枚举的常量</li>
-<li><strong>METHOD：</strong>方法</li>
-<li><strong>PARAMETER：</strong>方法参数</li>
-<li><strong>CONSTRUCTOR：</strong>构造器</li>
-<li><strong>LOCAL_VARIABLE：</strong>局部变量</li>
-<li><strong>ANNOTATION_TYPE：</strong>注解</li>
-<li><strong>PACKAGE：</strong>包</li>
-</ul>
-<p><strong>注：</strong>以上两个使用较多</p>
-<h3 id="Documented："><a href="#Documented：" class="headerlink" title="@Documented："></a><strong>@Documented：</strong></h3><p>表示所修饰的注解在被javadoc解析时，是否包含在javadoc（用户文档）中。</p>
-<h3 id="Inherited："><a href="#Inherited：" class="headerlink" title="@Inherited："></a><strong>@Inherited：</strong></h3><p>被修饰的Annotation将具有继承性。如果某个类使用了被@Inherited修饰的Annotation，则其子类将自动具有该注释。</p>
-<h1 id="通过反射获取注解信息"><a href="#通过反射获取注解信息" class="headerlink" title="通过反射获取注解信息"></a>通过反射获取注解信息</h1><p>后续补充</p>
-<h1 id="JDK8种注解的新特性"><a href="#JDK8种注解的新特性" class="headerlink" title="JDK8种注解的新特性"></a>JDK8种注解的新特性</h1><h2 id="可重复注解"><a href="#可重复注解" class="headerlink" title="可重复注解"></a>可重复注解</h2><h2 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h2>]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>注解</category>
-      </categories>
-      <tags>
-        <tag>注解</tag>
       </tags>
   </entry>
   <entry>
@@ -1009,6 +931,97 @@
       </tags>
   </entry>
   <entry>
+    <title>注解</title>
+    <url>/p/49545.html</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
+<li>JDK5.0开始引入的一种注释机制。</li>
+<li>代码中的特殊标记，这些标记可以在编译，类加载，运行时被读取，并执行相应的处理。通过使用Annotation，可以在不改变原有罗技的情况下，在源文件中嵌入一些补充信息。</li>
+<li>Annotation可以像修饰符一样被使用，可用于修饰包，类，构造器，方法，成员变量，参数，局部变量的声明。</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="常用Annotation示例"><a href="#常用Annotation示例" class="headerlink" title="常用Annotation示例"></a>常用Annotation示例</h1><ul>
+<li><strong>@Override：</strong>限定重写父类方法，该注解<strong>只能用于方法</strong>；</li>
+<li><strong>@Deprecated：</strong>用于表示所修饰的元素（类、方法等）已过时。通常是因为所修饰的结构危险或存在更好的选择；</li>
+<li><strong>@SuppressWarnings：</strong>抑制编译器警告。</li>
+</ul>
+<h2 id="Override使用"><a href="#Override使用" class="headerlink" title="@Override使用"></a>@Override使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">annotationTest1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Person p = <span class="keyword">new</span> Person(<span class="string">&quot;Lena&quot;</span>,<span class="number">15</span>);</span><br><span class="line">        p.walk();</span><br><span class="line">        Student s = <span class="keyword">new</span> Student(<span class="string">&quot;Cindy&quot;</span>,<span class="number">12</span>);</span><br><span class="line">        s.walk();</span><br><span class="line">        s.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人吃饭&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;学生走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;22222&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">人走路</span><br><span class="line">学生走路</span><br><span class="line"><span class="number">22222</span></span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong>如果去掉@Override，则编译的时候不会报错。</p>
+<h2 id="Deprecated使用"><a href="#Deprecated使用" class="headerlink" title="@Deprecated使用"></a>@Deprecated使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java.util.Date date = <span class="keyword">new</span> java.util.Date(<span class="number">1992</span>,<span class="number">12</span>,<span class="number">5</span>);<span class="comment">//已过时，但是可以使用</span></span><br><span class="line">System.out.println(date);<span class="comment">//Thu Jan 05 00:00:00 CST 3893</span></span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong>过时还能够使用。</p>
+<h2 id="SuppressWarnings使用"><a href="#SuppressWarnings使用" class="headerlink" title="@SuppressWarnings使用"></a>@SuppressWarnings使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings(&quot;unused&quot;)</span></span><br><span class="line"><span class="keyword">int</span> num = <span class="number">9</span>;</span><br></pre></td></tr></table></figure>
+<p>指示编译器去忽略注解中声明的警告。声明了一个新的变量int，如果没有使用，在IDEA中会显示灰色。使用@SuppressWarnings(“unused”)之后变成正常黑色。</p>
+<p>未注解：</p>
+<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205621901.png" alt="image-20201230205621901"></p>
+<p>注解后：</p>
+<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205638577.png" alt="image-20201230205638577"></p>
+<h1 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h1><ul>
+<li>自定义新的注解类型使用@interface关键字。</li>
+<li>自定义注解自动继承了java.lang.annotation.Annotation接口。</li>
+<li>Annotation的成员变量在Annotation定义中以无参数方法的形式来声明。其方法名和返回值定义了该成员的名字和类型，称之为配置参数。类型只能是8种基本数据类型、String类型、enum类型、Annotation类型、以上所有类型的数组。</li>
+<li>只有一个成员变量时，建议使用value。</li>
+<li>可以指定成员的默认值，使用default定义。</li>
+<li>如果自定义的注解没有成员，表明是一个<strong>标识作用</strong>。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(value = &quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(&quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
+<p>或者可以指定成员的默认值，使用default定义</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &quot;hi&quot;</span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation()</span><span class="comment">//使用默认值</span></span><br></pre></td></tr></table></figure>
+<h1 id="JDK提供的4种元注解"><a href="#JDK提供的4种元注解" class="headerlink" title="JDK提供的4种元注解"></a>JDK提供的4种元注解</h1><ul>
+<li>JDK中的元Annotation用于修饰其他Annotation定义</li>
+<li>JDK5.0提供了4个元注解：@Retention、@Documented、@Target、@Inherited</li>
+</ul>
+<h2 id="4个元注解的解释说明"><a href="#4个元注解的解释说明" class="headerlink" title="4个元注解的解释说明"></a>4个元注解的解释说明</h2><h3 id="Retention："><a href="#Retention：" class="headerlink" title="@Retention："></a><strong>@Retention：</strong></h3><p>标识这个注解怎么保存，是只在代码中，还是编入class文件中，或者是在运行时可以通过反射访问。</p>
+<p>有3种状态：</p>
+<ul>
+<li><strong>SOURCE</strong>：Annotations are to be discarded by the compiler.</li>
+<li><strong>CLASS：**</strong>默认保存状态**。Annotations are to be recorded in the class file by the compiler but need not be retained by the VM at run time.  This is the default behavior.</li>
+<li><strong>RUNTIME：只有声明为RUNTIME的注解才能通过反射获取</strong>。Annotations are to be recorded in the class file by the compiler and retained by the VM at run time, so they may be read reflectively.</li>
+</ul>
+<h3 id="Target："><a href="#Target：" class="headerlink" title="@Target："></a><strong>@Target：</strong></h3><p>用于指定被修饰的Annotation能用于修饰哪些程序元素。@Target也有一个成员变量。</p>
+<ul>
+<li><strong>TYPE：</strong>接口、类、枚举、注解</li>
+<li><strong>FIELD：</strong>字段、枚举的常量</li>
+<li><strong>METHOD：</strong>方法</li>
+<li><strong>PARAMETER：</strong>方法参数</li>
+<li><strong>CONSTRUCTOR：</strong>构造器</li>
+<li><strong>LOCAL_VARIABLE：</strong>局部变量</li>
+<li><strong>ANNOTATION_TYPE：</strong>注解</li>
+<li><strong>PACKAGE：</strong>包</li>
+</ul>
+<p><strong>注：</strong>以上两个使用较多</p>
+<h3 id="Documented："><a href="#Documented：" class="headerlink" title="@Documented："></a><strong>@Documented：</strong></h3><p>表示所修饰的注解在被javadoc解析时，是否包含在javadoc（用户文档）中。</p>
+<h3 id="Inherited："><a href="#Inherited：" class="headerlink" title="@Inherited："></a><strong>@Inherited：</strong></h3><p>被修饰的Annotation将具有继承性。如果某个类使用了被@Inherited修饰的Annotation，则其子类将自动具有该注释。</p>
+<h1 id="通过反射获取注解信息"><a href="#通过反射获取注解信息" class="headerlink" title="通过反射获取注解信息"></a>通过反射获取注解信息</h1><p>后续补充</p>
+<h1 id="JDK8种注解的新特性"><a href="#JDK8种注解的新特性" class="headerlink" title="JDK8种注解的新特性"></a>JDK8种注解的新特性</h1><h2 id="可重复注解"><a href="#可重复注解" class="headerlink" title="可重复注解"></a>可重复注解</h2><h2 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h2>]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>注解</category>
+      </categories>
+      <tags>
+        <tag>注解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线程的安全问题</title>
+    <url>/p/55922.html</url>
+    <content><![CDATA[<a id="more"></a>]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>线程的生命周期</title>
     <url>/p/37913.html</url>
     <content><![CDATA[<h4 id="线程的5种状态："><a href="#线程的5种状态：" class="headerlink" title="线程的5种状态："></a>线程的5种状态：</h4><p>JDK种使用Thread.state类定义了线程的5种状态：</p>
@@ -1023,19 +1036,6 @@
 </ol>
 <p><img src="/p/blog\picture\线程状态转换.png"></p>
 ]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>线程的安全问题</title>
-    <url>/p/55922.html</url>
-    <content><![CDATA[<a id="more"></a>]]></content>
       <categories>
         <category>Java</category>
         <category>多线程</category>
