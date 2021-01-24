@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>111111</title>
+    <url>/2021/01/24/111111/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">![插入图片](1.jpg)</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
     <title>File类</title>
     <url>/2021/01/10/File%E7%B1%BB/</url>
     <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><ul>
@@ -349,7 +354,7 @@
     <url>/2020/12/22/String%E7%B1%BB%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E6%8B%BC%E6%8E%A5/</url>
     <content><![CDATA[<h3 id="String类：字符串"><a href="#String类：字符串" class="headerlink" title="String类：字符串"></a><strong>String类：字符串</strong></h3><a id="more"></a>
 
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222113310973.png" alt="image-20201222113310973"></p>
+<p><img src="/2020/12/22/String%E7%B1%BB%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E6%8B%BC%E6%8E%A5/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222113310973.png" alt="image-20201222113310973"></p>
 <ul>
 <li><p>String是一个final类，代表<strong>不可变</strong>的字符序列；</p>
 </li>
@@ -383,7 +388,7 @@
 <p>s1 == s2;//false</p>
 <p><strong>两种创建方式的联系：</strong></p>
 <p>s1保存的地址是在字符串常量池中创建的字符串地址，s2保存的地址是在堆中开辟空间以后对应的地址值，但是String的本质是字符数组，所以在堆中的字符数组所保存的地址是和s1保存的地址值相同的，均是常量池里的那个地址。</p>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222155242960.png" alt="image-20201222155242960"></p>
+<p><img src="/2020/12/22/String%E7%B1%BB%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E6%8B%BC%E6%8E%A5/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222155242960.png" alt="image-20201222155242960"></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        String s2 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line"></span><br><span class="line">        String s3 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line">        String s4 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(s1 == s3);</span><br><span class="line">        System.out.println(s3 == s4);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;#########################################################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Person p1 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">45</span>);</span><br><span class="line">        Person p2 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">45</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(p1.name.equals(p2.name));<span class="comment">//true</span></span><br><span class="line">        System.out.println(p1.name == p2.name);<span class="comment">//true</span></span><br><span class="line">        System.out.println(p1 == p2);<span class="comment">//false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>问：</strong>String s = new String(“abc”);这种方式创造对象，在内存中创建了几个对象？</p>
@@ -842,95 +847,6 @@
       </tags>
   </entry>
   <entry>
-    <title>泛型</title>
-    <url>/2021/01/08/%E6%B3%9B%E5%9E%8B/</url>
-    <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><a id="more"></a>
-
-<p><a href="https://www.cnblogs.com/coprince/p/8603492.html">参考该文章</a></p>
-<p>泛型，即“<strong>参数化类型</strong>”。一提到参数，最熟悉的就是定义方法时有形参，然后调用此方法时传递实参。那么参数化类型怎么理解呢？顾名思义，就是<strong>将类型由原来的具体的类型参数化</strong>，类似于方法中的变量参数，此时类型也定义成参数形式（可以称之为类型形参），然后在使用/调用时传入具体的类型（类型实参）。</p>
-<p>泛型的本质是为了<strong>参数化类型</strong>（在不创建新的类型的情况下，通过泛型指定的不同类型来控制形参具体限制的类型）。也就是说在泛型使用过程中，<strong>操作的数据类型被指定为一个参数</strong>，这种参数类型可以用在类、接口和方法中，分别被称为泛型类、泛型接口、泛型方法。</p>
-<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List arrayList = <span class="keyword">new</span> ArrayList();</span><br><span class="line">arrayList.add(<span class="string">&quot;aaaa&quot;</span>);</span><br><span class="line">arrayList.add(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt; arrayList.size();i++)&#123;</span><br><span class="line">    String item = (String)arrayList.get(i);</span><br><span class="line">    Log.d(<span class="string">&quot;泛型测试&quot;</span>,<span class="string">&quot;item = &quot;</span> + item);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>执行结果：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.String</span><br></pre></td></tr></table></figure>
-<p>ArrayList可以存放任意类型，例子中添加了一个String类型，添加了一个Integer类型，再使用时都以String的方式使用，因此程序崩溃了。为了解决类似这样的问题（在编译阶段就可以解决），泛型应运而生。</p>
-<p><strong>修改：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br></pre></td></tr></table></figure>
-<p>我们将第一行声明初始化list的代码更改一下，编译器会在编译阶段就能够帮我们发现类似这样的问题。</p>
-<h1 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h1><p><strong>泛型只在编译阶段有效</strong>。看下面的代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; stringArrayList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">List&lt;Integer&gt; integerArrayList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">Class classStringArrayList = stringArrayList.getClass();</span><br><span class="line">Class classIntegerArrayList = integerArrayList.getClass();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(classStringArrayList.equals(classIntegerArrayList))&#123;</span><br><span class="line">    Log.d(<span class="string">&quot;泛型测试&quot;</span>,<span class="string">&quot;类型相同&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果：D/泛型测试: 类型相同。</p>
-<p>通过上面的例子可以证明，<strong>在编译之后程序会采取去泛型化的措施</strong>。也就是说Java中的泛型，只在编译阶段有效。在编译过程中，正确检验泛型结果后，会将泛型的相关信息擦出，并且在对象进入和离开方法的边界处添加类型检查和类型转换的方法。也就是说，泛型信息不会进入到运行时阶段。</p>
-<p>对此总结成一句话：泛型类型在逻辑上看以看成是多个不同的类型，实际上都是相同的基本类型。</p>
-<h1 id="泛型的使用"><a href="#泛型的使用" class="headerlink" title="泛型的使用"></a>泛型的使用</h1><p>泛型有三种使用方式，分别为：泛型类、泛型接口、泛型方法。</p>
-<h2 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h2><p>举例如下：</p>
-<p><strong>泛型类Order：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Order</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    String orderName;</span><br><span class="line">    <span class="keyword">int</span> orderId;</span><br><span class="line"></span><br><span class="line">    T oderT;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Order</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Order</span><span class="params">(String orderName, <span class="keyword">int</span> orderId, T oderT)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.orderName = orderName;</span><br><span class="line">        <span class="keyword">this</span>.orderId = orderId;</span><br><span class="line">        <span class="keyword">this</span>.oderT = oderT;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getOrderName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> orderName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrderName</span><span class="params">(String orderName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.orderName = orderName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getOrderId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> orderId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrderId</span><span class="params">(<span class="keyword">int</span> orderId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.orderId = orderId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">getOderT</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> oderT;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOderT</span><span class="params">(T oderT)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.oderT = oderT;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>测试：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Order&lt;Integer&gt; order = <span class="keyword">new</span> Order&lt;Integer&gt;(<span class="string">&quot;jyd&quot;</span>,<span class="number">1001</span>,<span class="number">25</span>);</span><br><span class="line">order.setOderT(<span class="number">23</span>);</span><br></pre></td></tr></table></figure>
-<p><strong>总结：</strong></p>
-<ul>
-<li>泛型类可能有多个参数，此时应该将多个参数一起放在进括号里，比如：&lt;T1,T2,T3&gt;；</li>
-<li>在使用泛型的时候如果传入泛型实参，则会根据传入的泛型实参做相应的限制，此时泛型才会起到本应起到的限制作用。如果不传入泛型类型实参的话，默认Object类，但是不等于Object；</li>
-<li>泛型的类型参数只能是类，不能是基本数据类型int等，要使用其包装类；</li>
-<li>一个泛型类，其子类可以确定泛型的类型参数，也可以选择不确定，继续使用父类的符号<T>（…）来表示；</li>
-</ul>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210109221654067.png" alt="image-20210109221654067"></p>
-<ul>
-<li>不能对确切的泛型类型使用instanceof操作。如下面的操作是非法的，编译时会出错；</li>
-<li>静态方法中不能使用类的泛型。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(ex_num <span class="keyword">instanceof</span> Order&lt;T&gt;)&#123; &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h2><p>泛型接口与泛型类的定义及使用基本相同。泛型接口常被用在各种类的生产器中，可以看一个例子：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//定义一个泛型接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Generator</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">next</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当实现泛型接口的类，未传入泛型实参时：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 未传入泛型实参时，与泛型类的定义相同，在声明类的时候，需将泛型的声明也一起加到类中</span></span><br><span class="line"><span class="comment"> * 即：class FruitGenerator&lt;T&gt; implements Generator&lt;T&gt;&#123;</span></span><br><span class="line"><span class="comment"> * 如果不声明泛型，如：class FruitGenerator implements Generator&lt;T&gt;，编译器会报错：&quot;Unknown class&quot;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FruitGenerator</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">Generator</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当实现泛型接口的类，传入泛型实参时：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 传入泛型实参时：</span></span><br><span class="line"><span class="comment"> * 定义一个生产器实现这个接口,虽然我们只创建了一个泛型接口Generator&lt;T&gt;</span></span><br><span class="line"><span class="comment"> * 但是我们可以为T传入无数个实参，形成无数种类型的Generator接口。</span></span><br><span class="line"><span class="comment"> * 在实现类实现泛型接口时，如已将泛型类型传入实参类型，则所有使用泛型的地方都要替换成传入的实参类型</span></span><br><span class="line"><span class="comment"> * 即：Generator&lt;T&gt;，public T next();中的的T都要替换成传入的String类型。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FruitGenerator</span> <span class="keyword">implements</span> <span class="title">Generator</span>&lt;<span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String[] fruits = <span class="keyword">new</span> String[]&#123;<span class="string">&quot;Apple&quot;</span>, <span class="string">&quot;Banana&quot;</span>, <span class="string">&quot;Pear&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Random rand = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">return</span> fruits[rand.nextInt(<span class="number">3</span>)];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h2><ul>
-<li>在方法中出现了泛型结构，泛型参数与类的泛型参数没有关系。即泛型方法所属的类是不是泛型类都没有关系。</li>
-<li>泛型方法可以声明为静态的，主要原因是泛型参数是在调用方法时确定的，并非是在实例化类时确定的。</li>
-</ul>
-<p>举例：</p>
-<p>Order类中的泛型方法：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">copyArrayToList</span><span class="params">(E[] arr)</span></span>&#123;</span><br><span class="line">    ArrayList&lt;E&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (E e : arr)&#123;</span><br><span class="line">        list.add(e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>测试：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="comment">//测试泛型方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Order&lt;String&gt; order = <span class="keyword">new</span> Order&lt;String&gt;();</span><br><span class="line">    Integer[] arr = <span class="keyword">new</span> Integer[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line">    List&lt;Integer&gt; list = order.copyArrayToList(arr);</span><br><span class="line">    System.out.println(list);<span class="comment">//[1, 2, 3, 4]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="泛型在继承方面的体现"><a href="#泛型在继承方面的体现" class="headerlink" title="泛型在继承方面的体现"></a>泛型在继承方面的体现</h2><ul>
-<li>类A是类B的父类，G<A>和G<B>不具备子父类关系，是并列关系；</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">List&lt;Object&gt; list1 &#x3D; null;</span><br><span class="line">List&lt;Object&gt; list2 &#x3D; null;</span><br><span class="line">list1 &#x3D; list2;&#x2F;&#x2F;编译不通过</span><br></pre></td></tr></table></figure>
-<ul>
-<li>类A是类B的父类（或实现关系），A<G>是B<G>的父类（或实现关系）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; list1 &#x3D; null;</span><br><span class="line">ArrayList&lt;String&gt; list2 &#x3D; null;</span><br><span class="line">list1 &#x3D; list2;&#x2F;&#x2F;没有问题</span><br></pre></td></tr></table></figure>
-<h2 id="通配符-的使用"><a href="#通配符-的使用" class="headerlink" title="通配符 ? 的使用"></a>通配符 ? 的使用</h2><ul>
-<li>类A是类B的父类，G<A>和G<B>不具备子父类关系，他们共同的父类是<strong>G&lt;?&gt;</strong></li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Object&gt; list1 = <span class="keyword">null</span>;</span><br><span class="line">List&lt;String&gt; list2 = <span class="keyword">null</span>;</span><br><span class="line">List&lt;?&gt; list = <span class="keyword">null</span>;</span><br><span class="line">list = list1;<span class="comment">//没问题</span></span><br><span class="line">list = list2;<span class="comment">//没问题</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(List&lt;?&gt; list)</span></span>&#123;</span><br><span class="line">    Iterator&lt;?&gt; iterator = list.iterator();</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">        Object o = iterator.next();</span><br><span class="line">        System.out.println(o);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>添加（写入）：对于List&lt;?&gt;不能向其内部类添加数据</li>
-<li>获取（读取）：允许读取数据，读取的数据类型为Object</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; list3 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">list3.add(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">list3.add(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">list3.add(<span class="string">&quot;c&quot;</span>);</span><br><span class="line">list = list3;</span><br><span class="line">list.add(<span class="string">&quot;d&quot;</span>);<span class="comment">//错误的</span></span><br><span class="line">list.add(<span class="keyword">null</span>);<span class="comment">//只可以加null</span></span><br><span class="line"></span><br><span class="line">Object o = list.get(<span class="number">0</span>);</span><br><span class="line">System.out.println(o);<span class="comment">//a</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>有限制的通配符</strong><ul>
-<li>通配符指定上限：上限extends—使用时指定的类型必须是继承某个类，或者实现某个接口，即&lt;=；</li>
-<li>通配符指定下限：下限super—使用时指定的类型不能小于操作的类，即&gt;=；</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>泛型</category>
-      </categories>
-      <tags>
-        <tag>泛型</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>注解</title>
     <url>/2020/12/30/%E6%B3%A8%E8%A7%A3/</url>
     <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
@@ -954,9 +870,9 @@
 <h2 id="SuppressWarnings使用"><a href="#SuppressWarnings使用" class="headerlink" title="@SuppressWarnings使用"></a>@SuppressWarnings使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings(&quot;unused&quot;)</span></span><br><span class="line"><span class="keyword">int</span> num = <span class="number">9</span>;</span><br></pre></td></tr></table></figure>
 <p>指示编译器去忽略注解中声明的警告。声明了一个新的变量int，如果没有使用，在IDEA中会显示灰色。使用@SuppressWarnings(“unused”)之后变成正常黑色。</p>
 <p>未注解：</p>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205621901.png" alt="image-20201230205621901"></p>
+<p><img src="/2020/12/30/%E6%B3%A8%E8%A7%A3/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205621901.png" alt="image-20201230205621901"></p>
 <p>注解后：</p>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205638577.png" alt="image-20201230205638577"></p>
+<p><img src="/2020/12/30/%E6%B3%A8%E8%A7%A3/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205638577.png" alt="image-20201230205638577"></p>
 <h1 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h1><ul>
 <li>自定义新的注解类型使用@interface关键字。</li>
 <li>自定义注解自动继承了java.lang.annotation.Annotation接口。</li>
@@ -1009,16 +925,92 @@
       </tags>
   </entry>
   <entry>
-    <title>线程的安全问题</title>
-    <url>/2020/12/22/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<a id="more"></a>]]></content>
+    <title>泛型</title>
+    <url>/2021/01/08/%E6%B3%9B%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><a id="more"></a>
+
+<p><a href="https://www.cnblogs.com/coprince/p/8603492.html">参考该文章</a></p>
+<p>泛型，即“<strong>参数化类型</strong>”。一提到参数，最熟悉的就是定义方法时有形参，然后调用此方法时传递实参。那么参数化类型怎么理解呢？顾名思义，就是<strong>将类型由原来的具体的类型参数化</strong>，类似于方法中的变量参数，此时类型也定义成参数形式（可以称之为类型形参），然后在使用/调用时传入具体的类型（类型实参）。</p>
+<p>泛型的本质是为了<strong>参数化类型</strong>（在不创建新的类型的情况下，通过泛型指定的不同类型来控制形参具体限制的类型）。也就是说在泛型使用过程中，<strong>操作的数据类型被指定为一个参数</strong>，这种参数类型可以用在类、接口和方法中，分别被称为泛型类、泛型接口、泛型方法。</p>
+<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List arrayList = <span class="keyword">new</span> ArrayList();</span><br><span class="line">arrayList.add(<span class="string">&quot;aaaa&quot;</span>);</span><br><span class="line">arrayList.add(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt; arrayList.size();i++)&#123;</span><br><span class="line">    String item = (String)arrayList.get(i);</span><br><span class="line">    Log.d(<span class="string">&quot;泛型测试&quot;</span>,<span class="string">&quot;item = &quot;</span> + item);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>执行结果：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.String</span><br></pre></td></tr></table></figure>
+<p>ArrayList可以存放任意类型，例子中添加了一个String类型，添加了一个Integer类型，再使用时都以String的方式使用，因此程序崩溃了。为了解决类似这样的问题（在编译阶段就可以解决），泛型应运而生。</p>
+<p><strong>修改：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br></pre></td></tr></table></figure>
+<p>我们将第一行声明初始化list的代码更改一下，编译器会在编译阶段就能够帮我们发现类似这样的问题。</p>
+<h1 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h1><p><strong>泛型只在编译阶段有效</strong>。看下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; stringArrayList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">List&lt;Integer&gt; integerArrayList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">Class classStringArrayList = stringArrayList.getClass();</span><br><span class="line">Class classIntegerArrayList = integerArrayList.getClass();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(classStringArrayList.equals(classIntegerArrayList))&#123;</span><br><span class="line">    Log.d(<span class="string">&quot;泛型测试&quot;</span>,<span class="string">&quot;类型相同&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：D/泛型测试: 类型相同。</p>
+<p>通过上面的例子可以证明，<strong>在编译之后程序会采取去泛型化的措施</strong>。也就是说Java中的泛型，只在编译阶段有效。在编译过程中，正确检验泛型结果后，会将泛型的相关信息擦出，并且在对象进入和离开方法的边界处添加类型检查和类型转换的方法。也就是说，泛型信息不会进入到运行时阶段。</p>
+<p>对此总结成一句话：泛型类型在逻辑上看以看成是多个不同的类型，实际上都是相同的基本类型。</p>
+<h1 id="泛型的使用"><a href="#泛型的使用" class="headerlink" title="泛型的使用"></a>泛型的使用</h1><p>泛型有三种使用方式，分别为：泛型类、泛型接口、泛型方法。</p>
+<h2 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h2><p>举例如下：</p>
+<p><strong>泛型类Order：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Order</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    String orderName;</span><br><span class="line">    <span class="keyword">int</span> orderId;</span><br><span class="line"></span><br><span class="line">    T oderT;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Order</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Order</span><span class="params">(String orderName, <span class="keyword">int</span> orderId, T oderT)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.orderName = orderName;</span><br><span class="line">        <span class="keyword">this</span>.orderId = orderId;</span><br><span class="line">        <span class="keyword">this</span>.oderT = oderT;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getOrderName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> orderName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrderName</span><span class="params">(String orderName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.orderName = orderName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getOrderId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> orderId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrderId</span><span class="params">(<span class="keyword">int</span> orderId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.orderId = orderId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">getOderT</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> oderT;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOderT</span><span class="params">(T oderT)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.oderT = oderT;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>测试：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Order&lt;Integer&gt; order = <span class="keyword">new</span> Order&lt;Integer&gt;(<span class="string">&quot;jyd&quot;</span>,<span class="number">1001</span>,<span class="number">25</span>);</span><br><span class="line">order.setOderT(<span class="number">23</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>总结：</strong></p>
+<ul>
+<li>泛型类可能有多个参数，此时应该将多个参数一起放在进括号里，比如：&lt;T1,T2,T3&gt;；</li>
+<li>在使用泛型的时候如果传入泛型实参，则会根据传入的泛型实参做相应的限制，此时泛型才会起到本应起到的限制作用。如果不传入泛型类型实参的话，默认Object类，但是不等于Object；</li>
+<li>泛型的类型参数只能是类，不能是基本数据类型int等，要使用其包装类；</li>
+<li>一个泛型类，其子类可以确定泛型的类型参数，也可以选择不确定，继续使用父类的符号<T>（…）来表示；</T></li>
+</ul>
+<p><img src="/2021/01/08/%E6%B3%9B%E5%9E%8B/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210109221654067.png" alt="image-20210109221654067"></p>
+<ul>
+<li>不能对确切的泛型类型使用instanceof操作。如下面的操作是非法的，编译时会出错；</li>
+<li>静态方法中不能使用类的泛型。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(ex_num <span class="keyword">instanceof</span> Order&lt;T&gt;)&#123; &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h2><p>泛型接口与泛型类的定义及使用基本相同。泛型接口常被用在各种类的生产器中，可以看一个例子：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//定义一个泛型接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Generator</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">next</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当实现泛型接口的类，未传入泛型实参时：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 未传入泛型实参时，与泛型类的定义相同，在声明类的时候，需将泛型的声明也一起加到类中</span></span><br><span class="line"><span class="comment"> * 即：class FruitGenerator&lt;T&gt; implements Generator&lt;T&gt;&#123;</span></span><br><span class="line"><span class="comment"> * 如果不声明泛型，如：class FruitGenerator implements Generator&lt;T&gt;，编译器会报错：&quot;Unknown class&quot;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FruitGenerator</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">Generator</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当实现泛型接口的类，传入泛型实参时：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 传入泛型实参时：</span></span><br><span class="line"><span class="comment"> * 定义一个生产器实现这个接口,虽然我们只创建了一个泛型接口Generator&lt;T&gt;</span></span><br><span class="line"><span class="comment"> * 但是我们可以为T传入无数个实参，形成无数种类型的Generator接口。</span></span><br><span class="line"><span class="comment"> * 在实现类实现泛型接口时，如已将泛型类型传入实参类型，则所有使用泛型的地方都要替换成传入的实参类型</span></span><br><span class="line"><span class="comment"> * 即：Generator&lt;T&gt;，public T next();中的的T都要替换成传入的String类型。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FruitGenerator</span> <span class="keyword">implements</span> <span class="title">Generator</span>&lt;<span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String[] fruits = <span class="keyword">new</span> String[]&#123;<span class="string">&quot;Apple&quot;</span>, <span class="string">&quot;Banana&quot;</span>, <span class="string">&quot;Pear&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Random rand = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">return</span> fruits[rand.nextInt(<span class="number">3</span>)];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h2><ul>
+<li>在方法中出现了泛型结构，泛型参数与类的泛型参数没有关系。即泛型方法所属的类是不是泛型类都没有关系。</li>
+<li>泛型方法可以声明为静态的，主要原因是泛型参数是在调用方法时确定的，并非是在实例化类时确定的。</li>
+</ul>
+<p>举例：</p>
+<p>Order类中的泛型方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">copyArrayToList</span><span class="params">(E[] arr)</span></span>&#123;</span><br><span class="line">    ArrayList&lt;E&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (E e : arr)&#123;</span><br><span class="line">        list.add(e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="comment">//测试泛型方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Order&lt;String&gt; order = <span class="keyword">new</span> Order&lt;String&gt;();</span><br><span class="line">    Integer[] arr = <span class="keyword">new</span> Integer[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line">    List&lt;Integer&gt; list = order.copyArrayToList(arr);</span><br><span class="line">    System.out.println(list);<span class="comment">//[1, 2, 3, 4]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="泛型在继承方面的体现"><a href="#泛型在继承方面的体现" class="headerlink" title="泛型在继承方面的体现"></a>泛型在继承方面的体现</h2><ul>
+<li>类A是类B的父类，G<A>和G<B>不具备子父类关系，是并列关系；</B></A></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">List&lt;Object&gt; list1 &#x3D; null;</span><br><span class="line">List&lt;Object&gt; list2 &#x3D; null;</span><br><span class="line">list1 &#x3D; list2;&#x2F;&#x2F;编译不通过</span><br></pre></td></tr></table></figure>
+<ul>
+<li>类A是类B的父类（或实现关系），A<G>是B<G>的父类（或实现关系）</G></G></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; list1 &#x3D; null;</span><br><span class="line">ArrayList&lt;String&gt; list2 &#x3D; null;</span><br><span class="line">list1 &#x3D; list2;&#x2F;&#x2F;没有问题</span><br></pre></td></tr></table></figure>
+<h2 id="通配符-的使用"><a href="#通配符-的使用" class="headerlink" title="通配符 ? 的使用"></a>通配符 ? 的使用</h2><ul>
+<li>类A是类B的父类，G<A>和G<B>不具备子父类关系，他们共同的父类是<strong>G&lt;?&gt;</strong></B></A></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Object&gt; list1 = <span class="keyword">null</span>;</span><br><span class="line">List&lt;String&gt; list2 = <span class="keyword">null</span>;</span><br><span class="line">List&lt;?&gt; list = <span class="keyword">null</span>;</span><br><span class="line">list = list1;<span class="comment">//没问题</span></span><br><span class="line">list = list2;<span class="comment">//没问题</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(List&lt;?&gt; list)</span></span>&#123;</span><br><span class="line">    Iterator&lt;?&gt; iterator = list.iterator();</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">        Object o = iterator.next();</span><br><span class="line">        System.out.println(o);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>添加（写入）：对于List&lt;?&gt;不能向其内部类添加数据</li>
+<li>获取（读取）：允许读取数据，读取的数据类型为Object</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; list3 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">list3.add(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">list3.add(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">list3.add(<span class="string">&quot;c&quot;</span>);</span><br><span class="line">list = list3;</span><br><span class="line">list.add(<span class="string">&quot;d&quot;</span>);<span class="comment">//错误的</span></span><br><span class="line">list.add(<span class="keyword">null</span>);<span class="comment">//只可以加null</span></span><br><span class="line"></span><br><span class="line">Object o = list.get(<span class="number">0</span>);</span><br><span class="line">System.out.println(o);<span class="comment">//a</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>有限制的通配符</strong><ul>
+<li>通配符指定上限：上限extends—使用时指定的类型必须是继承某个类，或者实现某个接口，即&lt;=；</li>
+<li>通配符指定下限：下限super—使用时指定的类型不能小于操作的类，即&gt;=；</li>
+</ul>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>Java</category>
-        <category>多线程</category>
+        <category>Java基础</category>
+        <category>泛型</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
+        <tag>泛型</tag>
       </tags>
   </entry>
   <entry>
@@ -1034,8 +1026,21 @@
 <li><strong>阻塞：</strong>在某种特殊情况下，被人挂起或进行I/O操作时，让出CPU并临时终端自己的执行，进入阻塞状态；阻塞状态是一个临时状态，不可以作为最终状态，线程最终状态都是死亡；</li>
 <li><strong>死亡：</strong>完成工作或者被强行退出或者出现异常导致线程结束。</li>
 </ol>
-<p><img src="F:\blog\picture\线程状态转换.png"></p>
+<p><img src="/2020/12/22/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/blog\picture\线程状态转换.png"></p>
 ]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线程的安全问题</title>
+    <url>/2020/12/22/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<a id="more"></a>]]></content>
       <categories>
         <category>Java</category>
         <category>多线程</category>
@@ -1080,6 +1085,28 @@
       <tags>
         <tag>Java</tag>
         <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>获取一个字符串在另一个字符串中出现的次数</title>
+    <url>/2020/12/24/%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%9C%A8%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
+    <content><![CDATA[<p><strong>问题：</strong>获取一个字符串在另一个字符串中出现的次数。比如字符串“abkkcadkabkebfkabkskabdjahkjldghabab”中“ab”出现的次数。</p>
+<a id="more"></a>
+
+<p><strong>解法一：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String str1 = <span class="string">&quot;abkkcadkabkebfkabkskabdjahkjldghabab&quot;</span>;</span><br><span class="line">        String str2 = <span class="string">&quot;ab&quot;</span>;</span><br><span class="line">        System.out.print(<span class="string">&quot;字符串&quot;</span> + str1 + <span class="string">&quot;中&quot;</span>);</span><br><span class="line">        System.out.println(str2 + <span class="string">&quot;出现几次？&quot;</span>);</span><br><span class="line">        System.out.println(getCount(str1, str2));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取str1中str2出现的次数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">        <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">            <span class="keyword">while</span> (str1.indexOf(str2) != -<span class="number">1</span>)&#123;</span><br><span class="line">                str1 = str1.substring(str1.indexOf(str2) + str2Length);</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>解法二：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount1</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">    <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">        <span class="keyword">while</span> ((index = str1.indexOf(str2,index)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            index += str2Length;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效率更高。因为没有频繁创建新对象。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -1159,28 +1186,6 @@
       </categories>
       <tags>
         <tag>网络编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>获取一个字符串在另一个字符串中出现的次数</title>
-    <url>/2020/12/24/%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%9C%A8%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/</url>
-    <content><![CDATA[<p><strong>问题：</strong>获取一个字符串在另一个字符串中出现的次数。比如字符串“abkkcadkabkebfkabkskabdjahkjldghabab”中“ab”出现的次数。</p>
-<a id="more"></a>
-
-<p><strong>解法一：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String str1 = <span class="string">&quot;abkkcadkabkebfkabkskabdjahkjldghabab&quot;</span>;</span><br><span class="line">        String str2 = <span class="string">&quot;ab&quot;</span>;</span><br><span class="line">        System.out.print(<span class="string">&quot;字符串&quot;</span> + str1 + <span class="string">&quot;中&quot;</span>);</span><br><span class="line">        System.out.println(str2 + <span class="string">&quot;出现几次？&quot;</span>);</span><br><span class="line">        System.out.println(getCount(str1, str2));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取str1中str2出现的次数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">        <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">            <span class="keyword">while</span> (str1.indexOf(str2) != -<span class="number">1</span>)&#123;</span><br><span class="line">                str1 = str1.substring(str1.indexOf(str2) + str2Length);</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>解法二：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount1</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">    <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">        <span class="keyword">while</span> ((index = str1.indexOf(str2,index)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            index += str2Length;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>效率更高。因为没有频繁创建新对象。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -1901,7 +1906,7 @@
 <li><p><strong>size()：</strong>返回此地图中键值映射的数量</p>
 </li>
 </ul>
-<h2 id="Map遍历"><a href="#Map遍历" class="headerlink" title="Map遍历"></a>Map遍历</h2><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210107195746697.png" alt="image-20210107195746697"></p>
+<h2 id="Map遍历"><a href="#Map遍历" class="headerlink" title="Map遍历"></a>Map遍历</h2><p><img src="/2021/01/04/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210107195746697.png" alt="image-20210107195746697"></p>
 <ul>
 <li>**Set keySet():**返回所有key构成的Set集合</li>
 <li>**Collection values():**返回所有value构成的Collection集合</li>
@@ -1988,8 +1993,8 @@
 <li><strong>排序操作</strong><ul>
 <li><strong>reverse(List&lt;?&gt; list)：</strong>反转指定列表中元素的顺序。</li>
 <li><strong>shuffle(List&lt;?&gt; list)：</strong>使用默认的随机源随机排列指定的列表。</li>
-<li><strong>sort(List<T> list)：</strong>根据元素的自然顺序对指定的List集合元素按升序排序。</li>
-<li>**sort(List<T> list, Comparator&lt;? super T&gt; c)**：根据指定的比较器引起的顺序对指定的列表进行排序。</li>
+<li><strong>sort(List<T> list)：</T></strong>根据元素的自然顺序对指定的List集合元素按升序排序。</li>
+<li>**sort(List<T> list, Comparator&lt;? super T&gt; c)**：根据指定的比较器引起的顺序对指定的列表进行排序。</T></li>
 <li><strong>swap(List&lt;?&gt; list, int i, int j)：</strong>交换指定列表中指定位置的元素。</li>
 </ul>
 </li>
