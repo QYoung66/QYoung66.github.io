@@ -345,6 +345,66 @@
       </tags>
   </entry>
   <entry>
+    <title>String类的创建和拼接</title>
+    <url>/2020/12/22/String%E7%B1%BB%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E6%8B%BC%E6%8E%A5/</url>
+    <content><![CDATA[<h3 id="String类：字符串"><a href="#String类：字符串" class="headerlink" title="String类：字符串"></a><strong>String类：字符串</strong></h3><a id="more"></a>
+
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222113310973.png" alt="image-20201222113310973"></p>
+<ul>
+<li><p>String是一个final类，代表<strong>不可变</strong>的字符序列；</p>
+</li>
+<li><p>字符串是常量，用双引号引起来表示，它们的值在创建之后不能更改；</p>
+</li>
+<li><p>String对象的字符内容是存储在一个字符数组value[]中的；</p>
+</li>
+<li><p>String实现了Serializable接口：表示字符串支持序列化；</p>
+</li>
+<li><p>String实现了Comparable接口：表示可以比较大小；</p>
+</li>
+<li><p>String实现了CharSequence接口</p>
+</li>
+</ul>
+<p><strong>注：</strong></p>
+<p>通过<strong>字面量的方式</strong>给一个字符串赋值，此时的字符串值声明在<strong>字符串常量池</strong>中。</p>
+<p>字符串常量池中是<strong>不会存储相同内容的字符串</strong>。</p>
+<p><strong>不可变性：</strong></p>
+<ul>
+<li>当前字符串重新赋值时，需要重写指定内存区域赋值，不能使用原有的value进行赋值；</li>
+<li>当对现有的字符串进行连接操作时，也需要重新指定内存区域赋值，不能在原有的value进行赋值；</li>
+<li>当调用String的replace方法修改指定的字符或者字符串时，也需要重新指定内存区域赋值，不能在原有的value进行赋值。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest1</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;abc&quot;</span>;<span class="comment">//字面量</span></span><br><span class="line">        String s2 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        s1 = <span class="string">&quot;hi&quot;</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(s1);</span><br><span class="line">        System.out.println(s2);</span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        String s3 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        s3 += <span class="string">&quot;def&quot;</span>;</span><br><span class="line">        System.out.println(s3);</span><br><span class="line">        System.out.println(s3 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        String s4 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        String s5 = s4.replace(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;m&#x27;</span>);</span><br><span class="line">        System.out.println(s4);</span><br><span class="line">        System.out.println(s5);</span><br><span class="line">        System.out.println(s5 == s4);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="keyword">true</span></span><br><span class="line">#####################</span><br><span class="line">hi</span><br><span class="line">abc</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br><span class="line">abcdef</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br><span class="line">abc</span><br><span class="line">mbc</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br></pre></td></tr></table></figure>
+<h3 id="String对象的创建："><a href="#String对象的创建：" class="headerlink" title="String对象的创建："></a>String对象的创建：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>两种创建方式的区别：</strong></p>
+<p>String s1 = “abc”;//声明在方法区的字符串常量池中。</p>
+<p>String s2 = new String(“abc”);//此时保存的地址值，是数据在堆空间中开辟空间以后对应的地址值。</p>
+<p>s1 == s2;//false</p>
+<p><strong>两种创建方式的联系：</strong></p>
+<p>s1保存的地址是在字符串常量池中创建的字符串地址，s2保存的地址是在堆中开辟空间以后对应的地址值，但是String的本质是字符数组，所以在堆中的字符数组所保存的地址是和s1保存的地址值相同的，均是常量池里的那个地址。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222155242960.png" alt="image-20201222155242960"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        String s2 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line"></span><br><span class="line">        String s3 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line">        String s4 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(s1 == s3);</span><br><span class="line">        System.out.println(s3 == s4);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;#########################################################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Person p1 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">45</span>);</span><br><span class="line">        Person p2 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">45</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(p1.name.equals(p2.name));<span class="comment">//true</span></span><br><span class="line">        System.out.println(p1.name == p2.name);<span class="comment">//true</span></span><br><span class="line">        System.out.println(p1 == p2);<span class="comment">//false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>问：</strong>String s = new String(“abc”);这种方式创造对象，在内存中创建了几个对象？</p>
+<p><strong>答：</strong>2个。1个是堆空间的new结构，另1个是char[]对应的常量池中的数据：“abc”。</p>
+<h3 id="String类中不同的拼接方式："><a href="#String类中不同的拼接方式：" class="headerlink" title="String类中不同的拼接方式："></a>String类中不同的拼接方式：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">        String s2 = <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s3 = <span class="string">&quot;helloworld&quot;</span>;</span><br><span class="line">        String s4 = <span class="string">&quot;hello&quot;</span> + <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s5 = s1 + <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s6 = <span class="string">&quot;hello&quot;</span> + s2;</span><br><span class="line">        String s7 = s1 + s2;</span><br><span class="line">        String s8 = s5.intern();</span><br><span class="line"></span><br><span class="line">        System.out.println(s3 == s4);<span class="comment">//true</span></span><br><span class="line">        System.out.println(s3 == s5);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s3 == s6);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s3 == s7);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s5 == s6);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s5 == s7);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s6 == s7);<span class="comment">//false</span></span><br><span class="line"></span><br><span class="line">        System.out.println(s3 == s8);<span class="comment">//true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>常量和常量的拼接结果在常量池，并且常量池中不会存在相同内容的常量；</li>
+<li>只要其中有一个是变量，结果就在堆中；</li>
+<li>如果拼接的结果调用intern()方法，返回值就在常量池中。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>反射</title>
     <url>/2021/01/15/%E5%8F%8D%E5%B0%84/</url>
     <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><ul>
@@ -404,55 +464,23 @@
       </tags>
   </entry>
   <entry>
-    <title>String类的创建和拼接</title>
-    <url>/2020/12/22/String%E7%B1%BB%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E6%8B%BC%E6%8E%A5/</url>
-    <content><![CDATA[<h3 id="String类：字符串"><a href="#String类：字符串" class="headerlink" title="String类：字符串"></a><strong>String类：字符串</strong></h3><a id="more"></a>
+    <title>字符串反转</title>
+    <url>/2020/12/24/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%8D%E8%BD%AC/</url>
+    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
+<a id="more"></a>
 
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222113310973.png" alt="image-20201222113310973"></p>
-<ul>
-<li><p>String是一个final类，代表<strong>不可变</strong>的字符序列；</p>
-</li>
-<li><p>字符串是常量，用双引号引起来表示，它们的值在创建之后不能更改；</p>
-</li>
-<li><p>String对象的字符内容是存储在一个字符数组value[]中的；</p>
-</li>
-<li><p>String实现了Serializable接口：表示字符串支持序列化；</p>
-</li>
-<li><p>String实现了Comparable接口：表示可以比较大小；</p>
-</li>
-<li><p>String实现了CharSequence接口</p>
-</li>
-</ul>
-<p><strong>注：</strong></p>
-<p>通过<strong>字面量的方式</strong>给一个字符串赋值，此时的字符串值声明在<strong>字符串常量池</strong>中。</p>
-<p>字符串常量池中是<strong>不会存储相同内容的字符串</strong>。</p>
-<p><strong>不可变性：</strong></p>
-<ul>
-<li>当前字符串重新赋值时，需要重写指定内存区域赋值，不能使用原有的value进行赋值；</li>
-<li>当对现有的字符串进行连接操作时，也需要重新指定内存区域赋值，不能在原有的value进行赋值；</li>
-<li>当调用String的replace方法修改指定的字符或者字符串时，也需要重新指定内存区域赋值，不能在原有的value进行赋值。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest1</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;abc&quot;</span>;<span class="comment">//字面量</span></span><br><span class="line">        String s2 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        s1 = <span class="string">&quot;hi&quot;</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(s1);</span><br><span class="line">        System.out.println(s2);</span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        String s3 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        s3 += <span class="string">&quot;def&quot;</span>;</span><br><span class="line">        System.out.println(s3);</span><br><span class="line">        System.out.println(s3 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        String s4 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        String s5 = s4.replace(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;m&#x27;</span>);</span><br><span class="line">        System.out.println(s4);</span><br><span class="line">        System.out.println(s5);</span><br><span class="line">        System.out.println(s5 == s4);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>结果：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="keyword">true</span></span><br><span class="line">#####################</span><br><span class="line">hi</span><br><span class="line">abc</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br><span class="line">abcdef</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br><span class="line">abc</span><br><span class="line">mbc</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br></pre></td></tr></table></figure>
-<h3 id="String对象的创建："><a href="#String对象的创建：" class="headerlink" title="String对象的创建："></a>String对象的创建：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br></pre></td></tr></table></figure>
-<p><strong>两种创建方式的区别：</strong></p>
-<p>String s1 = “abc”;//声明在方法区的字符串常量池中。</p>
-<p>String s2 = new String(“abc”);//此时保存的地址值，是数据在堆空间中开辟空间以后对应的地址值。</p>
-<p>s1 == s2;//false</p>
-<p><strong>两种创建方式的联系：</strong></p>
-<p>s1保存的地址是在字符串常量池中创建的字符串地址，s2保存的地址是在堆中开辟空间以后对应的地址值，但是String的本质是字符数组，所以在堆中的字符数组所保存的地址是和s1保存的地址值相同的，均是常量池里的那个地址。</p>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222155242960.png" alt="image-20201222155242960"></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        String s2 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line"></span><br><span class="line">        String s3 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line">        String s4 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(s1 == s3);</span><br><span class="line">        System.out.println(s3 == s4);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;#########################################################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Person p1 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">45</span>);</span><br><span class="line">        Person p2 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">45</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(p1.name.equals(p2.name));<span class="comment">//true</span></span><br><span class="line">        System.out.println(p1.name == p2.name);<span class="comment">//true</span></span><br><span class="line">        System.out.println(p1 == p2);<span class="comment">//false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>问：</strong>String s = new String(“abc”);这种方式创造对象，在内存中创建了几个对象？</p>
-<p><strong>答：</strong>2个。1个是堆空间的new结构，另1个是char[]对应的常量池中的数据：“abc”。</p>
-<h3 id="String类中不同的拼接方式："><a href="#String类中不同的拼接方式：" class="headerlink" title="String类中不同的拼接方式："></a>String类中不同的拼接方式：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">        String s2 = <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s3 = <span class="string">&quot;helloworld&quot;</span>;</span><br><span class="line">        String s4 = <span class="string">&quot;hello&quot;</span> + <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s5 = s1 + <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s6 = <span class="string">&quot;hello&quot;</span> + s2;</span><br><span class="line">        String s7 = s1 + s2;</span><br><span class="line">        String s8 = s5.intern();</span><br><span class="line"></span><br><span class="line">        System.out.println(s3 == s4);<span class="comment">//true</span></span><br><span class="line">        System.out.println(s3 == s5);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s3 == s6);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s3 == s7);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s5 == s6);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s5 == s7);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s6 == s7);<span class="comment">//false</span></span><br><span class="line"></span><br><span class="line">        System.out.println(s3 == s8);<span class="comment">//true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>常量和常量的拼接结果在常量池，并且常量池中不会存在相同内容的常量；</li>
-<li>只要其中有一个是变量，结果就在堆中；</li>
-<li>如果拼接的结果调用intern()方法，返回值就在常量池中。</li>
-</ul>
+<p><strong>解法一：转换为char[]</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>①将字符串转换为char[]类型；</p>
+<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
+<p>③将不需要反转的头和尾再按顺序加上。</p>
+<p><strong>解法二：使用String的拼接</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
+<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
 ]]></content>
       <categories>
         <category>Java</category>
@@ -461,6 +489,7 @@
       </categories>
       <tags>
         <tag>Java</tag>
+        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -596,35 +625,6 @@
       </categories>
       <tags>
         <tag>字符集</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符串反转</title>
-    <url>/2020/12/24/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%8D%E8%BD%AC/</url>
-    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
-<a id="more"></a>
-
-<p><strong>解法一：转换为char[]</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>①将字符串转换为char[]类型；</p>
-<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
-<p>③将不需要反转的头和尾再按顺序加上。</p>
-<p><strong>解法二：使用String的拼接</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
-<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -792,6 +792,134 @@
       </tags>
   </entry>
   <entry>
+    <title>死锁</title>
+    <url>/2020/12/22/%E6%AD%BB%E9%94%81/</url>
+    <content><![CDATA[<h1 id="死锁的定义"><a href="#死锁的定义" class="headerlink" title="死锁的定义"></a><strong>死锁的定义</strong></h1><p>多线程以及多进程改善了系统资源的利用率并提高了系统 的处理能力。然而，并发执行也带来了新的问题——死锁。所谓死锁是指多个线程因竞争资源而造成的一种僵局（互相等待），若无外力作用，这些进程都将无法向前推进。</p>
+<a id="more"></a>
+
+<h1 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a><strong>死锁产生的原因</strong></h1><p><strong>1.系统资源的竞争</strong></p>
+<p>通常系统中拥有的不可剥夺资源，其数量不足以满足多个进程运行的需要，使得进程在运行过程中，会因争夺资源而陷入僵局，如磁带机、打印机等。只有对不可剥夺资源的竞争才可能产生死锁，对可剥夺资源的竞争是不会引起死锁的。</p>
+<p><strong>2.进程推进顺序非法</strong></p>
+<p>Java中死锁最简单的情况是，一个线程T1持有锁L1并且申请获得锁L2，而另一个线程T2持有锁L2并且申请获得锁L1，因为默认的锁申请操作都是阻塞的，所以线程T1和T2永远被阻塞了。导致了死锁。</p>
+<p>总而言之，产生死锁可能性的最根本原因是：<strong>线程在获得一个锁L1的情况下再去申请另外一个锁L2，也就是锁L1想要包含了锁L2，也就是说在获得了锁L1，并且没有释放锁L1的情况下，又去申请获得锁L2，这个是产生死锁的最根本原因</strong>。另一个原因是<strong>默认的锁申请操作是阻塞的</strong>。</p>
+<h1 id="死锁产生的必要条件"><a href="#死锁产生的必要条件" class="headerlink" title="死锁产生的必要条件"></a><strong>死锁产生的必要条件</strong></h1><p><strong>1.互斥条件</strong>：一个资源每次只能被一个线程使用。此时若有其他进程请求该资源，则请求进程只能等待。</p>
+<p><strong>2.不剥夺条件：</strong>进程所获得的资源在未使用完毕之前，不能被其他进程强行夺走，即只能由获得该资源的进程自己来释放（只能是主动释放)。</p>
+<p><strong>3.请求和保持条件</strong>：进程已经保持了至少一个资源，但又提出了新的资源请求，而该资源已被其他进程占有，此时请求进程被阻塞，但对自己已获得的资源保持不放。</p>
+<p><strong>4.循环等待条件：</strong>若干进程之间形成一种头尾相接的循环等待资源关系。</p>
+<p>注：循环等待条件和死锁的区别</p>
+<p>循环等待条件是存在一种进程资源的循环等待链，链中每一个进程已获得的资源同时被链中下一个进程所请求。即存在一个处于等待状态的进程集合{Pl, P2, …, pn}，其中Pi等 待的资源被P(i+1)占有（i=0, 1, …, n-1)，Pn等待的资源被P0占有。</p>
+<p>直观上看，循环等待条件似乎和死锁的定义一样，其实不然。按死锁定义构成等待环所 要求的条件更严，它要求Pi等待的资源必须由P(i+1)来满足，而循环等待条件则无此限制。 例如，系统中有两台输出设备，P0占有一台，PK占有另一台，且K不属于集合{0, 1, …, n}。</p>
+<p> Pn等待一台输出设备，它可以从P0获得，也可能从PK获得。因此，虽然Pn、P0和其他 一些进程形成了循环等待圈，但PK不在圈内，若PK释放了输出设备，则可打破循环等待。因此循环等待只是死锁的必要条件。</p>
+<p>总的来说，<strong>死锁要求当前进程只能从循环链的下一个来满足，而循环等待条件是可以从循环链下一个来获取，也可以从其他途径获得。</strong></p>
+<h1 id="死锁的实例"><a href="#死锁的实例" class="headerlink" title="死锁的实例"></a>死锁的实例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLockTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Object lock1 = <span class="keyword">new</span> Object();</span><br><span class="line">        Object lock2 = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1, want lock2&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">100</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1 and lock2&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2, want lock1&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2 and lock1&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread-0 got lock1, want lock2</span><br><span class="line">Thread-1 got lock2, want lock1</span><br></pre></td></tr></table></figure>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h1 id="如何避免死锁"><a href="#如何避免死锁" class="headerlink" title="如何避免死锁"></a><strong>如何避免死锁</strong></h1><p>死锁是由四个必要条件导致的，所以一般来说，只要破坏这四个必要条件中的一个条件，死锁情况就应该不会发生。</p>
+<ul>
+<li>加锁顺序（线程按照一定的顺序加锁）</li>
+<li>加锁时限（线程尝试获取锁的时候加上一定的时限，超过时限则放弃对该锁的请求，并释放自己占有的锁）</li>
+<li>死锁检测</li>
+</ul>
+<h2 id="1-加锁顺序"><a href="#1-加锁顺序" class="headerlink" title="1.加锁顺序"></a>1.加锁顺序</h2><p>当多个线程需要相同的一些锁，但是按照不同的顺序加锁，死锁就很容易发生。如果能确保所有的线程都是按照相同的顺序获得锁，那么死锁就不会发生。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread 1:</span><br><span class="line">  lock A </span><br><span class="line">  lock B</span><br><span class="line"></span><br><span class="line">Thread 2:</span><br><span class="line">   wait for A</span><br><span class="line">   lock C (when A locked)</span><br><span class="line"></span><br><span class="line">Thread 3:</span><br><span class="line">   wait for A</span><br><span class="line">   wait for B</span><br><span class="line">   wait for C</span><br></pre></td></tr></table></figure>
+<p>如果一个线程（比如线程3）需要一些锁，那么它必须按照确定的顺序获取锁。它只有获得了从顺序上排在前面的锁之后，才能获取后面的锁。</p>
+<p>例如，线程2和线程3只有在获取了锁A之后才能尝试获取锁C(<em>获取锁A是获取锁C的必要条件</em>)。因为线程1已经拥有了锁A，所以线程2和3需要一直等到锁A被释放。然后在它们尝试对B或C加锁之前，必须成功地对A加了锁。</p>
+<p>按照顺序加锁是一种有效的死锁预防机制。但是，这种方式需要你事先知道所有可能会用到的锁(<em>并对这些锁做适当的排序</em>)，但总有些时候是无法预知的。</p>
+<h2 id="2-加锁时限"><a href="#2-加锁时限" class="headerlink" title="2.加锁时限"></a>2.加锁时限</h2><p>另外一个可以避免死锁的方法是在尝试获取锁的时候加一个超时时间，这也就意味着在尝试获取锁的过程中若超过了这个时限该线程则放弃对该锁请求。若一个线程没有在给定的时限内成功获得所有需要的锁，则会进行回退并释放所有已经获得的锁，然后等待一段随机的时间再重试。这段随机的等待时间让其它线程有机会尝试获取相同的这些锁，并且让该应用在没有获得锁的时候可以继续运行(<em>加锁超时后可以先继续运行干点其它事情，再回头来重复之前加锁的逻辑</em>)。</p>
+<p>这种机制存在一个问题，在Java中不能对synchronized同步块设置超时时间。你需要创建一个自定义锁，或使用Java5中java.util.concurrent包下的工具。</p>
+<h2 id="3-死锁检测"><a href="#3-死锁检测" class="headerlink" title="3.死锁检测"></a><strong>3.死锁检测</strong></h2><p>死锁检测是一个更好的死锁预防机制，它主要是针对那些不可能实现按序加锁并且锁超时也不可行的场景。</p>
+<p>每当一个线程获得了锁，会在线程和锁相关的数据结构中（map、graph等等）将其记下。除此之外，每当有线程请求锁，也需要记录在这个数据结构中。当一个线程请求锁失败时，这个线程可以遍历锁的关系图看看是否有死锁发生。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>注解</title>
+    <url>/2020/12/30/%E6%B3%A8%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
+<li>JDK5.0开始引入的一种注释机制。</li>
+<li>代码中的特殊标记，这些标记可以在编译，类加载，运行时被读取，并执行相应的处理。通过使用Annotation，可以在不改变原有罗技的情况下，在源文件中嵌入一些补充信息。</li>
+<li>Annotation可以像修饰符一样被使用，可用于修饰包，类，构造器，方法，成员变量，参数，局部变量的声明。</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="常用Annotation示例"><a href="#常用Annotation示例" class="headerlink" title="常用Annotation示例"></a>常用Annotation示例</h1><ul>
+<li><strong>@Override：</strong>限定重写父类方法，该注解<strong>只能用于方法</strong>；</li>
+<li><strong>@Deprecated：</strong>用于表示所修饰的元素（类、方法等）已过时。通常是因为所修饰的结构危险或存在更好的选择；</li>
+<li><strong>@SuppressWarnings：</strong>抑制编译器警告。</li>
+</ul>
+<h2 id="Override使用"><a href="#Override使用" class="headerlink" title="@Override使用"></a>@Override使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">annotationTest1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Person p = <span class="keyword">new</span> Person(<span class="string">&quot;Lena&quot;</span>,<span class="number">15</span>);</span><br><span class="line">        p.walk();</span><br><span class="line">        Student s = <span class="keyword">new</span> Student(<span class="string">&quot;Cindy&quot;</span>,<span class="number">12</span>);</span><br><span class="line">        s.walk();</span><br><span class="line">        s.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人吃饭&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;学生走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;22222&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">人走路</span><br><span class="line">学生走路</span><br><span class="line"><span class="number">22222</span></span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong>如果去掉@Override，则编译的时候不会报错。</p>
+<h2 id="Deprecated使用"><a href="#Deprecated使用" class="headerlink" title="@Deprecated使用"></a>@Deprecated使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java.util.Date date = <span class="keyword">new</span> java.util.Date(<span class="number">1992</span>,<span class="number">12</span>,<span class="number">5</span>);<span class="comment">//已过时，但是可以使用</span></span><br><span class="line">System.out.println(date);<span class="comment">//Thu Jan 05 00:00:00 CST 3893</span></span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong>过时还能够使用。</p>
+<h2 id="SuppressWarnings使用"><a href="#SuppressWarnings使用" class="headerlink" title="@SuppressWarnings使用"></a>@SuppressWarnings使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings(&quot;unused&quot;)</span></span><br><span class="line"><span class="keyword">int</span> num = <span class="number">9</span>;</span><br></pre></td></tr></table></figure>
+<p>指示编译器去忽略注解中声明的警告。声明了一个新的变量int，如果没有使用，在IDEA中会显示灰色。使用@SuppressWarnings(“unused”)之后变成正常黑色。</p>
+<p>未注解：</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205621901.png" alt="image-20201230205621901"></p>
+<p>注解后：</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205638577.png" alt="image-20201230205638577"></p>
+<h1 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h1><ul>
+<li>自定义新的注解类型使用@interface关键字。</li>
+<li>自定义注解自动继承了java.lang.annotation.Annotation接口。</li>
+<li>Annotation的成员变量在Annotation定义中以无参数方法的形式来声明。其方法名和返回值定义了该成员的名字和类型，称之为配置参数。类型只能是8种基本数据类型、String类型、enum类型、Annotation类型、以上所有类型的数组。</li>
+<li>只有一个成员变量时，建议使用value。</li>
+<li>可以指定成员的默认值，使用default定义。</li>
+<li>如果自定义的注解没有成员，表明是一个<strong>标识作用</strong>。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(value = &quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(&quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
+<p>或者可以指定成员的默认值，使用default定义</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &quot;hi&quot;</span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation()</span><span class="comment">//使用默认值</span></span><br></pre></td></tr></table></figure>
+<h1 id="JDK提供的4种元注解"><a href="#JDK提供的4种元注解" class="headerlink" title="JDK提供的4种元注解"></a>JDK提供的4种元注解</h1><ul>
+<li>JDK中的元Annotation用于修饰其他Annotation定义</li>
+<li>JDK5.0提供了4个元注解：@Retention、@Documented、@Target、@Inherited</li>
+</ul>
+<h2 id="4个元注解的解释说明"><a href="#4个元注解的解释说明" class="headerlink" title="4个元注解的解释说明"></a>4个元注解的解释说明</h2><h3 id="Retention："><a href="#Retention：" class="headerlink" title="@Retention："></a><strong>@Retention：</strong></h3><p>标识这个注解怎么保存，是只在代码中，还是编入class文件中，或者是在运行时可以通过反射访问。</p>
+<p>有3种状态：</p>
+<ul>
+<li><strong>SOURCE</strong>：Annotations are to be discarded by the compiler.</li>
+<li><strong>CLASS：**</strong>默认保存状态**。Annotations are to be recorded in the class file by the compiler but need not be retained by the VM at run time.  This is the default behavior.</li>
+<li><strong>RUNTIME：只有声明为RUNTIME的注解才能通过反射获取</strong>。Annotations are to be recorded in the class file by the compiler and retained by the VM at run time, so they may be read reflectively.</li>
+</ul>
+<h3 id="Target："><a href="#Target：" class="headerlink" title="@Target："></a><strong>@Target：</strong></h3><p>用于指定被修饰的Annotation能用于修饰哪些程序元素。@Target也有一个成员变量。</p>
+<ul>
+<li><strong>TYPE：</strong>接口、类、枚举、注解</li>
+<li><strong>FIELD：</strong>字段、枚举的常量</li>
+<li><strong>METHOD：</strong>方法</li>
+<li><strong>PARAMETER：</strong>方法参数</li>
+<li><strong>CONSTRUCTOR：</strong>构造器</li>
+<li><strong>LOCAL_VARIABLE：</strong>局部变量</li>
+<li><strong>ANNOTATION_TYPE：</strong>注解</li>
+<li><strong>PACKAGE：</strong>包</li>
+</ul>
+<p><strong>注：</strong>以上两个使用较多</p>
+<h3 id="Documented："><a href="#Documented：" class="headerlink" title="@Documented："></a><strong>@Documented：</strong></h3><p>表示所修饰的注解在被javadoc解析时，是否包含在javadoc（用户文档）中。</p>
+<h3 id="Inherited："><a href="#Inherited：" class="headerlink" title="@Inherited："></a><strong>@Inherited：</strong></h3><p>被修饰的Annotation将具有继承性。如果某个类使用了被@Inherited修饰的Annotation，则其子类将自动具有该注释。</p>
+<h1 id="通过反射获取注解信息"><a href="#通过反射获取注解信息" class="headerlink" title="通过反射获取注解信息"></a>通过反射获取注解信息</h1><p>后续补充</p>
+<h1 id="JDK8种注解的新特性"><a href="#JDK8种注解的新特性" class="headerlink" title="JDK8种注解的新特性"></a>JDK8种注解的新特性</h1><h2 id="可重复注解"><a href="#可重复注解" class="headerlink" title="可重复注解"></a>可重复注解</h2><h2 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h2>]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>注解</category>
+      </categories>
+      <tags>
+        <tag>注解</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>泛型</title>
     <url>/2021/01/08/%E6%B3%9B%E5%9E%8B/</url>
     <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><a id="more"></a>
@@ -881,56 +1009,6 @@
       </tags>
   </entry>
   <entry>
-    <title>死锁</title>
-    <url>/2020/12/22/%E6%AD%BB%E9%94%81/</url>
-    <content><![CDATA[<h1 id="死锁的定义"><a href="#死锁的定义" class="headerlink" title="死锁的定义"></a><strong>死锁的定义</strong></h1><p>多线程以及多进程改善了系统资源的利用率并提高了系统 的处理能力。然而，并发执行也带来了新的问题——死锁。所谓死锁是指多个线程因竞争资源而造成的一种僵局（互相等待），若无外力作用，这些进程都将无法向前推进。</p>
-<a id="more"></a>
-
-<h1 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a><strong>死锁产生的原因</strong></h1><p><strong>1.系统资源的竞争</strong></p>
-<p>通常系统中拥有的不可剥夺资源，其数量不足以满足多个进程运行的需要，使得进程在运行过程中，会因争夺资源而陷入僵局，如磁带机、打印机等。只有对不可剥夺资源的竞争才可能产生死锁，对可剥夺资源的竞争是不会引起死锁的。</p>
-<p><strong>2.进程推进顺序非法</strong></p>
-<p>Java中死锁最简单的情况是，一个线程T1持有锁L1并且申请获得锁L2，而另一个线程T2持有锁L2并且申请获得锁L1，因为默认的锁申请操作都是阻塞的，所以线程T1和T2永远被阻塞了。导致了死锁。</p>
-<p>总而言之，产生死锁可能性的最根本原因是：<strong>线程在获得一个锁L1的情况下再去申请另外一个锁L2，也就是锁L1想要包含了锁L2，也就是说在获得了锁L1，并且没有释放锁L1的情况下，又去申请获得锁L2，这个是产生死锁的最根本原因</strong>。另一个原因是<strong>默认的锁申请操作是阻塞的</strong>。</p>
-<h1 id="死锁产生的必要条件"><a href="#死锁产生的必要条件" class="headerlink" title="死锁产生的必要条件"></a><strong>死锁产生的必要条件</strong></h1><p><strong>1.互斥条件</strong>：一个资源每次只能被一个线程使用。此时若有其他进程请求该资源，则请求进程只能等待。</p>
-<p><strong>2.不剥夺条件：</strong>进程所获得的资源在未使用完毕之前，不能被其他进程强行夺走，即只能由获得该资源的进程自己来释放（只能是主动释放)。</p>
-<p><strong>3.请求和保持条件</strong>：进程已经保持了至少一个资源，但又提出了新的资源请求，而该资源已被其他进程占有，此时请求进程被阻塞，但对自己已获得的资源保持不放。</p>
-<p><strong>4.循环等待条件：</strong>若干进程之间形成一种头尾相接的循环等待资源关系。</p>
-<p>注：循环等待条件和死锁的区别</p>
-<p>循环等待条件是存在一种进程资源的循环等待链，链中每一个进程已获得的资源同时被链中下一个进程所请求。即存在一个处于等待状态的进程集合{Pl, P2, …, pn}，其中Pi等 待的资源被P(i+1)占有（i=0, 1, …, n-1)，Pn等待的资源被P0占有。</p>
-<p>直观上看，循环等待条件似乎和死锁的定义一样，其实不然。按死锁定义构成等待环所 要求的条件更严，它要求Pi等待的资源必须由P(i+1)来满足，而循环等待条件则无此限制。 例如，系统中有两台输出设备，P0占有一台，PK占有另一台，且K不属于集合{0, 1, …, n}。</p>
-<p> Pn等待一台输出设备，它可以从P0获得，也可能从PK获得。因此，虽然Pn、P0和其他 一些进程形成了循环等待圈，但PK不在圈内，若PK释放了输出设备，则可打破循环等待。因此循环等待只是死锁的必要条件。</p>
-<p>总的来说，<strong>死锁要求当前进程只能从循环链的下一个来满足，而循环等待条件是可以从循环链下一个来获取，也可以从其他途径获得。</strong></p>
-<h1 id="死锁的实例"><a href="#死锁的实例" class="headerlink" title="死锁的实例"></a>死锁的实例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLockTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Object lock1 = <span class="keyword">new</span> Object();</span><br><span class="line">        Object lock2 = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1, want lock2&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">100</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1 and lock2&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2, want lock1&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2 and lock1&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
-<p>结果：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread-0 got lock1, want lock2</span><br><span class="line">Thread-1 got lock2, want lock1</span><br></pre></td></tr></table></figure>
-<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
-<h1 id="如何避免死锁"><a href="#如何避免死锁" class="headerlink" title="如何避免死锁"></a><strong>如何避免死锁</strong></h1><p>死锁是由四个必要条件导致的，所以一般来说，只要破坏这四个必要条件中的一个条件，死锁情况就应该不会发生。</p>
-<ul>
-<li>加锁顺序（线程按照一定的顺序加锁）</li>
-<li>加锁时限（线程尝试获取锁的时候加上一定的时限，超过时限则放弃对该锁的请求，并释放自己占有的锁）</li>
-<li>死锁检测</li>
-</ul>
-<h2 id="1-加锁顺序"><a href="#1-加锁顺序" class="headerlink" title="1.加锁顺序"></a>1.加锁顺序</h2><p>当多个线程需要相同的一些锁，但是按照不同的顺序加锁，死锁就很容易发生。如果能确保所有的线程都是按照相同的顺序获得锁，那么死锁就不会发生。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread 1:</span><br><span class="line">  lock A </span><br><span class="line">  lock B</span><br><span class="line"></span><br><span class="line">Thread 2:</span><br><span class="line">   wait for A</span><br><span class="line">   lock C (when A locked)</span><br><span class="line"></span><br><span class="line">Thread 3:</span><br><span class="line">   wait for A</span><br><span class="line">   wait for B</span><br><span class="line">   wait for C</span><br></pre></td></tr></table></figure>
-<p>如果一个线程（比如线程3）需要一些锁，那么它必须按照确定的顺序获取锁。它只有获得了从顺序上排在前面的锁之后，才能获取后面的锁。</p>
-<p>例如，线程2和线程3只有在获取了锁A之后才能尝试获取锁C(<em>获取锁A是获取锁C的必要条件</em>)。因为线程1已经拥有了锁A，所以线程2和3需要一直等到锁A被释放。然后在它们尝试对B或C加锁之前，必须成功地对A加了锁。</p>
-<p>按照顺序加锁是一种有效的死锁预防机制。但是，这种方式需要你事先知道所有可能会用到的锁(<em>并对这些锁做适当的排序</em>)，但总有些时候是无法预知的。</p>
-<h2 id="2-加锁时限"><a href="#2-加锁时限" class="headerlink" title="2.加锁时限"></a>2.加锁时限</h2><p>另外一个可以避免死锁的方法是在尝试获取锁的时候加一个超时时间，这也就意味着在尝试获取锁的过程中若超过了这个时限该线程则放弃对该锁请求。若一个线程没有在给定的时限内成功获得所有需要的锁，则会进行回退并释放所有已经获得的锁，然后等待一段随机的时间再重试。这段随机的等待时间让其它线程有机会尝试获取相同的这些锁，并且让该应用在没有获得锁的时候可以继续运行(<em>加锁超时后可以先继续运行干点其它事情，再回头来重复之前加锁的逻辑</em>)。</p>
-<p>这种机制存在一个问题，在Java中不能对synchronized同步块设置超时时间。你需要创建一个自定义锁，或使用Java5中java.util.concurrent包下的工具。</p>
-<h2 id="3-死锁检测"><a href="#3-死锁检测" class="headerlink" title="3.死锁检测"></a><strong>3.死锁检测</strong></h2><p>死锁检测是一个更好的死锁预防机制，它主要是针对那些不可能实现按序加锁并且锁超时也不可行的场景。</p>
-<p>每当一个线程获得了锁，会在线程和锁相关的数据结构中（map、graph等等）将其记下。除此之外，每当有线程请求锁，也需要记录在这个数据结构中。当一个线程请求锁失败时，这个线程可以遍历锁的关系图看看是否有死锁发生。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>线程的安全问题</title>
     <url>/2020/12/22/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<a id="more"></a>]]></content>
@@ -941,84 +1019,6 @@
       <tags>
         <tag>Java</tag>
         <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>注解</title>
-    <url>/2020/12/30/%E6%B3%A8%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
-<li>JDK5.0开始引入的一种注释机制。</li>
-<li>代码中的特殊标记，这些标记可以在编译，类加载，运行时被读取，并执行相应的处理。通过使用Annotation，可以在不改变原有罗技的情况下，在源文件中嵌入一些补充信息。</li>
-<li>Annotation可以像修饰符一样被使用，可用于修饰包，类，构造器，方法，成员变量，参数，局部变量的声明。</li>
-</ul>
-<a id="more"></a>
-
-<h1 id="常用Annotation示例"><a href="#常用Annotation示例" class="headerlink" title="常用Annotation示例"></a>常用Annotation示例</h1><ul>
-<li><strong>@Override：</strong>限定重写父类方法，该注解<strong>只能用于方法</strong>；</li>
-<li><strong>@Deprecated：</strong>用于表示所修饰的元素（类、方法等）已过时。通常是因为所修饰的结构危险或存在更好的选择；</li>
-<li><strong>@SuppressWarnings：</strong>抑制编译器警告。</li>
-</ul>
-<h2 id="Override使用"><a href="#Override使用" class="headerlink" title="@Override使用"></a>@Override使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">annotationTest1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Person p = <span class="keyword">new</span> Person(<span class="string">&quot;Lena&quot;</span>,<span class="number">15</span>);</span><br><span class="line">        p.walk();</span><br><span class="line">        Student s = <span class="keyword">new</span> Student(<span class="string">&quot;Cindy&quot;</span>,<span class="number">12</span>);</span><br><span class="line">        s.walk();</span><br><span class="line">        s.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人吃饭&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;学生走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;22222&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">人走路</span><br><span class="line">学生走路</span><br><span class="line"><span class="number">22222</span></span><br></pre></td></tr></table></figure>
-<p><strong>注：</strong>如果去掉@Override，则编译的时候不会报错。</p>
-<h2 id="Deprecated使用"><a href="#Deprecated使用" class="headerlink" title="@Deprecated使用"></a>@Deprecated使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java.util.Date date = <span class="keyword">new</span> java.util.Date(<span class="number">1992</span>,<span class="number">12</span>,<span class="number">5</span>);<span class="comment">//已过时，但是可以使用</span></span><br><span class="line">System.out.println(date);<span class="comment">//Thu Jan 05 00:00:00 CST 3893</span></span><br></pre></td></tr></table></figure>
-<p><strong>注：</strong>过时还能够使用。</p>
-<h2 id="SuppressWarnings使用"><a href="#SuppressWarnings使用" class="headerlink" title="@SuppressWarnings使用"></a>@SuppressWarnings使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings(&quot;unused&quot;)</span></span><br><span class="line"><span class="keyword">int</span> num = <span class="number">9</span>;</span><br></pre></td></tr></table></figure>
-<p>指示编译器去忽略注解中声明的警告。声明了一个新的变量int，如果没有使用，在IDEA中会显示灰色。使用@SuppressWarnings(“unused”)之后变成正常黑色。</p>
-<p>未注解：</p>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205621901.png" alt="image-20201230205621901"></p>
-<p>注解后：</p>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205638577.png" alt="image-20201230205638577"></p>
-<h1 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h1><ul>
-<li>自定义新的注解类型使用@interface关键字。</li>
-<li>自定义注解自动继承了java.lang.annotation.Annotation接口。</li>
-<li>Annotation的成员变量在Annotation定义中以无参数方法的形式来声明。其方法名和返回值定义了该成员的名字和类型，称之为配置参数。类型只能是8种基本数据类型、String类型、enum类型、Annotation类型、以上所有类型的数组。</li>
-<li>只有一个成员变量时，建议使用value。</li>
-<li>可以指定成员的默认值，使用default定义。</li>
-<li>如果自定义的注解没有成员，表明是一个<strong>标识作用</strong>。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(value = &quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(&quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
-<p>或者可以指定成员的默认值，使用default定义</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &quot;hi&quot;</span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation()</span><span class="comment">//使用默认值</span></span><br></pre></td></tr></table></figure>
-<h1 id="JDK提供的4种元注解"><a href="#JDK提供的4种元注解" class="headerlink" title="JDK提供的4种元注解"></a>JDK提供的4种元注解</h1><ul>
-<li>JDK中的元Annotation用于修饰其他Annotation定义</li>
-<li>JDK5.0提供了4个元注解：@Retention、@Documented、@Target、@Inherited</li>
-</ul>
-<h2 id="4个元注解的解释说明"><a href="#4个元注解的解释说明" class="headerlink" title="4个元注解的解释说明"></a>4个元注解的解释说明</h2><h3 id="Retention："><a href="#Retention：" class="headerlink" title="@Retention："></a><strong>@Retention：</strong></h3><p>标识这个注解怎么保存，是只在代码中，还是编入class文件中，或者是在运行时可以通过反射访问。</p>
-<p>有3种状态：</p>
-<ul>
-<li><strong>SOURCE</strong>：Annotations are to be discarded by the compiler.</li>
-<li><strong>CLASS：**</strong>默认保存状态**。Annotations are to be recorded in the class file by the compiler but need not be retained by the VM at run time.  This is the default behavior.</li>
-<li><strong>RUNTIME：只有声明为RUNTIME的注解才能通过反射获取</strong>。Annotations are to be recorded in the class file by the compiler and retained by the VM at run time, so they may be read reflectively.</li>
-</ul>
-<h3 id="Target："><a href="#Target：" class="headerlink" title="@Target："></a><strong>@Target：</strong></h3><p>用于指定被修饰的Annotation能用于修饰哪些程序元素。@Target也有一个成员变量。</p>
-<ul>
-<li><strong>TYPE：</strong>接口、类、枚举、注解</li>
-<li><strong>FIELD：</strong>字段、枚举的常量</li>
-<li><strong>METHOD：</strong>方法</li>
-<li><strong>PARAMETER：</strong>方法参数</li>
-<li><strong>CONSTRUCTOR：</strong>构造器</li>
-<li><strong>LOCAL_VARIABLE：</strong>局部变量</li>
-<li><strong>ANNOTATION_TYPE：</strong>注解</li>
-<li><strong>PACKAGE：</strong>包</li>
-</ul>
-<p><strong>注：</strong>以上两个使用较多</p>
-<h3 id="Documented："><a href="#Documented：" class="headerlink" title="@Documented："></a><strong>@Documented：</strong></h3><p>表示所修饰的注解在被javadoc解析时，是否包含在javadoc（用户文档）中。</p>
-<h3 id="Inherited："><a href="#Inherited：" class="headerlink" title="@Inherited："></a><strong>@Inherited：</strong></h3><p>被修饰的Annotation将具有继承性。如果某个类使用了被@Inherited修饰的Annotation，则其子类将自动具有该注释。</p>
-<h1 id="通过反射获取注解信息"><a href="#通过反射获取注解信息" class="headerlink" title="通过反射获取注解信息"></a>通过反射获取注解信息</h1><p>后续补充</p>
-<h1 id="JDK8种注解的新特性"><a href="#JDK8种注解的新特性" class="headerlink" title="JDK8种注解的新特性"></a>JDK8种注解的新特性</h1><h2 id="可重复注解"><a href="#可重复注解" class="headerlink" title="可重复注解"></a>可重复注解</h2><h2 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h2>]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>注解</category>
-      </categories>
-      <tags>
-        <tag>注解</tag>
       </tags>
   </entry>
   <entry>
