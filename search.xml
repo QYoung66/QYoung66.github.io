@@ -69,54 +69,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java比较器</title>
-    <url>/p/32876.html</url>
-    <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>Java中的对象，在正常的情况下只能使用“==”、“！=”来比较地址值，而不能使用“&gt;”、“&lt;”。但是在开发过程中，我们需要对多个对象不同的属性进行排序，这就需要比较对象之间的大小。比如，淘宝搜索某商品，会呈现一个综合排序，我们可以根据销量、好评等进行再次排序。</p>
-<a id="more"></a>
-
-<h2 id="Comparable接口"><a href="#Comparable接口" class="headerlink" title="Comparable接口"></a>Comparable接口</h2><ul>
-<li>该接口对实现它的每个类的对象强加一个整体排序。这个排序被称为类的<em>自然排序</em> ，类的<code>compareTo</code>方法被称为其<em>自然比较方法</em> 。</li>
-<li>String、包装类等实现了Comparable接口，重写了compareTo(obj)方法，给出了比较两个对象大小的方法。</li>
-<li>重写compareTo(obj)方法的规则：如果当前的对象this大于形参obj，返回正整数；如果当前对象this小于形参obj，返回负整数；如果相等返回0。</li>
-<li>默认从小到大排序。</li>
-<li><a href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Collections.html#sort-java.util.List-"><code>Collections.sort</code></a> （和<a href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Arrays.html#sort-java.lang.Object:A-"><code>Arrays.sort</code></a> ）可以自动对实现此接口的对象进行列表（和数组）排序。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String[] arr1 = <span class="keyword">new</span> String[]&#123;<span class="string">&quot;pencil&quot;</span>,<span class="string">&quot;pen&quot;</span>,<span class="string">&quot;eraser&quot;</span>,<span class="string">&quot;computer&quot;</span>,<span class="string">&quot;mouse&quot;</span>,<span class="string">&quot;ipad&quot;</span>&#125;;</span><br><span class="line">    Arrays.sort(arr1);</span><br><span class="line">    System.out.println(Arrays.toString(arr1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[computer, eraser, ipad, mouse, pen, pencil]</span><br></pre></td></tr></table></figure>
-<h2 id="自定义类实现Comparable接口"><a href="#自定义类实现Comparable接口" class="headerlink" title="自定义类实现Comparable接口"></a>自定义类实现Comparable接口</h2><p>自定义类想要排序需要实现Comparable接口，重写compareTo()方法，在该方法中指明如何排序。不然会报错：java.lang.ClassCastException。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Goods</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Goods</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> price;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Goods</span><span class="params">(String name, <span class="keyword">double</span> price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrice</span><span class="params">(<span class="keyword">double</span> price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Goods o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.price &gt; o.price)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.price &lt; o.price)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.name.compareTo(o.name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GoodsTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Goods[] arr = <span class="keyword">new</span> Goods[<span class="number">5</span>];</span><br><span class="line">    arr[<span class="number">0</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;philips&quot;</span>, <span class="number">1000</span>);</span><br><span class="line">    arr[<span class="number">1</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;lenovo&quot;</span>, <span class="number">2000</span>);</span><br><span class="line">    arr[<span class="number">2</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;apple&quot;</span>, <span class="number">6000</span>);</span><br><span class="line">    arr[<span class="number">3</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;sony&quot;</span>, <span class="number">3000</span>);</span><br><span class="line">    arr[<span class="number">4</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">5000</span>);</span><br><span class="line">    System.out.println(<span class="string">&quot;排序前：&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">        System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">    &#125;</span><br><span class="line">    Arrays.sort(arr);</span><br><span class="line">    System.out.println(<span class="string">&quot;排序后：&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">        System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">排序前：</span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">apple:<span class="number">6000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">排序后：</span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">apple:<span class="number">6000.0</span></span><br></pre></td></tr></table></figure>
-<h2 id="Comparator接口"><a href="#Comparator接口" class="headerlink" title="Comparator接口"></a>Comparator接口</h2><ul>
-<li><strong>定制排序</strong>：当元素的类型没有实现java.lang.Comparable接口而又不方便修改代码，或者实现了java.lang.Comparable接口的排序规则不适合当前的操作，考虑使用Comparator接口。</li>
-<li>重写int compare(T o1, T o2)方法，比较o1和o2的大小，如果返回正整数，则o1&gt;o2；如果返回负整数，则o1&lt;o2；如果返回0，则相等。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String[] arr1 = <span class="keyword">new</span> String[]&#123;<span class="string">&quot;pencil&quot;</span>,<span class="string">&quot;pen&quot;</span>,<span class="string">&quot;eraser&quot;</span>,<span class="string">&quot;computer&quot;</span>,<span class="string">&quot;mouse&quot;</span>,<span class="string">&quot;ipad&quot;</span>&#125;;</span><br><span class="line">    Arrays.sort(arr1,</span><br><span class="line">            <span class="keyword">new</span> Comparator()&#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Object o1, Object o2)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (o1 <span class="keyword">instanceof</span> String &amp;&amp; o2 <span class="keyword">instanceof</span> String)&#123;</span><br><span class="line">                        String s1 = (String) o1;</span><br><span class="line">                        String s2 = (String) o2;</span><br><span class="line">                        <span class="keyword">return</span> -s1.compareTo(s2);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;输入类型不一致&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">    System.out.println(Arrays.toString(arr1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[pencil, pen, mouse, ipad, eraser, computer]</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Goods[] arr = <span class="keyword">new</span> Goods[<span class="number">6</span>];</span><br><span class="line">        arr[<span class="number">0</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;philips&quot;</span>, <span class="number">1000</span>);</span><br><span class="line">        arr[<span class="number">1</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;lenovo&quot;</span>, <span class="number">2000</span>);</span><br><span class="line">        arr[<span class="number">2</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;apple&quot;</span>, <span class="number">6000</span>);</span><br><span class="line">        arr[<span class="number">3</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;sony&quot;</span>, <span class="number">3000</span>);</span><br><span class="line">        arr[<span class="number">4</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">5000</span>);</span><br><span class="line">        arr[<span class="number">5</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">8000</span>);</span><br><span class="line">        Arrays.sort(arr,</span><br><span class="line">                <span class="keyword">new</span> Comparator()&#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Object o1, Object o2)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">if</span> (o1 <span class="keyword">instanceof</span> Goods &amp;&amp; o2 <span class="keyword">instanceof</span> Goods)&#123;</span><br><span class="line">                            Goods g1 = (Goods) o1;</span><br><span class="line">                            Goods g2 = (Goods) o2;</span><br><span class="line">                            <span class="keyword">if</span> (g1.getName().equals(g2.getName()))&#123;</span><br><span class="line">                                <span class="keyword">return</span> -Double.compare(g1.getPrice(),g2.getPrice());</span><br><span class="line">                            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                                <span class="keyword">return</span> g1.getName().compareTo(g2.getName());</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">            System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">apple:<span class="number">6000.0</span></span><br><span class="line">huawei:<span class="number">8000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br></pre></td></tr></table></figure>
-<h1 id="Comparable和Comparator区别和联系"><a href="#Comparable和Comparator区别和联系" class="headerlink" title="Comparable和Comparator区别和联系"></a>Comparable和Comparator区别和联系</h1><ul>
-<li>Comparable是排序接口，若一个类实现了Comparable接口，就意味着“该类支持排序”。而Comparator是比较器，我们若需要控制某个类的次序，可以建立一个“该类的比较器”来进行排序。</li>
-<li>Comparable接口的方式一旦确定，保证Comparable接口实现类的对象在任何位置都可以比较大小；Comparator接口属于临时性比较。</li>
-<li>Comparable相当于“内部比较器”，而Comparator相当于“外部比较器”。</li>
-<li>两种方法各有优劣， 用Comparable 简单， 只要实现Comparable 接口的对象直接就成为一个可以比较的对象，但是需要修改源代码。 用Comparator 的好处是不需要修改源代码， 而是另外实现一个比较器， 当某个自定义的对象需要作比较的时候，把比较器和对象一起传递过去就可以比大小了， 并且在Comparator 里面用户可以自己实现复杂的可以通用的逻辑，使其可以匹配一些比较简单的对象，那样就可以节省很多重复劳动了。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>比较器</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>比较器</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>StringBuffer和StringBuilder</title>
     <url>/p/31461.html</url>
     <content><![CDATA[<h3 id="StringBuffer、StringBuilder和String的异同？"><a href="#StringBuffer、StringBuilder和String的异同？" class="headerlink" title="StringBuffer、StringBuilder和String的异同？"></a>StringBuffer、StringBuilder和String的异同？</h3><a id="more"></a>
@@ -208,63 +160,51 @@
       </tags>
   </entry>
   <entry>
-    <title>String类的创建和拼接</title>
-    <url>/p/52765.html</url>
-    <content><![CDATA[<h3 id="String类：字符串"><a href="#String类：字符串" class="headerlink" title="String类：字符串"></a><strong>String类：字符串</strong></h3><a id="more"></a>
+    <title>Java比较器</title>
+    <url>/p/32876.html</url>
+    <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>Java中的对象，在正常的情况下只能使用“==”、“！=”来比较地址值，而不能使用“&gt;”、“&lt;”。但是在开发过程中，我们需要对多个对象不同的属性进行排序，这就需要比较对象之间的大小。比如，淘宝搜索某商品，会呈现一个综合排序，我们可以根据销量、好评等进行再次排序。</p>
+<a id="more"></a>
 
-<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222113310973.png" alt="image-20201222113310973"></p>
-<ul>
-<li><p>String是一个final类，代表<strong>不可变</strong>的字符序列；</p>
-</li>
-<li><p>字符串是常量，用双引号引起来表示，它们的值在创建之后不能更改；</p>
-</li>
-<li><p>String对象的字符内容是存储在一个字符数组value[]中的；</p>
-</li>
-<li><p>String实现了Serializable接口：表示字符串支持序列化；</p>
-</li>
-<li><p>String实现了Comparable接口：表示可以比较大小；</p>
-</li>
-<li><p>String实现了CharSequence接口</p>
-</li>
+<h2 id="Comparable接口"><a href="#Comparable接口" class="headerlink" title="Comparable接口"></a>Comparable接口</h2><ul>
+<li>该接口对实现它的每个类的对象强加一个整体排序。这个排序被称为类的<em>自然排序</em> ，类的<code>compareTo</code>方法被称为其<em>自然比较方法</em> 。</li>
+<li>String、包装类等实现了Comparable接口，重写了compareTo(obj)方法，给出了比较两个对象大小的方法。</li>
+<li>重写compareTo(obj)方法的规则：如果当前的对象this大于形参obj，返回正整数；如果当前对象this小于形参obj，返回负整数；如果相等返回0。</li>
+<li>默认从小到大排序。</li>
+<li><a href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Collections.html#sort-java.util.List-"><code>Collections.sort</code></a> （和<a href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Arrays.html#sort-java.lang.Object:A-"><code>Arrays.sort</code></a> ）可以自动对实现此接口的对象进行列表（和数组）排序。</li>
 </ul>
-<p><strong>注：</strong></p>
-<p>通过<strong>字面量的方式</strong>给一个字符串赋值，此时的字符串值声明在<strong>字符串常量池</strong>中。</p>
-<p>字符串常量池中是<strong>不会存储相同内容的字符串</strong>。</p>
-<p><strong>不可变性：</strong></p>
-<ul>
-<li>当前字符串重新赋值时，需要重写指定内存区域赋值，不能使用原有的value进行赋值；</li>
-<li>当对现有的字符串进行连接操作时，也需要重新指定内存区域赋值，不能在原有的value进行赋值；</li>
-<li>当调用String的replace方法修改指定的字符或者字符串时，也需要重新指定内存区域赋值，不能在原有的value进行赋值。</li>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String[] arr1 = <span class="keyword">new</span> String[]&#123;<span class="string">&quot;pencil&quot;</span>,<span class="string">&quot;pen&quot;</span>,<span class="string">&quot;eraser&quot;</span>,<span class="string">&quot;computer&quot;</span>,<span class="string">&quot;mouse&quot;</span>,<span class="string">&quot;ipad&quot;</span>&#125;;</span><br><span class="line">    Arrays.sort(arr1);</span><br><span class="line">    System.out.println(Arrays.toString(arr1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[computer, eraser, ipad, mouse, pen, pencil]</span><br></pre></td></tr></table></figure>
+<h2 id="自定义类实现Comparable接口"><a href="#自定义类实现Comparable接口" class="headerlink" title="自定义类实现Comparable接口"></a>自定义类实现Comparable接口</h2><p>自定义类想要排序需要实现Comparable接口，重写compareTo()方法，在该方法中指明如何排序。不然会报错：java.lang.ClassCastException。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Goods</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Goods</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> price;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Goods</span><span class="params">(String name, <span class="keyword">double</span> price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrice</span><span class="params">(<span class="keyword">double</span> price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Goods o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.price &gt; o.price)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.price &lt; o.price)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.name.compareTo(o.name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GoodsTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Goods[] arr = <span class="keyword">new</span> Goods[<span class="number">5</span>];</span><br><span class="line">    arr[<span class="number">0</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;philips&quot;</span>, <span class="number">1000</span>);</span><br><span class="line">    arr[<span class="number">1</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;lenovo&quot;</span>, <span class="number">2000</span>);</span><br><span class="line">    arr[<span class="number">2</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;apple&quot;</span>, <span class="number">6000</span>);</span><br><span class="line">    arr[<span class="number">3</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;sony&quot;</span>, <span class="number">3000</span>);</span><br><span class="line">    arr[<span class="number">4</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">5000</span>);</span><br><span class="line">    System.out.println(<span class="string">&quot;排序前：&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">        System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">    &#125;</span><br><span class="line">    Arrays.sort(arr);</span><br><span class="line">    System.out.println(<span class="string">&quot;排序后：&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">        System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">排序前：</span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">apple:<span class="number">6000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">排序后：</span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">apple:<span class="number">6000.0</span></span><br></pre></td></tr></table></figure>
+<h2 id="Comparator接口"><a href="#Comparator接口" class="headerlink" title="Comparator接口"></a>Comparator接口</h2><ul>
+<li><strong>定制排序</strong>：当元素的类型没有实现java.lang.Comparable接口而又不方便修改代码，或者实现了java.lang.Comparable接口的排序规则不适合当前的操作，考虑使用Comparator接口。</li>
+<li>重写int compare(T o1, T o2)方法，比较o1和o2的大小，如果返回正整数，则o1&gt;o2；如果返回负整数，则o1&lt;o2；如果返回0，则相等。</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest1</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;abc&quot;</span>;<span class="comment">//字面量</span></span><br><span class="line">        String s2 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        s1 = <span class="string">&quot;hi&quot;</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(s1);</span><br><span class="line">        System.out.println(s2);</span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        String s3 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        s3 += <span class="string">&quot;def&quot;</span>;</span><br><span class="line">        System.out.println(s3);</span><br><span class="line">        System.out.println(s3 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        String s4 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        String s5 = s4.replace(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;m&#x27;</span>);</span><br><span class="line">        System.out.println(s4);</span><br><span class="line">        System.out.println(s5);</span><br><span class="line">        System.out.println(s5 == s4);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>结果：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="keyword">true</span></span><br><span class="line">#####################</span><br><span class="line">hi</span><br><span class="line">abc</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br><span class="line">abcdef</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br><span class="line">abc</span><br><span class="line">mbc</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br></pre></td></tr></table></figure>
-<h3 id="String对象的创建："><a href="#String对象的创建：" class="headerlink" title="String对象的创建："></a>String对象的创建：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br></pre></td></tr></table></figure>
-<p><strong>两种创建方式的区别：</strong></p>
-<p>String s1 = “abc”;//声明在方法区的字符串常量池中。</p>
-<p>String s2 = new String(“abc”);//此时保存的地址值，是数据在堆空间中开辟空间以后对应的地址值。</p>
-<p>s1 == s2;//false</p>
-<p><strong>两种创建方式的联系：</strong></p>
-<p>s1保存的地址是在字符串常量池中创建的字符串地址，s2保存的地址是在堆中开辟空间以后对应的地址值，但是String的本质是字符数组，所以在堆中的字符数组所保存的地址是和s1保存的地址值相同的，均是常量池里的那个地址。</p>
-<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222155242960.png" alt="image-20201222155242960"></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        String s2 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line"></span><br><span class="line">        String s3 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line">        String s4 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(s1 == s3);</span><br><span class="line">        System.out.println(s3 == s4);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;#########################################################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Person p1 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">45</span>);</span><br><span class="line">        Person p2 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">45</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(p1.name.equals(p2.name));<span class="comment">//true</span></span><br><span class="line">        System.out.println(p1.name == p2.name);<span class="comment">//true</span></span><br><span class="line">        System.out.println(p1 == p2);<span class="comment">//false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>问：</strong>String s = new String(“abc”);这种方式创造对象，在内存中创建了几个对象？</p>
-<p><strong>答：</strong>2个。1个是堆空间的new结构，另1个是char[]对应的常量池中的数据：“abc”。</p>
-<h3 id="String类中不同的拼接方式："><a href="#String类中不同的拼接方式：" class="headerlink" title="String类中不同的拼接方式："></a>String类中不同的拼接方式：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">        String s2 = <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s3 = <span class="string">&quot;helloworld&quot;</span>;</span><br><span class="line">        String s4 = <span class="string">&quot;hello&quot;</span> + <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s5 = s1 + <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s6 = <span class="string">&quot;hello&quot;</span> + s2;</span><br><span class="line">        String s7 = s1 + s2;</span><br><span class="line">        String s8 = s5.intern();</span><br><span class="line"></span><br><span class="line">        System.out.println(s3 == s4);<span class="comment">//true</span></span><br><span class="line">        System.out.println(s3 == s5);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s3 == s6);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s3 == s7);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s5 == s6);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s5 == s7);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s6 == s7);<span class="comment">//false</span></span><br><span class="line"></span><br><span class="line">        System.out.println(s3 == s8);<span class="comment">//true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>常量和常量的拼接结果在常量池，并且常量池中不会存在相同内容的常量；</li>
-<li>只要其中有一个是变量，结果就在堆中；</li>
-<li>如果拼接的结果调用intern()方法，返回值就在常量池中。</li>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String[] arr1 = <span class="keyword">new</span> String[]&#123;<span class="string">&quot;pencil&quot;</span>,<span class="string">&quot;pen&quot;</span>,<span class="string">&quot;eraser&quot;</span>,<span class="string">&quot;computer&quot;</span>,<span class="string">&quot;mouse&quot;</span>,<span class="string">&quot;ipad&quot;</span>&#125;;</span><br><span class="line">    Arrays.sort(arr1,</span><br><span class="line">            <span class="keyword">new</span> Comparator()&#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Object o1, Object o2)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (o1 <span class="keyword">instanceof</span> String &amp;&amp; o2 <span class="keyword">instanceof</span> String)&#123;</span><br><span class="line">                        String s1 = (String) o1;</span><br><span class="line">                        String s2 = (String) o2;</span><br><span class="line">                        <span class="keyword">return</span> -s1.compareTo(s2);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;输入类型不一致&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">    System.out.println(Arrays.toString(arr1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[pencil, pen, mouse, ipad, eraser, computer]</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Goods[] arr = <span class="keyword">new</span> Goods[<span class="number">6</span>];</span><br><span class="line">        arr[<span class="number">0</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;philips&quot;</span>, <span class="number">1000</span>);</span><br><span class="line">        arr[<span class="number">1</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;lenovo&quot;</span>, <span class="number">2000</span>);</span><br><span class="line">        arr[<span class="number">2</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;apple&quot;</span>, <span class="number">6000</span>);</span><br><span class="line">        arr[<span class="number">3</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;sony&quot;</span>, <span class="number">3000</span>);</span><br><span class="line">        arr[<span class="number">4</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">5000</span>);</span><br><span class="line">        arr[<span class="number">5</span>] = <span class="keyword">new</span> Goods(<span class="string">&quot;huawei&quot;</span>, <span class="number">8000</span>);</span><br><span class="line">        Arrays.sort(arr,</span><br><span class="line">                <span class="keyword">new</span> Comparator()&#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Object o1, Object o2)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">if</span> (o1 <span class="keyword">instanceof</span> Goods &amp;&amp; o2 <span class="keyword">instanceof</span> Goods)&#123;</span><br><span class="line">                            Goods g1 = (Goods) o1;</span><br><span class="line">                            Goods g2 = (Goods) o2;</span><br><span class="line">                            <span class="keyword">if</span> (g1.getName().equals(g2.getName()))&#123;</span><br><span class="line">                                <span class="keyword">return</span> -Double.compare(g1.getPrice(),g2.getPrice());</span><br><span class="line">                            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                                <span class="keyword">return</span> g1.getName().compareTo(g2.getName());</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        <span class="keyword">for</span> (Goods goods: arr)&#123;</span><br><span class="line">            System.out.println(goods.getName() + <span class="string">&quot;:&quot;</span> + goods.getPrice());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">apple:<span class="number">6000.0</span></span><br><span class="line">huawei:<span class="number">8000.0</span></span><br><span class="line">huawei:<span class="number">5000.0</span></span><br><span class="line">lenovo:<span class="number">2000.0</span></span><br><span class="line">philips:<span class="number">1000.0</span></span><br><span class="line">sony:<span class="number">3000.0</span></span><br></pre></td></tr></table></figure>
+<h1 id="Comparable和Comparator区别和联系"><a href="#Comparable和Comparator区别和联系" class="headerlink" title="Comparable和Comparator区别和联系"></a>Comparable和Comparator区别和联系</h1><ul>
+<li>Comparable是排序接口，若一个类实现了Comparable接口，就意味着“该类支持排序”。而Comparator是比较器，我们若需要控制某个类的次序，可以建立一个“该类的比较器”来进行排序。</li>
+<li>Comparable接口的方式一旦确定，保证Comparable接口实现类的对象在任何位置都可以比较大小；Comparator接口属于临时性比较。</li>
+<li>Comparable相当于“内部比较器”，而Comparator相当于“外部比较器”。</li>
+<li>两种方法各有优劣， 用Comparable 简单， 只要实现Comparable 接口的对象直接就成为一个可以比较的对象，但是需要修改源代码。 用Comparator 的好处是不需要修改源代码， 而是另外实现一个比较器， 当某个自定义的对象需要作比较的时候，把比较器和对象一起传递过去就可以比大小了， 并且在Comparator 里面用户可以自己实现复杂的可以通用的逻辑，使其可以匹配一些比较简单的对象，那样就可以节省很多重复劳动了。</li>
 </ul>
 ]]></content>
       <categories>
         <category>Java</category>
         <category>Java基础</category>
-        <category>String类</category>
+        <category>比较器</category>
       </categories>
       <tags>
         <tag>Java</tag>
+        <tag>比较器</tag>
       </tags>
   </entry>
   <entry>
@@ -402,6 +342,66 @@
       <tags>
         <tag>Java</tag>
         <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>String类的创建和拼接</title>
+    <url>/p/52765.html</url>
+    <content><![CDATA[<h3 id="String类：字符串"><a href="#String类：字符串" class="headerlink" title="String类：字符串"></a><strong>String类：字符串</strong></h3><a id="more"></a>
+
+<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222113310973.png" alt="image-20201222113310973"></p>
+<ul>
+<li><p>String是一个final类，代表<strong>不可变</strong>的字符序列；</p>
+</li>
+<li><p>字符串是常量，用双引号引起来表示，它们的值在创建之后不能更改；</p>
+</li>
+<li><p>String对象的字符内容是存储在一个字符数组value[]中的；</p>
+</li>
+<li><p>String实现了Serializable接口：表示字符串支持序列化；</p>
+</li>
+<li><p>String实现了Comparable接口：表示可以比较大小；</p>
+</li>
+<li><p>String实现了CharSequence接口</p>
+</li>
+</ul>
+<p><strong>注：</strong></p>
+<p>通过<strong>字面量的方式</strong>给一个字符串赋值，此时的字符串值声明在<strong>字符串常量池</strong>中。</p>
+<p>字符串常量池中是<strong>不会存储相同内容的字符串</strong>。</p>
+<p><strong>不可变性：</strong></p>
+<ul>
+<li>当前字符串重新赋值时，需要重写指定内存区域赋值，不能使用原有的value进行赋值；</li>
+<li>当对现有的字符串进行连接操作时，也需要重新指定内存区域赋值，不能在原有的value进行赋值；</li>
+<li>当调用String的replace方法修改指定的字符或者字符串时，也需要重新指定内存区域赋值，不能在原有的value进行赋值。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest1</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;abc&quot;</span>;<span class="comment">//字面量</span></span><br><span class="line">        String s2 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        s1 = <span class="string">&quot;hi&quot;</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(s1);</span><br><span class="line">        System.out.println(s2);</span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        String s3 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        s3 += <span class="string">&quot;def&quot;</span>;</span><br><span class="line">        System.out.println(s3);</span><br><span class="line">        System.out.println(s3 == s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        String s4 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        String s5 = s4.replace(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;m&#x27;</span>);</span><br><span class="line">        System.out.println(s4);</span><br><span class="line">        System.out.println(s5);</span><br><span class="line">        System.out.println(s5 == s4);</span><br><span class="line">        System.out.println(<span class="string">&quot;#####################&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="keyword">true</span></span><br><span class="line">#####################</span><br><span class="line">hi</span><br><span class="line">abc</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br><span class="line">abcdef</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br><span class="line">abc</span><br><span class="line">mbc</span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">#####################</span><br></pre></td></tr></table></figure>
+<h3 id="String对象的创建："><a href="#String对象的创建：" class="headerlink" title="String对象的创建："></a>String对象的创建：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>两种创建方式的区别：</strong></p>
+<p>String s1 = “abc”;//声明在方法区的字符串常量池中。</p>
+<p>String s2 = new String(“abc”);//此时保存的地址值，是数据在堆空间中开辟空间以后对应的地址值。</p>
+<p>s1 == s2;//false</p>
+<p><strong>两种创建方式的联系：</strong></p>
+<p>s1保存的地址是在字符串常量池中创建的字符串地址，s2保存的地址是在堆中开辟空间以后对应的地址值，但是String的本质是字符数组，所以在堆中的字符数组所保存的地址是和s1保存的地址值相同的，均是常量池里的那个地址。</p>
+<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201222155242960.png" alt="image-20201222155242960"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        String s2 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line"></span><br><span class="line">        String s3 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line">        String s4 = <span class="keyword">new</span> String(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(s1 == s3);</span><br><span class="line">        System.out.println(s3 == s4);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;#########################################################&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Person p1 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">45</span>);</span><br><span class="line">        Person p2 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">45</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(p1.name.equals(p2.name));<span class="comment">//true</span></span><br><span class="line">        System.out.println(p1.name == p2.name);<span class="comment">//true</span></span><br><span class="line">        System.out.println(p1 == p2);<span class="comment">//false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>问：</strong>String s = new String(“abc”);这种方式创造对象，在内存中创建了几个对象？</p>
+<p><strong>答：</strong>2个。1个是堆空间的new结构，另1个是char[]对应的常量池中的数据：“abc”。</p>
+<h3 id="String类中不同的拼接方式："><a href="#String类中不同的拼接方式：" class="headerlink" title="String类中不同的拼接方式："></a>String类中不同的拼接方式：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">        String s2 = <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s3 = <span class="string">&quot;helloworld&quot;</span>;</span><br><span class="line">        String s4 = <span class="string">&quot;hello&quot;</span> + <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s5 = s1 + <span class="string">&quot;world&quot;</span>;</span><br><span class="line">        String s6 = <span class="string">&quot;hello&quot;</span> + s2;</span><br><span class="line">        String s7 = s1 + s2;</span><br><span class="line">        String s8 = s5.intern();</span><br><span class="line"></span><br><span class="line">        System.out.println(s3 == s4);<span class="comment">//true</span></span><br><span class="line">        System.out.println(s3 == s5);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s3 == s6);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s3 == s7);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s5 == s6);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s5 == s7);<span class="comment">//false</span></span><br><span class="line">        System.out.println(s6 == s7);<span class="comment">//false</span></span><br><span class="line"></span><br><span class="line">        System.out.println(s3 == s8);<span class="comment">//true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>常量和常量的拼接结果在常量池，并且常量池中不会存在相同内容的常量；</li>
+<li>只要其中有一个是变量，结果就在堆中；</li>
+<li>如果拼接的结果调用intern()方法，返回值就在常量池中。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -543,6 +543,62 @@
       </tags>
   </entry>
   <entry>
+    <title>字符集</title>
+    <url>/p/40261.html</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>我们在计算机屏幕上看到的是实体化的文字，而在计算机存储介质中存放的实际是二进制的比特流。那么在这两者之间的转换规则就需要一个统一的标准。简单的说字符集就规定了某个文字对应的二进制数字存放方式（编码）和某串二进制数值代表了哪个文字（解码）的转换关系。</p>
+<a id="more"></a> 
+
+<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><ul>
+<li><strong>ASCII：</strong>美国标准信息交换码，用一个字节的7位表示（128个）；</li>
+<li><strong>ISO8859-1：</strong>拉丁码表。欧洲码表，用一个字节的8位表示；</li>
+<li><strong>GB2312：</strong>中国的中文编码表。最多两个字节编码所有字符；</li>
+<li><strong>GBK：</strong>中国的中文编码表升级，融合了更多的中文文字符号，最多两个字节编码；</li>
+<li><strong>Unicode：</strong>国际标准码，融合了目前人类使用的所有字符，为每个字符分配唯一的字符码，所有的文字都使用两个字节来表示；</li>
+<li><strong>UTF-8：</strong>变长的国际标准码，定义了庞大的、全球通用的字符集，为每个字符规定了唯一确定的编码，可用1-4个字节来表示一个字符。</li>
+</ul>
+<h1 id="字库表、编码字符集、字符编码"><a href="#字库表、编码字符集、字符编码" class="headerlink" title="字库表、编码字符集、字符编码"></a>字库表、编码字符集、字符编码</h1><p><strong>字库表（character repertoire）</strong>：相当于所有可读或者可显示字符的数据库，字库表决定了整个字符集能够展现表示的所有字符的范围。</p>
+<p><strong>编码字符集（coded character set</strong>）：用一个编码值<code>code point</code>来表示一个字符在字库中的位置。</p>
+<p><strong>字符编码（character encoding form）</strong>：将编码字符集和实际存储数值之间的转换关系。一般来说都会直接将code point的值作为编码后的值直接存储。例如在ASCII中<code>A</code>在表中排第65位，而编码后<code>A</code>的数值是<code>0100 0001</code>也即十进制的65的二进制转换结果。</p>
+<p><code>字库表</code>和<code>编码字符集</code>看来是必不可少的，那既然字库表中的每一个字符都有一个自己的序号，直接把序号作为存储内容就好了。为什么还要多此一举通过<code>字符编码</code>把序号转换成另外一种存储格式呢？其实原因也比较容易理解：统一字库表的目的是为了能够涵盖世界上所有的字符，但实际使用过程中会发现真正用的上的字符相对整个字库表来说比例非常低。例如中文地区的程序几乎不会需要日语字符，而一些英语国家甚至简单的ASCII字库表就能满足基本需求。而如果把每个字符都用字库表中的序号来存储的话，每个字符就需要3个字节（这里以Unicode字库为例），这样对于原本用仅占一个字符的ASCII编码的英语地区国家显然是一个额外成本（存储体积是原来的三倍）。算的直接一些，同样一块硬盘，用ASCII可以存1500篇文章，而用3字节Unicode序号存储只能存500篇。于是就出现了UTF-8这样的变长编码。在UTF-8编码中原本只需要一个字节的ASCII字符，仍然只占一个字节。而像中文及日语这样的复杂字符就需要2个到3个字节来存储。</p>
+<h1 id="UTF-8和Unicode的关系"><a href="#UTF-8和Unicode的关系" class="headerlink" title="UTF-8和Unicode的关系"></a>UTF-8和Unicode的关系</h1><p>Unicode就是上文中提到的编码字符集，而UTF-8就是字符编码，即Unicode规则字库的一种实现形式。随着互联网的发展，对同一字库集的要求越来越迫切，Unicode标准也就自然而然的出现。它几乎涵盖了各个国家语言可能出现的符号和文字，并将为他们编号。Unicode的编号从0000开始一直到10FFFF共分为16个Plane，每个Plane中有65536个字符。而UTF-8则只实现了第一个Plane，可见UTF-8虽然是一个当今接受度最广的字符集编码，但是它并没有涵盖整个Unicode的字库。</p>
+<h2 id="UTF-8编码简介"><a href="#UTF-8编码简介" class="headerlink" title="UTF-8编码简介"></a>UTF-8编码简介</h2><ul>
+<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的 Unicode 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的。</li>
+<li>对于n字节的符号（n &gt; 1），第一个字节的前n位都设为1，第n + 1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的 Unicode 码。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Unicode符号范围（十六进制）</th>
+<th>UTF-8编码方式（二进制）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000 0000-0000 0007F</td>
+<td>0xxxxxxx</td>
+</tr>
+<tr>
+<td>0000 0080-0000 07FF</td>
+<td>110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0000 0800-0000 FFFF</td>
+<td>1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0001 0000-0010 FFFF</td>
+<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>IO流</category>
+      </categories>
+      <tags>
+        <tag>字符集</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>字符串反转</title>
     <url>/p/34837.html</url>
     <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
@@ -569,56 +625,6 @@
       <tags>
         <tag>Java</tag>
         <tag>String</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>死锁</title>
-    <url>/p/28384.html</url>
-    <content><![CDATA[<h1 id="死锁的定义"><a href="#死锁的定义" class="headerlink" title="死锁的定义"></a><strong>死锁的定义</strong></h1><p>多线程以及多进程改善了系统资源的利用率并提高了系统 的处理能力。然而，并发执行也带来了新的问题——死锁。所谓死锁是指多个线程因竞争资源而造成的一种僵局（互相等待），若无外力作用，这些进程都将无法向前推进。</p>
-<a id="more"></a>
-
-<h1 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a><strong>死锁产生的原因</strong></h1><p><strong>1.系统资源的竞争</strong></p>
-<p>通常系统中拥有的不可剥夺资源，其数量不足以满足多个进程运行的需要，使得进程在运行过程中，会因争夺资源而陷入僵局，如磁带机、打印机等。只有对不可剥夺资源的竞争才可能产生死锁，对可剥夺资源的竞争是不会引起死锁的。</p>
-<p><strong>2.进程推进顺序非法</strong></p>
-<p>Java中死锁最简单的情况是，一个线程T1持有锁L1并且申请获得锁L2，而另一个线程T2持有锁L2并且申请获得锁L1，因为默认的锁申请操作都是阻塞的，所以线程T1和T2永远被阻塞了。导致了死锁。</p>
-<p>总而言之，产生死锁可能性的最根本原因是：<strong>线程在获得一个锁L1的情况下再去申请另外一个锁L2，也就是锁L1想要包含了锁L2，也就是说在获得了锁L1，并且没有释放锁L1的情况下，又去申请获得锁L2，这个是产生死锁的最根本原因</strong>。另一个原因是<strong>默认的锁申请操作是阻塞的</strong>。</p>
-<h1 id="死锁产生的必要条件"><a href="#死锁产生的必要条件" class="headerlink" title="死锁产生的必要条件"></a><strong>死锁产生的必要条件</strong></h1><p><strong>1.互斥条件</strong>：一个资源每次只能被一个线程使用。此时若有其他进程请求该资源，则请求进程只能等待。</p>
-<p><strong>2.不剥夺条件：</strong>进程所获得的资源在未使用完毕之前，不能被其他进程强行夺走，即只能由获得该资源的进程自己来释放（只能是主动释放)。</p>
-<p><strong>3.请求和保持条件</strong>：进程已经保持了至少一个资源，但又提出了新的资源请求，而该资源已被其他进程占有，此时请求进程被阻塞，但对自己已获得的资源保持不放。</p>
-<p><strong>4.循环等待条件：</strong>若干进程之间形成一种头尾相接的循环等待资源关系。</p>
-<p>注：循环等待条件和死锁的区别</p>
-<p>循环等待条件是存在一种进程资源的循环等待链，链中每一个进程已获得的资源同时被链中下一个进程所请求。即存在一个处于等待状态的进程集合{Pl, P2, …, pn}，其中Pi等 待的资源被P(i+1)占有（i=0, 1, …, n-1)，Pn等待的资源被P0占有。</p>
-<p>直观上看，循环等待条件似乎和死锁的定义一样，其实不然。按死锁定义构成等待环所 要求的条件更严，它要求Pi等待的资源必须由P(i+1)来满足，而循环等待条件则无此限制。 例如，系统中有两台输出设备，P0占有一台，PK占有另一台，且K不属于集合{0, 1, …, n}。</p>
-<p> Pn等待一台输出设备，它可以从P0获得，也可能从PK获得。因此，虽然Pn、P0和其他 一些进程形成了循环等待圈，但PK不在圈内，若PK释放了输出设备，则可打破循环等待。因此循环等待只是死锁的必要条件。</p>
-<p>总的来说，<strong>死锁要求当前进程只能从循环链的下一个来满足，而循环等待条件是可以从循环链下一个来获取，也可以从其他途径获得。</strong></p>
-<h1 id="死锁的实例"><a href="#死锁的实例" class="headerlink" title="死锁的实例"></a>死锁的实例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLockTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Object lock1 = <span class="keyword">new</span> Object();</span><br><span class="line">        Object lock2 = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1, want lock2&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">100</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1 and lock2&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2, want lock1&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2 and lock1&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
-<p>结果：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread-0 got lock1, want lock2</span><br><span class="line">Thread-1 got lock2, want lock1</span><br></pre></td></tr></table></figure>
-<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
-<h1 id="如何避免死锁"><a href="#如何避免死锁" class="headerlink" title="如何避免死锁"></a><strong>如何避免死锁</strong></h1><p>死锁是由四个必要条件导致的，所以一般来说，只要破坏这四个必要条件中的一个条件，死锁情况就应该不会发生。</p>
-<ul>
-<li>加锁顺序（线程按照一定的顺序加锁）</li>
-<li>加锁时限（线程尝试获取锁的时候加上一定的时限，超过时限则放弃对该锁的请求，并释放自己占有的锁）</li>
-<li>死锁检测</li>
-</ul>
-<h2 id="1-加锁顺序"><a href="#1-加锁顺序" class="headerlink" title="1.加锁顺序"></a>1.加锁顺序</h2><p>当多个线程需要相同的一些锁，但是按照不同的顺序加锁，死锁就很容易发生。如果能确保所有的线程都是按照相同的顺序获得锁，那么死锁就不会发生。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread 1:</span><br><span class="line">  lock A </span><br><span class="line">  lock B</span><br><span class="line"></span><br><span class="line">Thread 2:</span><br><span class="line">   wait for A</span><br><span class="line">   lock C (when A locked)</span><br><span class="line"></span><br><span class="line">Thread 3:</span><br><span class="line">   wait for A</span><br><span class="line">   wait for B</span><br><span class="line">   wait for C</span><br></pre></td></tr></table></figure>
-<p>如果一个线程（比如线程3）需要一些锁，那么它必须按照确定的顺序获取锁。它只有获得了从顺序上排在前面的锁之后，才能获取后面的锁。</p>
-<p>例如，线程2和线程3只有在获取了锁A之后才能尝试获取锁C(<em>获取锁A是获取锁C的必要条件</em>)。因为线程1已经拥有了锁A，所以线程2和3需要一直等到锁A被释放。然后在它们尝试对B或C加锁之前，必须成功地对A加了锁。</p>
-<p>按照顺序加锁是一种有效的死锁预防机制。但是，这种方式需要你事先知道所有可能会用到的锁(<em>并对这些锁做适当的排序</em>)，但总有些时候是无法预知的。</p>
-<h2 id="2-加锁时限"><a href="#2-加锁时限" class="headerlink" title="2.加锁时限"></a>2.加锁时限</h2><p>另外一个可以避免死锁的方法是在尝试获取锁的时候加一个超时时间，这也就意味着在尝试获取锁的过程中若超过了这个时限该线程则放弃对该锁请求。若一个线程没有在给定的时限内成功获得所有需要的锁，则会进行回退并释放所有已经获得的锁，然后等待一段随机的时间再重试。这段随机的等待时间让其它线程有机会尝试获取相同的这些锁，并且让该应用在没有获得锁的时候可以继续运行(<em>加锁超时后可以先继续运行干点其它事情，再回头来重复之前加锁的逻辑</em>)。</p>
-<p>这种机制存在一个问题，在Java中不能对synchronized同步块设置超时时间。你需要创建一个自定义锁，或使用Java5中java.util.concurrent包下的工具。</p>
-<h2 id="3-死锁检测"><a href="#3-死锁检测" class="headerlink" title="3.死锁检测"></a><strong>3.死锁检测</strong></h2><p>死锁检测是一个更好的死锁预防机制，它主要是针对那些不可能实现按序加锁并且锁超时也不可行的场景。</p>
-<p>每当一个线程获得了锁，会在线程和锁相关的数据结构中（map、graph等等）将其记下。除此之外，每当有线程请求锁，也需要记录在这个数据结构中。当一个线程请求锁失败时，这个线程可以遍历锁的关系图看看是否有死锁发生。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -749,62 +755,6 @@
       </tags>
   </entry>
   <entry>
-    <title>字符集</title>
-    <url>/p/40261.html</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>我们在计算机屏幕上看到的是实体化的文字，而在计算机存储介质中存放的实际是二进制的比特流。那么在这两者之间的转换规则就需要一个统一的标准。简单的说字符集就规定了某个文字对应的二进制数字存放方式（编码）和某串二进制数值代表了哪个文字（解码）的转换关系。</p>
-<a id="more"></a> 
-
-<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><ul>
-<li><strong>ASCII：</strong>美国标准信息交换码，用一个字节的7位表示（128个）；</li>
-<li><strong>ISO8859-1：</strong>拉丁码表。欧洲码表，用一个字节的8位表示；</li>
-<li><strong>GB2312：</strong>中国的中文编码表。最多两个字节编码所有字符；</li>
-<li><strong>GBK：</strong>中国的中文编码表升级，融合了更多的中文文字符号，最多两个字节编码；</li>
-<li><strong>Unicode：</strong>国际标准码，融合了目前人类使用的所有字符，为每个字符分配唯一的字符码，所有的文字都使用两个字节来表示；</li>
-<li><strong>UTF-8：</strong>变长的国际标准码，定义了庞大的、全球通用的字符集，为每个字符规定了唯一确定的编码，可用1-4个字节来表示一个字符。</li>
-</ul>
-<h1 id="字库表、编码字符集、字符编码"><a href="#字库表、编码字符集、字符编码" class="headerlink" title="字库表、编码字符集、字符编码"></a>字库表、编码字符集、字符编码</h1><p><strong>字库表（character repertoire）</strong>：相当于所有可读或者可显示字符的数据库，字库表决定了整个字符集能够展现表示的所有字符的范围。</p>
-<p><strong>编码字符集（coded character set</strong>）：用一个编码值<code>code point</code>来表示一个字符在字库中的位置。</p>
-<p><strong>字符编码（character encoding form）</strong>：将编码字符集和实际存储数值之间的转换关系。一般来说都会直接将code point的值作为编码后的值直接存储。例如在ASCII中<code>A</code>在表中排第65位，而编码后<code>A</code>的数值是<code>0100 0001</code>也即十进制的65的二进制转换结果。</p>
-<p><code>字库表</code>和<code>编码字符集</code>看来是必不可少的，那既然字库表中的每一个字符都有一个自己的序号，直接把序号作为存储内容就好了。为什么还要多此一举通过<code>字符编码</code>把序号转换成另外一种存储格式呢？其实原因也比较容易理解：统一字库表的目的是为了能够涵盖世界上所有的字符，但实际使用过程中会发现真正用的上的字符相对整个字库表来说比例非常低。例如中文地区的程序几乎不会需要日语字符，而一些英语国家甚至简单的ASCII字库表就能满足基本需求。而如果把每个字符都用字库表中的序号来存储的话，每个字符就需要3个字节（这里以Unicode字库为例），这样对于原本用仅占一个字符的ASCII编码的英语地区国家显然是一个额外成本（存储体积是原来的三倍）。算的直接一些，同样一块硬盘，用ASCII可以存1500篇文章，而用3字节Unicode序号存储只能存500篇。于是就出现了UTF-8这样的变长编码。在UTF-8编码中原本只需要一个字节的ASCII字符，仍然只占一个字节。而像中文及日语这样的复杂字符就需要2个到3个字节来存储。</p>
-<h1 id="UTF-8和Unicode的关系"><a href="#UTF-8和Unicode的关系" class="headerlink" title="UTF-8和Unicode的关系"></a>UTF-8和Unicode的关系</h1><p>Unicode就是上文中提到的编码字符集，而UTF-8就是字符编码，即Unicode规则字库的一种实现形式。随着互联网的发展，对同一字库集的要求越来越迫切，Unicode标准也就自然而然的出现。它几乎涵盖了各个国家语言可能出现的符号和文字，并将为他们编号。Unicode的编号从0000开始一直到10FFFF共分为16个Plane，每个Plane中有65536个字符。而UTF-8则只实现了第一个Plane，可见UTF-8虽然是一个当今接受度最广的字符集编码，但是它并没有涵盖整个Unicode的字库。</p>
-<h2 id="UTF-8编码简介"><a href="#UTF-8编码简介" class="headerlink" title="UTF-8编码简介"></a>UTF-8编码简介</h2><ul>
-<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的 Unicode 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的。</li>
-<li>对于n字节的符号（n &gt; 1），第一个字节的前n位都设为1，第n + 1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的 Unicode 码。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Unicode符号范围（十六进制）</th>
-<th>UTF-8编码方式（二进制）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0000 0000-0000 0007F</td>
-<td>0xxxxxxx</td>
-</tr>
-<tr>
-<td>0000 0080-0000 07FF</td>
-<td>110xxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td>0000 0800-0000 FFFF</td>
-<td>1110xxxx 10xxxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td>0001 0000-0010 FFFF</td>
-<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>IO流</category>
-      </categories>
-      <tags>
-        <tag>字符集</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>枚举类</title>
     <url>/p/20039.html</url>
     <content><![CDATA[<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><ul>
@@ -839,6 +789,56 @@
       </categories>
       <tags>
         <tag>枚举类</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>死锁</title>
+    <url>/p/28384.html</url>
+    <content><![CDATA[<h1 id="死锁的定义"><a href="#死锁的定义" class="headerlink" title="死锁的定义"></a><strong>死锁的定义</strong></h1><p>多线程以及多进程改善了系统资源的利用率并提高了系统 的处理能力。然而，并发执行也带来了新的问题——死锁。所谓死锁是指多个线程因竞争资源而造成的一种僵局（互相等待），若无外力作用，这些进程都将无法向前推进。</p>
+<a id="more"></a>
+
+<h1 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a><strong>死锁产生的原因</strong></h1><p><strong>1.系统资源的竞争</strong></p>
+<p>通常系统中拥有的不可剥夺资源，其数量不足以满足多个进程运行的需要，使得进程在运行过程中，会因争夺资源而陷入僵局，如磁带机、打印机等。只有对不可剥夺资源的竞争才可能产生死锁，对可剥夺资源的竞争是不会引起死锁的。</p>
+<p><strong>2.进程推进顺序非法</strong></p>
+<p>Java中死锁最简单的情况是，一个线程T1持有锁L1并且申请获得锁L2，而另一个线程T2持有锁L2并且申请获得锁L1，因为默认的锁申请操作都是阻塞的，所以线程T1和T2永远被阻塞了。导致了死锁。</p>
+<p>总而言之，产生死锁可能性的最根本原因是：<strong>线程在获得一个锁L1的情况下再去申请另外一个锁L2，也就是锁L1想要包含了锁L2，也就是说在获得了锁L1，并且没有释放锁L1的情况下，又去申请获得锁L2，这个是产生死锁的最根本原因</strong>。另一个原因是<strong>默认的锁申请操作是阻塞的</strong>。</p>
+<h1 id="死锁产生的必要条件"><a href="#死锁产生的必要条件" class="headerlink" title="死锁产生的必要条件"></a><strong>死锁产生的必要条件</strong></h1><p><strong>1.互斥条件</strong>：一个资源每次只能被一个线程使用。此时若有其他进程请求该资源，则请求进程只能等待。</p>
+<p><strong>2.不剥夺条件：</strong>进程所获得的资源在未使用完毕之前，不能被其他进程强行夺走，即只能由获得该资源的进程自己来释放（只能是主动释放)。</p>
+<p><strong>3.请求和保持条件</strong>：进程已经保持了至少一个资源，但又提出了新的资源请求，而该资源已被其他进程占有，此时请求进程被阻塞，但对自己已获得的资源保持不放。</p>
+<p><strong>4.循环等待条件：</strong>若干进程之间形成一种头尾相接的循环等待资源关系。</p>
+<p>注：循环等待条件和死锁的区别</p>
+<p>循环等待条件是存在一种进程资源的循环等待链，链中每一个进程已获得的资源同时被链中下一个进程所请求。即存在一个处于等待状态的进程集合{Pl, P2, …, pn}，其中Pi等 待的资源被P(i+1)占有（i=0, 1, …, n-1)，Pn等待的资源被P0占有。</p>
+<p>直观上看，循环等待条件似乎和死锁的定义一样，其实不然。按死锁定义构成等待环所 要求的条件更严，它要求Pi等待的资源必须由P(i+1)来满足，而循环等待条件则无此限制。 例如，系统中有两台输出设备，P0占有一台，PK占有另一台，且K不属于集合{0, 1, …, n}。</p>
+<p> Pn等待一台输出设备，它可以从P0获得，也可能从PK获得。因此，虽然Pn、P0和其他 一些进程形成了循环等待圈，但PK不在圈内，若PK释放了输出设备，则可打破循环等待。因此循环等待只是死锁的必要条件。</p>
+<p>总的来说，<strong>死锁要求当前进程只能从循环链的下一个来满足，而循环等待条件是可以从循环链下一个来获取，也可以从其他途径获得。</strong></p>
+<h1 id="死锁的实例"><a href="#死锁的实例" class="headerlink" title="死锁的实例"></a>死锁的实例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLockTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Object lock1 = <span class="keyword">new</span> Object();</span><br><span class="line">        Object lock2 = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1, want lock2&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">100</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1 and lock2&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2, want lock1&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2 and lock1&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread-0 got lock1, want lock2</span><br><span class="line">Thread-1 got lock2, want lock1</span><br></pre></td></tr></table></figure>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h1 id="如何避免死锁"><a href="#如何避免死锁" class="headerlink" title="如何避免死锁"></a><strong>如何避免死锁</strong></h1><p>死锁是由四个必要条件导致的，所以一般来说，只要破坏这四个必要条件中的一个条件，死锁情况就应该不会发生。</p>
+<ul>
+<li>加锁顺序（线程按照一定的顺序加锁）</li>
+<li>加锁时限（线程尝试获取锁的时候加上一定的时限，超过时限则放弃对该锁的请求，并释放自己占有的锁）</li>
+<li>死锁检测</li>
+</ul>
+<h2 id="1-加锁顺序"><a href="#1-加锁顺序" class="headerlink" title="1.加锁顺序"></a>1.加锁顺序</h2><p>当多个线程需要相同的一些锁，但是按照不同的顺序加锁，死锁就很容易发生。如果能确保所有的线程都是按照相同的顺序获得锁，那么死锁就不会发生。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread 1:</span><br><span class="line">  lock A </span><br><span class="line">  lock B</span><br><span class="line"></span><br><span class="line">Thread 2:</span><br><span class="line">   wait for A</span><br><span class="line">   lock C (when A locked)</span><br><span class="line"></span><br><span class="line">Thread 3:</span><br><span class="line">   wait for A</span><br><span class="line">   wait for B</span><br><span class="line">   wait for C</span><br></pre></td></tr></table></figure>
+<p>如果一个线程（比如线程3）需要一些锁，那么它必须按照确定的顺序获取锁。它只有获得了从顺序上排在前面的锁之后，才能获取后面的锁。</p>
+<p>例如，线程2和线程3只有在获取了锁A之后才能尝试获取锁C(<em>获取锁A是获取锁C的必要条件</em>)。因为线程1已经拥有了锁A，所以线程2和3需要一直等到锁A被释放。然后在它们尝试对B或C加锁之前，必须成功地对A加了锁。</p>
+<p>按照顺序加锁是一种有效的死锁预防机制。但是，这种方式需要你事先知道所有可能会用到的锁(<em>并对这些锁做适当的排序</em>)，但总有些时候是无法预知的。</p>
+<h2 id="2-加锁时限"><a href="#2-加锁时限" class="headerlink" title="2.加锁时限"></a>2.加锁时限</h2><p>另外一个可以避免死锁的方法是在尝试获取锁的时候加一个超时时间，这也就意味着在尝试获取锁的过程中若超过了这个时限该线程则放弃对该锁请求。若一个线程没有在给定的时限内成功获得所有需要的锁，则会进行回退并释放所有已经获得的锁，然后等待一段随机的时间再重试。这段随机的等待时间让其它线程有机会尝试获取相同的这些锁，并且让该应用在没有获得锁的时候可以继续运行(<em>加锁超时后可以先继续运行干点其它事情，再回头来重复之前加锁的逻辑</em>)。</p>
+<p>这种机制存在一个问题，在Java中不能对synchronized同步块设置超时时间。你需要创建一个自定义锁，或使用Java5中java.util.concurrent包下的工具。</p>
+<h2 id="3-死锁检测"><a href="#3-死锁检测" class="headerlink" title="3.死锁检测"></a><strong>3.死锁检测</strong></h2><p>死锁检测是一个更好的死锁预防机制，它主要是针对那些不可能实现按序加锁并且锁超时也不可行的场景。</p>
+<p>每当一个线程获得了锁，会在线程和锁相关的数据结构中（map、graph等等）将其记下。除此之外，每当有线程请求锁，也需要记录在这个数据结构中。当一个线程请求锁失败时，这个线程可以遍历锁的关系图看看是否有死锁发生。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -1009,19 +1009,6 @@
       </tags>
   </entry>
   <entry>
-    <title>线程的安全问题</title>
-    <url>/p/55922.html</url>
-    <content><![CDATA[<a id="more"></a>]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>线程的生命周期</title>
     <url>/p/37913.html</url>
     <content><![CDATA[<h4 id="线程的5种状态："><a href="#线程的5种状态：" class="headerlink" title="线程的5种状态："></a>线程的5种状态：</h4><p>JDK种使用Thread.state类定义了线程的5种状态：</p>
@@ -1036,6 +1023,19 @@
 </ol>
 <p><img src="/p/blog\picture\线程状态转换.png"></p>
 ]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线程的安全问题</title>
+    <url>/p/55922.html</url>
+    <content><![CDATA[<a id="more"></a>]]></content>
       <categories>
         <category>Java</category>
         <category>多线程</category>
