@@ -117,35 +117,6 @@
       </tags>
   </entry>
   <entry>
-    <title>String类与其他结构之间的转换</title>
-    <url>/p/37668.html</url>
-    <content><![CDATA[<h3 id="String类与其他结构之间的转换"><a href="#String类与其他结构之间的转换" class="headerlink" title="String类与其他结构之间的转换"></a>String类与其他结构之间的转换</h3><h4 id="String与基本数据类型、包装类之间的转换"><a href="#String与基本数据类型、包装类之间的转换" class="headerlink" title="String与基本数据类型、包装类之间的转换"></a>String与基本数据类型、包装类之间的转换</h4><a id="more"></a>
-
-<h5 id="String类-–-gt-基本数据类型、包装类："><a href="#String类-–-gt-基本数据类型、包装类：" class="headerlink" title="String类 –&gt; 基本数据类型、包装类："></a>String类 –&gt; 基本数据类型、包装类：</h5><p><strong>调用包装类的静态方法：parseXxx(str)</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"><span class="comment">//        int num = (int) s1;//error</span></span><br><span class="line">        <span class="keyword">int</span> b1 = Integer.parseInt(s1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="基本数据类型、包装类-–-gt-String类："><a href="#基本数据类型、包装类-–-gt-String类：" class="headerlink" title="基本数据类型、包装类 –&gt; String类："></a>基本数据类型、包装类 –&gt; String类：</h5><p><strong>调用String重载的valueOf(xxx)</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//两种都可以</span></span><br><span class="line">String c1 = String.valueOf(b1);</span><br><span class="line">String c2 = b1 + <span class="string">&quot;&quot;</span>;</span><br></pre></td></tr></table></figure>
-<h4 id="String与字符数组转换"><a href="#String与字符数组转换" class="headerlink" title="String与字符数组转换"></a>String与字符数组转换</h4><h5 id="String-–-gt-char-："><a href="#String-–-gt-char-：" class="headerlink" title="String –&gt; char[]："></a>String –&gt; char[]：</h5><p><strong>调用String中的toCharArray()方法</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">char</span>[] c1 = s1.toCharArray();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; c1.length; i++) &#123;</span><br><span class="line">        System.out.println(c1[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="char-–-gt-String："><a href="#char-–-gt-String：" class="headerlink" title="char[] –&gt; String："></a>char[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> [] arr1 = <span class="keyword">new</span> <span class="keyword">char</span>[] &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>&#125;;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(arr1);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
-<h4 id="String与字节数组转换"><a href="#String与字节数组转换" class="headerlink" title="String与字节数组转换"></a>String与字节数组转换</h4><h5 id="String-–-gt-byte-："><a href="#String-–-gt-byte-：" class="headerlink" title="String –&gt; byte[]："></a>String –&gt; byte[]：</h5><p><strong>调用String的getBytes()方法</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = s1.getBytes();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bytes.length; i++) &#123;</span><br><span class="line">        System.out.println(bytes[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="byte-–-gt-String："><a href="#byte-–-gt-String：" class="headerlink" title="byte[] –&gt; String："></a>byte[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s2 = <span class="keyword">new</span> String(bytes);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
-<p><strong>注</strong>：String与字节数组转换可以看作一个编解码的过程，在此过程中，必须保证使用的字符集相同，否则会出现乱码。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>StringBuffer和StringBuilder</title>
     <url>/p/31461.html</url>
     <content><![CDATA[<h3 id="StringBuffer、StringBuilder和String的异同？"><a href="#StringBuffer、StringBuilder和String的异同？" class="headerlink" title="StringBuffer、StringBuilder和String的异同？"></a>StringBuffer、StringBuilder和String的异同？</h3><a id="more"></a>
@@ -226,6 +197,35 @@
 <li>返回指定字符串在此字符串中第一次出现的索引值</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(String str)</span></span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>String类与其他结构之间的转换</title>
+    <url>/p/37668.html</url>
+    <content><![CDATA[<h3 id="String类与其他结构之间的转换"><a href="#String类与其他结构之间的转换" class="headerlink" title="String类与其他结构之间的转换"></a>String类与其他结构之间的转换</h3><h4 id="String与基本数据类型、包装类之间的转换"><a href="#String与基本数据类型、包装类之间的转换" class="headerlink" title="String与基本数据类型、包装类之间的转换"></a>String与基本数据类型、包装类之间的转换</h4><a id="more"></a>
+
+<h5 id="String类-–-gt-基本数据类型、包装类："><a href="#String类-–-gt-基本数据类型、包装类：" class="headerlink" title="String类 –&gt; 基本数据类型、包装类："></a>String类 –&gt; 基本数据类型、包装类：</h5><p><strong>调用包装类的静态方法：parseXxx(str)</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"><span class="comment">//        int num = (int) s1;//error</span></span><br><span class="line">        <span class="keyword">int</span> b1 = Integer.parseInt(s1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="基本数据类型、包装类-–-gt-String类："><a href="#基本数据类型、包装类-–-gt-String类：" class="headerlink" title="基本数据类型、包装类 –&gt; String类："></a>基本数据类型、包装类 –&gt; String类：</h5><p><strong>调用String重载的valueOf(xxx)</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//两种都可以</span></span><br><span class="line">String c1 = String.valueOf(b1);</span><br><span class="line">String c2 = b1 + <span class="string">&quot;&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="String与字符数组转换"><a href="#String与字符数组转换" class="headerlink" title="String与字符数组转换"></a>String与字符数组转换</h4><h5 id="String-–-gt-char-："><a href="#String-–-gt-char-：" class="headerlink" title="String –&gt; char[]："></a>String –&gt; char[]：</h5><p><strong>调用String中的toCharArray()方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">char</span>[] c1 = s1.toCharArray();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; c1.length; i++) &#123;</span><br><span class="line">        System.out.println(c1[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="char-–-gt-String："><a href="#char-–-gt-String：" class="headerlink" title="char[] –&gt; String："></a>char[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> [] arr1 = <span class="keyword">new</span> <span class="keyword">char</span>[] &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>&#125;;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(arr1);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
+<h4 id="String与字节数组转换"><a href="#String与字节数组转换" class="headerlink" title="String与字节数组转换"></a>String与字节数组转换</h4><h5 id="String-–-gt-byte-："><a href="#String-–-gt-byte-：" class="headerlink" title="String –&gt; byte[]："></a>String –&gt; byte[]：</h5><p><strong>调用String的getBytes()方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = s1.getBytes();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bytes.length; i++) &#123;</span><br><span class="line">        System.out.println(bytes[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="byte-–-gt-String："><a href="#byte-–-gt-String：" class="headerlink" title="byte[] –&gt; String："></a>byte[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s2 = <span class="keyword">new</span> String(bytes);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
+<p><strong>注</strong>：String与字节数组转换可以看作一个编解码的过程，在此过程中，必须保证使用的字符集相同，否则会出现乱码。</p>
+]]></content>
       <categories>
         <category>Java</category>
         <category>Java基础</category>
@@ -345,21 +345,6 @@
       </tags>
   </entry>
   <entry>
-    <title>单链表</title>
-    <url>/p/71c610d3.html</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="/p/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.jpg" alt="单链表基本结构"></p>
-<a id="more"></a> 
-
-]]></content>
-      <categories>
-        <category>算法与数据结构</category>
-        <category>单链表</category>
-      </categories>
-      <tags>
-        <tag>单链表</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>String类的创建和拼接</title>
     <url>/p/52765.html</url>
     <content><![CDATA[<h3 id="String类：字符串"><a href="#String类：字符串" class="headerlink" title="String类：字符串"></a><strong>String类：字符串</strong></h3><a id="more"></a>
@@ -417,6 +402,21 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>单链表</title>
+    <url>/p/71c610d3.html</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="/p/%5C%E5%8D%95%E9%93%BE%E8%A1%A8%5C%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.jpg" alt="单链表基本结构"></p>
+<a id="more"></a> 
+
+]]></content>
+      <categories>
+        <category>算法与数据结构</category>
+        <category>单链表</category>
+      </categories>
+      <tags>
+        <tag>单链表</tag>
       </tags>
   </entry>
   <entry>
@@ -632,6 +632,62 @@
       </tags>
   </entry>
   <entry>
+    <title>字符集</title>
+    <url>/p/40261.html</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>我们在计算机屏幕上看到的是实体化的文字，而在计算机存储介质中存放的实际是二进制的比特流。那么在这两者之间的转换规则就需要一个统一的标准。简单的说字符集就规定了某个文字对应的二进制数字存放方式（编码）和某串二进制数值代表了哪个文字（解码）的转换关系。</p>
+<a id="more"></a> 
+
+<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><ul>
+<li><strong>ASCII：</strong>美国标准信息交换码，用一个字节的7位表示（128个）；</li>
+<li><strong>ISO8859-1：</strong>拉丁码表。欧洲码表，用一个字节的8位表示；</li>
+<li><strong>GB2312：</strong>中国的中文编码表。最多两个字节编码所有字符；</li>
+<li><strong>GBK：</strong>中国的中文编码表升级，融合了更多的中文文字符号，最多两个字节编码；</li>
+<li><strong>Unicode：</strong>国际标准码，融合了目前人类使用的所有字符，为每个字符分配唯一的字符码，所有的文字都使用两个字节来表示；</li>
+<li><strong>UTF-8：</strong>变长的国际标准码，定义了庞大的、全球通用的字符集，为每个字符规定了唯一确定的编码，可用1-4个字节来表示一个字符。</li>
+</ul>
+<h1 id="字库表、编码字符集、字符编码"><a href="#字库表、编码字符集、字符编码" class="headerlink" title="字库表、编码字符集、字符编码"></a>字库表、编码字符集、字符编码</h1><p><strong>字库表（character repertoire）</strong>：相当于所有可读或者可显示字符的数据库，字库表决定了整个字符集能够展现表示的所有字符的范围。</p>
+<p><strong>编码字符集（coded character set</strong>）：用一个编码值<code>code point</code>来表示一个字符在字库中的位置。</p>
+<p><strong>字符编码（character encoding form）</strong>：将编码字符集和实际存储数值之间的转换关系。一般来说都会直接将code point的值作为编码后的值直接存储。例如在ASCII中<code>A</code>在表中排第65位，而编码后<code>A</code>的数值是<code>0100 0001</code>也即十进制的65的二进制转换结果。</p>
+<p><code>字库表</code>和<code>编码字符集</code>看来是必不可少的，那既然字库表中的每一个字符都有一个自己的序号，直接把序号作为存储内容就好了。为什么还要多此一举通过<code>字符编码</code>把序号转换成另外一种存储格式呢？其实原因也比较容易理解：统一字库表的目的是为了能够涵盖世界上所有的字符，但实际使用过程中会发现真正用的上的字符相对整个字库表来说比例非常低。例如中文地区的程序几乎不会需要日语字符，而一些英语国家甚至简单的ASCII字库表就能满足基本需求。而如果把每个字符都用字库表中的序号来存储的话，每个字符就需要3个字节（这里以Unicode字库为例），这样对于原本用仅占一个字符的ASCII编码的英语地区国家显然是一个额外成本（存储体积是原来的三倍）。算的直接一些，同样一块硬盘，用ASCII可以存1500篇文章，而用3字节Unicode序号存储只能存500篇。于是就出现了UTF-8这样的变长编码。在UTF-8编码中原本只需要一个字节的ASCII字符，仍然只占一个字节。而像中文及日语这样的复杂字符就需要2个到3个字节来存储。</p>
+<h1 id="UTF-8和Unicode的关系"><a href="#UTF-8和Unicode的关系" class="headerlink" title="UTF-8和Unicode的关系"></a>UTF-8和Unicode的关系</h1><p>Unicode就是上文中提到的编码字符集，而UTF-8就是字符编码，即Unicode规则字库的一种实现形式。随着互联网的发展，对同一字库集的要求越来越迫切，Unicode标准也就自然而然的出现。它几乎涵盖了各个国家语言可能出现的符号和文字，并将为他们编号。Unicode的编号从0000开始一直到10FFFF共分为16个Plane，每个Plane中有65536个字符。而UTF-8则只实现了第一个Plane，可见UTF-8虽然是一个当今接受度最广的字符集编码，但是它并没有涵盖整个Unicode的字库。</p>
+<h2 id="UTF-8编码简介"><a href="#UTF-8编码简介" class="headerlink" title="UTF-8编码简介"></a>UTF-8编码简介</h2><ul>
+<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的 Unicode 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的。</li>
+<li>对于n字节的符号（n &gt; 1），第一个字节的前n位都设为1，第n + 1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的 Unicode 码。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Unicode符号范围（十六进制）</th>
+<th>UTF-8编码方式（二进制）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000 0000-0000 0007F</td>
+<td>0xxxxxxx</td>
+</tr>
+<tr>
+<td>0000 0080-0000 07FF</td>
+<td>110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0000 0800-0000 FFFF</td>
+<td>1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0001 0000-0010 FFFF</td>
+<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>IO流</category>
+      </categories>
+      <tags>
+        <tag>字符集</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>日期和时间的使用</title>
     <url>/p/48841.html</url>
     <content><![CDATA[<h1 id="System-currentTimeMillis-方法-JDK1-5"><a href="#System-currentTimeMillis-方法-JDK1-5" class="headerlink" title="System.currentTimeMillis()方法(JDK1.5)"></a>System.currentTimeMillis()方法(JDK1.5)</h1><p><strong>介绍：</strong>返回当前时间与1970年1约1日0时0分0秒之间以毫秒为单位的时间差——又称为时间戳。</p>
@@ -759,62 +815,6 @@
       </tags>
   </entry>
   <entry>
-    <title>字符集</title>
-    <url>/p/40261.html</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>我们在计算机屏幕上看到的是实体化的文字，而在计算机存储介质中存放的实际是二进制的比特流。那么在这两者之间的转换规则就需要一个统一的标准。简单的说字符集就规定了某个文字对应的二进制数字存放方式（编码）和某串二进制数值代表了哪个文字（解码）的转换关系。</p>
-<a id="more"></a> 
-
-<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><ul>
-<li><strong>ASCII：</strong>美国标准信息交换码，用一个字节的7位表示（128个）；</li>
-<li><strong>ISO8859-1：</strong>拉丁码表。欧洲码表，用一个字节的8位表示；</li>
-<li><strong>GB2312：</strong>中国的中文编码表。最多两个字节编码所有字符；</li>
-<li><strong>GBK：</strong>中国的中文编码表升级，融合了更多的中文文字符号，最多两个字节编码；</li>
-<li><strong>Unicode：</strong>国际标准码，融合了目前人类使用的所有字符，为每个字符分配唯一的字符码，所有的文字都使用两个字节来表示；</li>
-<li><strong>UTF-8：</strong>变长的国际标准码，定义了庞大的、全球通用的字符集，为每个字符规定了唯一确定的编码，可用1-4个字节来表示一个字符。</li>
-</ul>
-<h1 id="字库表、编码字符集、字符编码"><a href="#字库表、编码字符集、字符编码" class="headerlink" title="字库表、编码字符集、字符编码"></a>字库表、编码字符集、字符编码</h1><p><strong>字库表（character repertoire）</strong>：相当于所有可读或者可显示字符的数据库，字库表决定了整个字符集能够展现表示的所有字符的范围。</p>
-<p><strong>编码字符集（coded character set</strong>）：用一个编码值<code>code point</code>来表示一个字符在字库中的位置。</p>
-<p><strong>字符编码（character encoding form）</strong>：将编码字符集和实际存储数值之间的转换关系。一般来说都会直接将code point的值作为编码后的值直接存储。例如在ASCII中<code>A</code>在表中排第65位，而编码后<code>A</code>的数值是<code>0100 0001</code>也即十进制的65的二进制转换结果。</p>
-<p><code>字库表</code>和<code>编码字符集</code>看来是必不可少的，那既然字库表中的每一个字符都有一个自己的序号，直接把序号作为存储内容就好了。为什么还要多此一举通过<code>字符编码</code>把序号转换成另外一种存储格式呢？其实原因也比较容易理解：统一字库表的目的是为了能够涵盖世界上所有的字符，但实际使用过程中会发现真正用的上的字符相对整个字库表来说比例非常低。例如中文地区的程序几乎不会需要日语字符，而一些英语国家甚至简单的ASCII字库表就能满足基本需求。而如果把每个字符都用字库表中的序号来存储的话，每个字符就需要3个字节（这里以Unicode字库为例），这样对于原本用仅占一个字符的ASCII编码的英语地区国家显然是一个额外成本（存储体积是原来的三倍）。算的直接一些，同样一块硬盘，用ASCII可以存1500篇文章，而用3字节Unicode序号存储只能存500篇。于是就出现了UTF-8这样的变长编码。在UTF-8编码中原本只需要一个字节的ASCII字符，仍然只占一个字节。而像中文及日语这样的复杂字符就需要2个到3个字节来存储。</p>
-<h1 id="UTF-8和Unicode的关系"><a href="#UTF-8和Unicode的关系" class="headerlink" title="UTF-8和Unicode的关系"></a>UTF-8和Unicode的关系</h1><p>Unicode就是上文中提到的编码字符集，而UTF-8就是字符编码，即Unicode规则字库的一种实现形式。随着互联网的发展，对同一字库集的要求越来越迫切，Unicode标准也就自然而然的出现。它几乎涵盖了各个国家语言可能出现的符号和文字，并将为他们编号。Unicode的编号从0000开始一直到10FFFF共分为16个Plane，每个Plane中有65536个字符。而UTF-8则只实现了第一个Plane，可见UTF-8虽然是一个当今接受度最广的字符集编码，但是它并没有涵盖整个Unicode的字库。</p>
-<h2 id="UTF-8编码简介"><a href="#UTF-8编码简介" class="headerlink" title="UTF-8编码简介"></a>UTF-8编码简介</h2><ul>
-<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的 Unicode 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的。</li>
-<li>对于n字节的符号（n &gt; 1），第一个字节的前n位都设为1，第n + 1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的 Unicode 码。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Unicode符号范围（十六进制）</th>
-<th>UTF-8编码方式（二进制）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0000 0000-0000 0007F</td>
-<td>0xxxxxxx</td>
-</tr>
-<tr>
-<td>0000 0080-0000 07FF</td>
-<td>110xxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td>0000 0800-0000 FFFF</td>
-<td>1110xxxx 10xxxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td>0001 0000-0010 FFFF</td>
-<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>IO流</category>
-      </categories>
-      <tags>
-        <tag>字符集</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>枚举类</title>
     <url>/p/20039.html</url>
     <content><![CDATA[<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><ul>
@@ -892,19 +892,6 @@
 <h2 id="3-死锁检测"><a href="#3-死锁检测" class="headerlink" title="3.死锁检测"></a><strong>3.死锁检测</strong></h2><p>死锁检测是一个更好的死锁预防机制，它主要是针对那些不可能实现按序加锁并且锁超时也不可行的场景。</p>
 <p>每当一个线程获得了锁，会在线程和锁相关的数据结构中（map、graph等等）将其记下。除此之外，每当有线程请求锁，也需要记录在这个数据结构中。当一个线程请求锁失败时，这个线程可以遍历锁的关系图看看是否有死锁发生。</p>
 ]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>线程的安全问题</title>
-    <url>/p/55922.html</url>
-    <content><![CDATA[<a id="more"></a>]]></content>
       <categories>
         <category>Java</category>
         <category>多线程</category>
@@ -1082,6 +1069,19 @@
       </tags>
   </entry>
   <entry>
+    <title>线程的安全问题</title>
+    <url>/p/55922.html</url>
+    <content><![CDATA[<a id="more"></a>]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>线程通信</title>
     <url>/p/27168.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -1140,28 +1140,6 @@
       <tags>
         <tag>Java</tag>
         <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>获取一个字符串在另一个字符串中出现的次数</title>
-    <url>/p/4524.html</url>
-    <content><![CDATA[<p><strong>问题：</strong>获取一个字符串在另一个字符串中出现的次数。比如字符串“abkkcadkabkebfkabkskabdjahkjldghabab”中“ab”出现的次数。</p>
-<a id="more"></a>
-
-<p><strong>解法一：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String str1 = <span class="string">&quot;abkkcadkabkebfkabkskabdjahkjldghabab&quot;</span>;</span><br><span class="line">        String str2 = <span class="string">&quot;ab&quot;</span>;</span><br><span class="line">        System.out.print(<span class="string">&quot;字符串&quot;</span> + str1 + <span class="string">&quot;中&quot;</span>);</span><br><span class="line">        System.out.println(str2 + <span class="string">&quot;出现几次？&quot;</span>);</span><br><span class="line">        System.out.println(getCount(str1, str2));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取str1中str2出现的次数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">        <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">            <span class="keyword">while</span> (str1.indexOf(str2) != -<span class="number">1</span>)&#123;</span><br><span class="line">                str1 = str1.substring(str1.indexOf(str2) + str2Length);</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>解法二：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount1</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">    <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">        <span class="keyword">while</span> ((index = str1.indexOf(str2,index)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            index += str2Length;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>效率更高。因为没有频繁创建新对象。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -1241,6 +1219,28 @@
       </categories>
       <tags>
         <tag>网络编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>获取一个字符串在另一个字符串中出现的次数</title>
+    <url>/p/4524.html</url>
+    <content><![CDATA[<p><strong>问题：</strong>获取一个字符串在另一个字符串中出现的次数。比如字符串“abkkcadkabkebfkabkskabdjahkjldghabab”中“ab”出现的次数。</p>
+<a id="more"></a>
+
+<p><strong>解法一：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String str1 = <span class="string">&quot;abkkcadkabkebfkabkskabdjahkjldghabab&quot;</span>;</span><br><span class="line">        String str2 = <span class="string">&quot;ab&quot;</span>;</span><br><span class="line">        System.out.print(<span class="string">&quot;字符串&quot;</span> + str1 + <span class="string">&quot;中&quot;</span>);</span><br><span class="line">        System.out.println(str2 + <span class="string">&quot;出现几次？&quot;</span>);</span><br><span class="line">        System.out.println(getCount(str1, str2));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取str1中str2出现的次数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">        <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">            <span class="keyword">while</span> (str1.indexOf(str2) != -<span class="number">1</span>)&#123;</span><br><span class="line">                str1 = str1.substring(str1.indexOf(str2) + str2Length);</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>解法二：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount1</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">    <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">        <span class="keyword">while</span> ((index = str1.indexOf(str2,index)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            index += str2Length;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效率更高。因为没有频繁创建新对象。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
       </tags>
   </entry>
   <entry>
