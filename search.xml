@@ -345,65 +345,6 @@
       </tags>
   </entry>
   <entry>
-    <title>反射</title>
-    <url>/p/53772.html</url>
-    <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><ul>
-<li>Reflection(反射)是被视为动态语言的关键，反射机制允许程序再执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法。</li>
-<li>Java反射机制提供的功能：<ul>
-<li>在运行时判断任意一个对象所属的类</li>
-<li>在运行时构造任意一个类的对象</li>
-<li>在运行时判断任意一个类所具有的成员变量和方法</li>
-<li>在运行时获取泛型信息</li>
-<li>在运行时调用任意一个对象的成员变量和方法</li>
-<li>在运行时处理注解</li>
-<li>生成动态代理</li>
-</ul>
-</li>
-</ul>
-<a id="more"></a> 
-
-<h1 id="反射举例"><a href="#反射举例" class="headerlink" title="反射举例"></a>反射举例</h1><ul>
-<li>在类的外部，是不能通过类的对象调用其内部私有结构的；</li>
-<li>通过反射可以调用类的私有结构。比如私有的构造器、方法、属性。</li>
-</ul>
-<p>Person类：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Person</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Person&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, age=&quot;</span> + age +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;我是一个人&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">showNation</span><span class="params">(String nation)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;我的国籍是&quot;</span> + nation);</span><br><span class="line">        <span class="keyword">return</span> nation;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="反射之前："><a href="#反射之前：" class="headerlink" title="反射之前："></a>反射之前：</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//反射之前</span></span><br><span class="line">    System.out.println(<span class="string">&quot;反射之前&quot;</span>);</span><br><span class="line">    <span class="comment">//1.创建Person类对象</span></span><br><span class="line">    Person p1 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">3</span>);</span><br><span class="line">    <span class="comment">//2.通过对象，调用其内部属性、方法</span></span><br><span class="line">    p1.age = <span class="number">30</span>;</span><br><span class="line">    System.out.println(p1);</span><br><span class="line"></span><br><span class="line">    p1.show();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">反射之前</span><br><span class="line">Person&#123;name=<span class="string">&#x27;Tom&#x27;</span>, age=<span class="number">30</span>&#125;</span><br><span class="line">我是一个人</span><br></pre></td></tr></table></figure>
-<h2 id="反射之后："><a href="#反射之后：" class="headerlink" title="反射之后："></a>反射之后：</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> <span class="keyword">throws</span> IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException, NoSuchFieldException </span>&#123;</span><br><span class="line">    <span class="comment">//反射之后</span></span><br><span class="line">    <span class="comment">//1.通过反射，创建Person类的对象</span></span><br><span class="line">    System.out.println(<span class="string">&quot;反射之后&quot;</span>);</span><br><span class="line">    Class clazz = Person.class;</span><br><span class="line">    Constructor cons = clazz.getConstructor(String.class, <span class="keyword">int</span>.class);</span><br><span class="line">    Object obj = cons.newInstance(<span class="string">&quot;Tom&quot;</span>, <span class="number">3</span>);</span><br><span class="line">    Person p = (Person)obj;</span><br><span class="line">    System.out.println(p.toString());</span><br><span class="line">    <span class="comment">//2.通过反射，调用对象指定的属性、方法</span></span><br><span class="line">    <span class="comment">//调用属性</span></span><br><span class="line">    Field age = clazz.getDeclaredField(<span class="string">&quot;age&quot;</span>);</span><br><span class="line">    age.set(p,<span class="number">30</span>);</span><br><span class="line">    System.out.println(p.toString());</span><br><span class="line">    <span class="comment">//调用方法</span></span><br><span class="line">    Method show = clazz.getDeclaredMethod(<span class="string">&quot;show&quot;</span>);</span><br><span class="line">    show.invoke(p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3.通过反射，调用对象私有的属性、方法</span></span><br><span class="line">    <span class="comment">//调用私有构造器</span></span><br><span class="line">    Constructor cons1 = clazz.getDeclaredConstructor(String.class);</span><br><span class="line">    cons1.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    Person p1 = (Person) cons1.newInstance(<span class="string">&quot;Rose&quot;</span>);</span><br><span class="line">    System.out.println(p1);</span><br><span class="line">    <span class="comment">//调用私有的属性</span></span><br><span class="line">    Field name = clazz.getDeclaredField(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">    name.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    name.set(p1,<span class="string">&quot;Jack&quot;</span>);</span><br><span class="line">    System.out.println(p1);</span><br><span class="line">    <span class="comment">//调用私有的方法</span></span><br><span class="line">    Method showNation = clazz.getDeclaredMethod(<span class="string">&quot;showNation&quot;</span>,String.class);</span><br><span class="line">    showNation.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    showNation.invoke(p1,<span class="string">&quot;America&quot;</span>);<span class="comment">//相当于p1.showNation(&quot;America&quot;);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">反射之后</span><br><span class="line">Person&#123;name=<span class="string">&#x27;Tom&#x27;</span>, age=<span class="number">3</span>&#125;</span><br><span class="line">Person&#123;name=<span class="string">&#x27;Tom&#x27;</span>, age=<span class="number">30</span>&#125;</span><br><span class="line">我是一个人</span><br><span class="line">Person&#123;name=<span class="string">&#x27;Rose&#x27;</span>, age=<span class="number">0</span>&#125;</span><br><span class="line">Person&#123;name=<span class="string">&#x27;Jack&#x27;</span>, age=<span class="number">0</span>&#125;</span><br><span class="line">我的国籍是America</span><br></pre></td></tr></table></figure>
-<h1 id="java-lang-Class类"><a href="#java-lang-Class类" class="headerlink" title="java.lang.Class类"></a>java.lang.Class类</h1><ul>
-<li><strong>类的加载过程：</strong></li>
-</ul>
-<p>程序经过javac.exe命令以后，会生成一个或者多个字节码文件(.class文件)，接着使用java.exe命令对某个字节码文件进行解释运行。相当于将某个字节码文件加载到内存中。加载到内存中的类，成为运行时类，此<strong>运行时类，就作为Class的一个实例</strong>。可以理解为，每一个类也是一个对象，是Class类的一个对象，可以作为Class类的一个实例。</p>
-<ul>
-<li>加载到内存中的运行时类，会缓存一段时间，在此时间内，可以通过不同的方式获取此运行时类。</li>
-</ul>
-<h2 id="获取Class类的实例的方式"><a href="#获取Class类的实例的方式" class="headerlink" title="获取Class类的实例的方式"></a>获取Class类的实例的方式</h2><h3 id="方式一：调用运行时类的属性：-class"><a href="#方式一：调用运行时类的属性：-class" class="headerlink" title="方式一：调用运行时类的属性：.class"></a>方式一：调用运行时类的属性：.class</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class&lt;Person&gt; clazz = Person.class;</span><br><span class="line">System.out.println(clazz);<span class="comment">//class Person</span></span><br></pre></td></tr></table></figure>
-<h3 id="方式二：通过运行时类的对象"><a href="#方式二：通过运行时类的对象" class="headerlink" title="方式二：通过运行时类的对象"></a>方式二：通过运行时类的对象</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Person p1 = <span class="keyword">new</span> Person();</span><br><span class="line">Class clazz = p1.getClass();</span><br><span class="line">System.out.println(clazz);<span class="comment">//class Person</span></span><br></pre></td></tr></table></figure>
-<h3 id="方式三：调用Class的静态方法：forName-String-classPath-—使用多"><a href="#方式三：调用Class的静态方法：forName-String-classPath-—使用多" class="headerlink" title="方式三：调用Class的静态方法：forName(String classPath)—使用多"></a>方式三：调用Class的静态方法：forName(String classPath)—使用多</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class clazz = Class.forName(<span class="string">&quot;Person&quot;</span>);</span><br><span class="line">System.out.println(clazz);<span class="comment">//class Person</span></span><br></pre></td></tr></table></figure>
-<h3 id="方式四：使用类的加载器：ClassLoader"><a href="#方式四：使用类的加载器：ClassLoader" class="headerlink" title="方式四：使用类的加载器：ClassLoader"></a>方式四：使用类的加载器：ClassLoader</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ClassLoader classLoader = ReflectionTest.class.getClassLoader();</span><br><span class="line">Class clazz = classLoader.loadClass(<span class="string">&quot;Person&quot;</span>);</span><br><span class="line">System.out.println(clazz);<span class="comment">//class Person</span></span><br></pre></td></tr></table></figure>
-<h2 id="哪些类可以有Class对象"><a href="#哪些类可以有Class对象" class="headerlink" title="哪些类可以有Class对象"></a>哪些类可以有Class对象</h2><ol>
-<li>class：外部类，成员（成员内部类，静态内部类），局部内部类，匿名内部类</li>
-<li>interface：接口</li>
-<li>[]：数组</li>
-<li>enum：枚举</li>
-<li>annotation：注解@interface</li>
-<li>primitive type：基本数据类型</li>
-<li>void</li>
-</ol>
-<h1 id="类的加载器ClassLoader"><a href="#类的加载器ClassLoader" class="headerlink" title="类的加载器ClassLoader"></a>类的加载器ClassLoader</h1>]]></content>
-      <categories>
-        <category>Java</category>
-        <category>反射</category>
-      </categories>
-      <tags>
-        <tag>反射</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>String类的创建和拼接</title>
     <url>/p/52765.html</url>
     <content><![CDATA[<h3 id="String类：字符串"><a href="#String类：字符串" class="headerlink" title="String类：字符串"></a><strong>String类：字符串</strong></h3><a id="more"></a>
@@ -543,6 +484,139 @@
       </tags>
   </entry>
   <entry>
+    <title>反射</title>
+    <url>/p/53772.html</url>
+    <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><ul>
+<li>Reflection(反射)是被视为动态语言的关键，反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性和方法。</li>
+<li>Java反射机制提供的功能：<ul>
+<li>在运行时判断任意一个对象所属的类</li>
+<li>在运行时构造任意一个类的对象</li>
+<li>在运行时判断任意一个类所具有的成员变量和方法</li>
+<li>在运行时获取泛型信息</li>
+<li>在运行时调用任意一个对象的成员变量和方法</li>
+<li>在运行时处理注解</li>
+<li>生成动态代理</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a> 
+
+<h1 id="反射特点"><a href="#反射特点" class="headerlink" title="反射特点"></a>反射特点</h1><p>Java不是动态语言，但Java可以称之为“<strong>准动态语言</strong>”。即Java有一定的动态性，利用反射机制、字节码操作获得类似动态语言特性。动态性使得Java编程更加灵活。</p>
+<ul>
+<li><strong>动态语言</strong>：在运行时代码可以根据某些条件改变自身结构；C#、JavaScript、PHP、Python</li>
+<li><strong>静态语言</strong>：在运行时代码不可以根据某些条件改变自身结构。Java、C、C++</li>
+</ul>
+<h1 id="反射举例"><a href="#反射举例" class="headerlink" title="反射举例"></a>反射举例</h1><ul>
+<li>在类的外部，是不能通过类的对象调用其内部私有结构的；</li>
+<li>通过反射可以调用类的私有结构。比如私有的构造器、方法、属性。</li>
+</ul>
+<p>Person类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Person</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Person&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, age=&quot;</span> + age +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;我是一个人&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">showNation</span><span class="params">(String nation)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;我的国籍是&quot;</span> + nation);</span><br><span class="line">        <span class="keyword">return</span> nation;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="反射之前："><a href="#反射之前：" class="headerlink" title="反射之前："></a>反射之前：</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//反射之前</span></span><br><span class="line">    System.out.println(<span class="string">&quot;反射之前&quot;</span>);</span><br><span class="line">    <span class="comment">//1.创建Person类对象</span></span><br><span class="line">    Person p1 = <span class="keyword">new</span> Person(<span class="string">&quot;Tom&quot;</span>, <span class="number">3</span>);</span><br><span class="line">    <span class="comment">//2.通过对象，调用其内部属性、方法</span></span><br><span class="line">    p1.age = <span class="number">30</span>;</span><br><span class="line">    System.out.println(p1);</span><br><span class="line"></span><br><span class="line">    p1.show();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">反射之前</span><br><span class="line">Person&#123;name=<span class="string">&#x27;Tom&#x27;</span>, age=<span class="number">30</span>&#125;</span><br><span class="line">我是一个人</span><br></pre></td></tr></table></figure>
+<h2 id="反射之后："><a href="#反射之后：" class="headerlink" title="反射之后："></a>反射之后：</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> <span class="keyword">throws</span> IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException, NoSuchFieldException </span>&#123;</span><br><span class="line">    <span class="comment">//反射之后</span></span><br><span class="line">    <span class="comment">//1.通过反射，创建Person类的对象</span></span><br><span class="line">    System.out.println(<span class="string">&quot;反射之后&quot;</span>);</span><br><span class="line">    Class clazz = Person.class;</span><br><span class="line">    Constructor cons = clazz.getConstructor(String.class, <span class="keyword">int</span>.class);</span><br><span class="line">    Object obj = cons.newInstance(<span class="string">&quot;Tom&quot;</span>, <span class="number">3</span>);</span><br><span class="line">    Person p = (Person)obj;</span><br><span class="line">    System.out.println(p.toString());</span><br><span class="line">    <span class="comment">//2.通过反射，调用对象指定的属性、方法</span></span><br><span class="line">    <span class="comment">//调用属性</span></span><br><span class="line">    Field age = clazz.getDeclaredField(<span class="string">&quot;age&quot;</span>);</span><br><span class="line">    age.set(p,<span class="number">30</span>);</span><br><span class="line">    System.out.println(p.toString());</span><br><span class="line">    <span class="comment">//调用方法</span></span><br><span class="line">    Method show = clazz.getDeclaredMethod(<span class="string">&quot;show&quot;</span>);</span><br><span class="line">    show.invoke(p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3.通过反射，调用对象私有的属性、方法</span></span><br><span class="line">    <span class="comment">//调用私有构造器</span></span><br><span class="line">    Constructor cons1 = clazz.getDeclaredConstructor(String.class);</span><br><span class="line">    cons1.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    Person p1 = (Person) cons1.newInstance(<span class="string">&quot;Rose&quot;</span>);</span><br><span class="line">    System.out.println(p1);</span><br><span class="line">    <span class="comment">//调用私有的属性</span></span><br><span class="line">    Field name = clazz.getDeclaredField(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">    name.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    name.set(p1,<span class="string">&quot;Jack&quot;</span>);</span><br><span class="line">    System.out.println(p1);</span><br><span class="line">    <span class="comment">//调用私有的方法</span></span><br><span class="line">    Method showNation = clazz.getDeclaredMethod(<span class="string">&quot;showNation&quot;</span>,String.class);</span><br><span class="line">    showNation.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    showNation.invoke(p1,<span class="string">&quot;America&quot;</span>);<span class="comment">//相当于p1.showNation(&quot;America&quot;);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">反射之后</span><br><span class="line">Person&#123;name=<span class="string">&#x27;Tom&#x27;</span>, age=<span class="number">3</span>&#125;</span><br><span class="line">Person&#123;name=<span class="string">&#x27;Tom&#x27;</span>, age=<span class="number">30</span>&#125;</span><br><span class="line">我是一个人</span><br><span class="line">Person&#123;name=<span class="string">&#x27;Rose&#x27;</span>, age=<span class="number">0</span>&#125;</span><br><span class="line">Person&#123;name=<span class="string">&#x27;Jack&#x27;</span>, age=<span class="number">0</span>&#125;</span><br><span class="line">我的国籍是America</span><br></pre></td></tr></table></figure>
+<h1 id="java-lang-Class类"><a href="#java-lang-Class类" class="headerlink" title="java.lang.Class类"></a>java.lang.Class类</h1><ul>
+<li><strong>类的加载过程：</strong></li>
+</ul>
+<p>程序经过javac.exe命令以后，会生成一个或者多个字节码文件(.class文件)，接着使用java.exe命令对某个字节码文件进行解释运行。相当于将某个字节码文件加载到内存中。加载到内存中的类，成为<strong>运行时类</strong>，此<strong>运行时类，就作为Class的一个实例</strong>。可以理解为，每一个类也是一个对象，是Class类的一个对象，可以作为Class类的一个实例。</p>
+<ul>
+<li>加载到内存中的运行时类，会缓存一段时间，在此时间内，可以通过不同的方式获取此运行时类。</li>
+</ul>
+<h2 id="获取Class类的实例的方式"><a href="#获取Class类的实例的方式" class="headerlink" title="获取Class类的实例的方式"></a>获取Class类的实例的方式</h2><h3 id="方式一：调用运行时类的属性：-class"><a href="#方式一：调用运行时类的属性：-class" class="headerlink" title="方式一：调用运行时类的属性：.class"></a>方式一：调用运行时类的属性：.class</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class&lt;Person&gt; clazz = Person.class;</span><br><span class="line">System.out.println(clazz);<span class="comment">//class Person</span></span><br></pre></td></tr></table></figure>
+<h3 id="方式二：通过运行时类的对象"><a href="#方式二：通过运行时类的对象" class="headerlink" title="方式二：通过运行时类的对象"></a>方式二：通过运行时类的对象</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Person p1 = <span class="keyword">new</span> Person();</span><br><span class="line">Class clazz = p1.getClass();</span><br><span class="line">System.out.println(clazz);<span class="comment">//class Person</span></span><br></pre></td></tr></table></figure>
+<h3 id="⭐方式三：调用Class的静态方法：forName-String-classPath-—使用多"><a href="#⭐方式三：调用Class的静态方法：forName-String-classPath-—使用多" class="headerlink" title="⭐方式三：调用Class的静态方法：forName(String classPath)—使用多"></a>⭐方式三：调用Class的静态方法：forName(String classPath)—使用多</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class clazz = Class.forName(<span class="string">&quot;Person&quot;</span>);</span><br><span class="line">System.out.println(clazz);<span class="comment">//class Person</span></span><br></pre></td></tr></table></figure>
+<h3 id="方式四：使用类的加载器：ClassLoader"><a href="#方式四：使用类的加载器：ClassLoader" class="headerlink" title="方式四：使用类的加载器：ClassLoader"></a>方式四：使用类的加载器：ClassLoader</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ClassLoader classLoader = ReflectionTest.class.getClassLoader();</span><br><span class="line">Class clazz = classLoader.loadClass(<span class="string">&quot;Person&quot;</span>);</span><br><span class="line">System.out.println(clazz);<span class="comment">//class Person</span></span><br></pre></td></tr></table></figure>
+<h2 id="哪些类可以有Class对象"><a href="#哪些类可以有Class对象" class="headerlink" title="哪些类可以有Class对象"></a>哪些类可以有Class对象</h2><ol>
+<li>class：外部类，成员（成员内部类，静态内部类），局部内部类，匿名内部类</li>
+<li>interface：接口</li>
+<li>[]：数组</li>
+<li>enum：枚举</li>
+<li>annotation：注解@interface</li>
+<li>primitive type：基本数据类型</li>
+<li>void</li>
+</ol>
+<h1 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h1><ol>
+<li><strong>加载（Loading）</strong>：指的是将类的class文件读入到内存，并为之创建一个java.lang.Class对象，也就是说，当程序中使用任何类时，系统都会为之建立一个java.lang.Class对象。类的加载由类加载器完成。</li>
+<li><strong>链接（Linking）</strong>：当类被加载之后，系统为之生成一个对应的Class对象，接着将会进入连接阶段，连接阶段负责把类的二进制数据合并到JRE中。</li>
+<li><strong>初始化（Initialization）</strong>：初始化是为类的静态变量赋予正确的初始值，链接中的准备阶段和初始化阶段看似有点矛盾，其实是不矛盾的，如果类中有语句：private static int a = 10，它的执行过程是这样的，首先字节码文件被加载到内存后，先给a分配内存，因为变量a是static的，所以此时a等于int类型的默认初始值0，即a=0,然后到初始化这一步骤时，才把a的真正的值10赋给a,此时a=10。</li>
+</ol>
+<h1 id="类的加载器—ClassLoader"><a href="#类的加载器—ClassLoader" class="headerlink" title="类的加载器—ClassLoader"></a>类的加载器—ClassLoader</h1><ul>
+<li><strong>类加载器作用是用来把类（class）装载进内存的。</strong></li>
+<li>在虚拟机提供了3种类加载器：<ul>
+<li>引导（Bootstrap）类加载器：主要加载的是JVM自身需要的类；</li>
+<li>扩展（Extension）类加载器：负责加载<code>&lt;JAVA_HOME&gt;/lib/ext</code>目录下或者由系统变量-Djava.ext.dir指定位路径中的类库；</li>
+<li>系统（System）类加载器：加载自定义类</li>
+</ul>
+</li>
+</ul>
+<h1 id="创建运行时类的对象"><a href="#创建运行时类的对象" class="headerlink" title="创建运行时类的对象"></a>创建运行时类的对象</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> <span class="keyword">throws</span> IllegalAccessException, InstantiationException </span>&#123;</span><br><span class="line">    Class&lt;Person&gt; clazz = Person.class;</span><br><span class="line">    Person obj = clazz.newInstance();<span class="comment">//newInstance()已经过时了</span></span><br><span class="line">    System.out.println(obj);<span class="comment">//ReflectionTest.NewInstanceTest,test1</span></span><br><span class="line">Person&#123;name=<span class="string">&#x27;null&#x27;</span>, age=<span class="number">0</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="获取运行时类的属性"><a href="#获取运行时类的属性" class="headerlink" title="获取运行时类的属性"></a>获取运行时类的属性</h2><ul>
+<li>clazz.getFields()：获取当前运行类时及其所有父类所有public的属性</li>
+<li>clazz.getDeclaredFields()：获取当前运行时类声明的所有属性</li>
+</ul>
+<h2 id="获取运行时类的方法"><a href="#获取运行时类的方法" class="headerlink" title="获取运行时类的方法"></a>获取运行时类的方法</h2><ul>
+<li>clazz.getMethods()：获取当前运行时类及其所有父类中声明的所有的public方法</li>
+<li>clazz.getDeclaredMethods()：获取当前运行时类声明的所有方法</li>
+</ul>
+<h2 id="获取运行时类的构造器"><a href="#获取运行时类的构造器" class="headerlink" title="获取运行时类的构造器"></a>获取运行时类的构造器</h2><ul>
+<li>clazz.getConstructors()：获取当前运行时类中声明为public的构造器</li>
+<li>clazz.getDeclaredConstructors()：获取当前运行时类中声明的构造器</li>
+</ul>
+<h2 id="获取运行时类的父类及父类的泛型"><a href="#获取运行时类的父类及父类的泛型" class="headerlink" title="获取运行时类的父类及父类的泛型"></a>获取运行时类的父类及父类的泛型</h2><ul>
+<li>clazz.getSuperclass()：获取当前运行时类的父类</li>
+<li>clazz.getGenericSuperclass()：获取当前运行时类的带泛型的父类</li>
+</ul>
+<h2 id="获取运行时类的接口、所在包、注解等"><a href="#获取运行时类的接口、所在包、注解等" class="headerlink" title="获取运行时类的接口、所在包、注解等"></a>获取运行时类的接口、所在包、注解等</h2><ul>
+<li>clazz.getInterfaces()：获取当前运行时类的接口</li>
+<li>clazz.getPackage()：获取当前运行时类所在的包</li>
+<li>clazz.getAnnotations()：获取当前运行时类的注解</li>
+</ul>
+<h1 id="调用运行时类的指定结构"><a href="#调用运行时类的指定结构" class="headerlink" title="调用运行时类的指定结构"></a>调用运行时类的指定结构</h1><p><strong>调用运行时类的指定属性</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class clazz = Class.forName(<span class="string">&quot;ReflectionTest.Person&quot;</span>);</span><br><span class="line"><span class="comment">//获取指定属性</span></span><br><span class="line">Field age = clazz.getDeclaredField(<span class="string">&quot;age&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用指定参数结构的构造器，生成Constructor 的实例</span></span><br><span class="line">Constructor cons = clazz.getDeclaredConstructor(String.class, <span class="keyword">int</span>.class);</span><br><span class="line"><span class="comment">//通过Constructor 的实例创建对应类的对象，并初始化类属性</span></span><br><span class="line">Person tom = (Person) cons.newInstance(<span class="string">&quot;Tom&quot;</span>, <span class="number">5</span>);</span><br><span class="line"><span class="comment">//设置指定属性的值</span></span><br><span class="line">age.set(tom, <span class="number">12</span>);</span><br><span class="line">System.out.println(tom);</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取指定属性</span></span><br><span class="line">Field name = clazz.getDeclaredField(<span class="string">&quot;name&quot;</span>);</span><br><span class="line"><span class="comment">//设置指定属性的值</span></span><br><span class="line">name.setAccessible(<span class="keyword">true</span>);<span class="comment">//保证当前属性可以访问</span></span><br><span class="line">name.set(tom,<span class="string">&quot;Jerry&quot;</span>);</span><br><span class="line">System.out.println(tom);</span><br></pre></td></tr></table></figure>
+<p><strong>调用运行时类的指定方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class clazz = Class.forName(<span class="string">&quot;ReflectionTest.Person&quot;</span>);</span><br><span class="line"></span><br><span class="line">Constructor con = clazz.getDeclaredConstructor();</span><br><span class="line">Object p = con.newInstance();</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取指定的某个方法(非静态方法)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//getDeclaredMethod()：参数1--指明获取方法的名称 参数2：知名获取的方法形参列表</span></span><br><span class="line">Method showNation = clazz.getDeclaredMethod(<span class="string">&quot;showNation&quot;</span>,String.class);</span><br><span class="line"><span class="comment">//保证当前方法是可用的</span></span><br><span class="line">showNation.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"><span class="comment">//invoke()：参数1--方法的调用者 参数2--给方法形参赋值的实参</span></span><br><span class="line"><span class="comment">//invoke()也有返回值，返回的是对应类中调用的方法的返回值</span></span><br><span class="line">Object china = showNation.invoke(p, <span class="string">&quot;China&quot;</span>);<span class="comment">//相当于String nation p.show(&quot;China&quot;);//我的国籍是China</span></span><br><span class="line">System.out.println(china);<span class="comment">//China</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//获取指定的某个方法(静态方法)</span></span><br><span class="line">Method showInfo = clazz.getDeclaredMethod(<span class="string">&quot;showInfo&quot;</span>);</span><br><span class="line">showInfo.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">Object invoke = showInfo.invoke(clazz);<span class="comment">//I am a person</span></span><br><span class="line">System.out.println(invoke);<span class="comment">//null</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>反射</category>
+      </categories>
+      <tags>
+        <tag>反射</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串反转</title>
+    <url>/p/34837.html</url>
+    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
+<a id="more"></a>
+
+<p><strong>解法一：转换为char[]</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>①将字符串转换为char[]类型；</p>
+<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
+<p>③将不需要反转的头和尾再按顺序加上。</p>
+<p><strong>解法二：使用String的拼接</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
+<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>字符集</title>
     <url>/p/40261.html</url>
     <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>我们在计算机屏幕上看到的是实体化的文字，而在计算机存储介质中存放的实际是二进制的比特流。那么在这两者之间的转换规则就需要一个统一的标准。简单的说字符集就规定了某个文字对应的二进制数字存放方式（编码）和某串二进制数值代表了哪个文字（解码）的转换关系。</p>
@@ -596,35 +670,6 @@
       </categories>
       <tags>
         <tag>字符集</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符串反转</title>
-    <url>/p/34837.html</url>
-    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
-<a id="more"></a>
-
-<p><strong>解法一：转换为char[]</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>①将字符串转换为char[]类型；</p>
-<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
-<p>③将不需要反转的头和尾再按顺序加上。</p>
-<p><strong>解法二：使用String的拼接</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
-<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -931,6 +976,19 @@
       </tags>
   </entry>
   <entry>
+    <title>线程的安全问题</title>
+    <url>/p/55922.html</url>
+    <content><![CDATA[<a id="more"></a>]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>注解</title>
     <url>/p/49545.html</url>
     <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
@@ -1033,16 +1091,25 @@
       </tags>
   </entry>
   <entry>
-    <title>线程的安全问题</title>
-    <url>/p/55922.html</url>
-    <content><![CDATA[<a id="more"></a>]]></content>
+    <title>获取一个字符串在另一个字符串中出现的次数</title>
+    <url>/p/4524.html</url>
+    <content><![CDATA[<p><strong>问题：</strong>获取一个字符串在另一个字符串中出现的次数。比如字符串“abkkcadkabkebfkabkskabdjahkjldghabab”中“ab”出现的次数。</p>
+<a id="more"></a>
+
+<p><strong>解法一：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String str1 = <span class="string">&quot;abkkcadkabkebfkabkskabdjahkjldghabab&quot;</span>;</span><br><span class="line">        String str2 = <span class="string">&quot;ab&quot;</span>;</span><br><span class="line">        System.out.print(<span class="string">&quot;字符串&quot;</span> + str1 + <span class="string">&quot;中&quot;</span>);</span><br><span class="line">        System.out.println(str2 + <span class="string">&quot;出现几次？&quot;</span>);</span><br><span class="line">        System.out.println(getCount(str1, str2));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取str1中str2出现的次数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">        <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">            <span class="keyword">while</span> (str1.indexOf(str2) != -<span class="number">1</span>)&#123;</span><br><span class="line">                str1 = str1.substring(str1.indexOf(str2) + str2Length);</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>解法二：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount1</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">    <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">        <span class="keyword">while</span> ((index = str1.indexOf(str2,index)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            index += str2Length;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效率更高。因为没有频繁创建新对象。</p>
+]]></content>
       <categories>
         <category>Java</category>
-        <category>多线程</category>
+        <category>Java基础</category>
+        <category>String类</category>
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>多线程</tag>
+        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -1159,28 +1226,6 @@
       </categories>
       <tags>
         <tag>网络编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>获取一个字符串在另一个字符串中出现的次数</title>
-    <url>/p/4524.html</url>
-    <content><![CDATA[<p><strong>问题：</strong>获取一个字符串在另一个字符串中出现的次数。比如字符串“abkkcadkabkebfkabkskabdjahkjldghabab”中“ab”出现的次数。</p>
-<a id="more"></a>
-
-<p><strong>解法一：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String str1 = <span class="string">&quot;abkkcadkabkebfkabkskabdjahkjldghabab&quot;</span>;</span><br><span class="line">        String str2 = <span class="string">&quot;ab&quot;</span>;</span><br><span class="line">        System.out.print(<span class="string">&quot;字符串&quot;</span> + str1 + <span class="string">&quot;中&quot;</span>);</span><br><span class="line">        System.out.println(str2 + <span class="string">&quot;出现几次？&quot;</span>);</span><br><span class="line">        System.out.println(getCount(str1, str2));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取str1中str2出现的次数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">        <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">            <span class="keyword">while</span> (str1.indexOf(str2) != -<span class="number">1</span>)&#123;</span><br><span class="line">                str1 = str1.substring(str1.indexOf(str2) + str2Length);</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>解法二：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount1</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">    <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">        <span class="keyword">while</span> ((index = str1.indexOf(str2,index)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            index += str2Length;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>效率更高。因为没有频繁创建新对象。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
       </tags>
   </entry>
   <entry>
