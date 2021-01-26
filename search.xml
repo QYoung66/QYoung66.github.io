@@ -347,7 +347,7 @@
   <entry>
     <title>单链表</title>
     <url>/p/71c610d3.html</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="/%E5%8D%95%E9%93%BE%E8%A1%A8/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.jpg" alt="单链表基本结构"></p>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="/p/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.jpg" alt="单链表基本结构"></p>
 <a id="more"></a> 
 
 ]]></content>
@@ -632,62 +632,6 @@
       </tags>
   </entry>
   <entry>
-    <title>字符集</title>
-    <url>/p/40261.html</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>我们在计算机屏幕上看到的是实体化的文字，而在计算机存储介质中存放的实际是二进制的比特流。那么在这两者之间的转换规则就需要一个统一的标准。简单的说字符集就规定了某个文字对应的二进制数字存放方式（编码）和某串二进制数值代表了哪个文字（解码）的转换关系。</p>
-<a id="more"></a> 
-
-<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><ul>
-<li><strong>ASCII：</strong>美国标准信息交换码，用一个字节的7位表示（128个）；</li>
-<li><strong>ISO8859-1：</strong>拉丁码表。欧洲码表，用一个字节的8位表示；</li>
-<li><strong>GB2312：</strong>中国的中文编码表。最多两个字节编码所有字符；</li>
-<li><strong>GBK：</strong>中国的中文编码表升级，融合了更多的中文文字符号，最多两个字节编码；</li>
-<li><strong>Unicode：</strong>国际标准码，融合了目前人类使用的所有字符，为每个字符分配唯一的字符码，所有的文字都使用两个字节来表示；</li>
-<li><strong>UTF-8：</strong>变长的国际标准码，定义了庞大的、全球通用的字符集，为每个字符规定了唯一确定的编码，可用1-4个字节来表示一个字符。</li>
-</ul>
-<h1 id="字库表、编码字符集、字符编码"><a href="#字库表、编码字符集、字符编码" class="headerlink" title="字库表、编码字符集、字符编码"></a>字库表、编码字符集、字符编码</h1><p><strong>字库表（character repertoire）</strong>：相当于所有可读或者可显示字符的数据库，字库表决定了整个字符集能够展现表示的所有字符的范围。</p>
-<p><strong>编码字符集（coded character set</strong>）：用一个编码值<code>code point</code>来表示一个字符在字库中的位置。</p>
-<p><strong>字符编码（character encoding form）</strong>：将编码字符集和实际存储数值之间的转换关系。一般来说都会直接将code point的值作为编码后的值直接存储。例如在ASCII中<code>A</code>在表中排第65位，而编码后<code>A</code>的数值是<code>0100 0001</code>也即十进制的65的二进制转换结果。</p>
-<p><code>字库表</code>和<code>编码字符集</code>看来是必不可少的，那既然字库表中的每一个字符都有一个自己的序号，直接把序号作为存储内容就好了。为什么还要多此一举通过<code>字符编码</code>把序号转换成另外一种存储格式呢？其实原因也比较容易理解：统一字库表的目的是为了能够涵盖世界上所有的字符，但实际使用过程中会发现真正用的上的字符相对整个字库表来说比例非常低。例如中文地区的程序几乎不会需要日语字符，而一些英语国家甚至简单的ASCII字库表就能满足基本需求。而如果把每个字符都用字库表中的序号来存储的话，每个字符就需要3个字节（这里以Unicode字库为例），这样对于原本用仅占一个字符的ASCII编码的英语地区国家显然是一个额外成本（存储体积是原来的三倍）。算的直接一些，同样一块硬盘，用ASCII可以存1500篇文章，而用3字节Unicode序号存储只能存500篇。于是就出现了UTF-8这样的变长编码。在UTF-8编码中原本只需要一个字节的ASCII字符，仍然只占一个字节。而像中文及日语这样的复杂字符就需要2个到3个字节来存储。</p>
-<h1 id="UTF-8和Unicode的关系"><a href="#UTF-8和Unicode的关系" class="headerlink" title="UTF-8和Unicode的关系"></a>UTF-8和Unicode的关系</h1><p>Unicode就是上文中提到的编码字符集，而UTF-8就是字符编码，即Unicode规则字库的一种实现形式。随着互联网的发展，对同一字库集的要求越来越迫切，Unicode标准也就自然而然的出现。它几乎涵盖了各个国家语言可能出现的符号和文字，并将为他们编号。Unicode的编号从0000开始一直到10FFFF共分为16个Plane，每个Plane中有65536个字符。而UTF-8则只实现了第一个Plane，可见UTF-8虽然是一个当今接受度最广的字符集编码，但是它并没有涵盖整个Unicode的字库。</p>
-<h2 id="UTF-8编码简介"><a href="#UTF-8编码简介" class="headerlink" title="UTF-8编码简介"></a>UTF-8编码简介</h2><ul>
-<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的 Unicode 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的。</li>
-<li>对于n字节的符号（n &gt; 1），第一个字节的前n位都设为1，第n + 1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的 Unicode 码。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Unicode符号范围（十六进制）</th>
-<th>UTF-8编码方式（二进制）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0000 0000-0000 0007F</td>
-<td>0xxxxxxx</td>
-</tr>
-<tr>
-<td>0000 0080-0000 07FF</td>
-<td>110xxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td>0000 0800-0000 FFFF</td>
-<td>1110xxxx 10xxxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td>0001 0000-0010 FFFF</td>
-<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>IO流</category>
-      </categories>
-      <tags>
-        <tag>字符集</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>日期和时间的使用</title>
     <url>/p/48841.html</url>
     <content><![CDATA[<h1 id="System-currentTimeMillis-方法-JDK1-5"><a href="#System-currentTimeMillis-方法-JDK1-5" class="headerlink" title="System.currentTimeMillis()方法(JDK1.5)"></a>System.currentTimeMillis()方法(JDK1.5)</h1><p><strong>介绍：</strong>返回当前时间与1970年1约1日0时0分0秒之间以毫秒为单位的时间差——又称为时间戳。</p>
@@ -815,6 +759,62 @@
       </tags>
   </entry>
   <entry>
+    <title>字符集</title>
+    <url>/p/40261.html</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>我们在计算机屏幕上看到的是实体化的文字，而在计算机存储介质中存放的实际是二进制的比特流。那么在这两者之间的转换规则就需要一个统一的标准。简单的说字符集就规定了某个文字对应的二进制数字存放方式（编码）和某串二进制数值代表了哪个文字（解码）的转换关系。</p>
+<a id="more"></a> 
+
+<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><ul>
+<li><strong>ASCII：</strong>美国标准信息交换码，用一个字节的7位表示（128个）；</li>
+<li><strong>ISO8859-1：</strong>拉丁码表。欧洲码表，用一个字节的8位表示；</li>
+<li><strong>GB2312：</strong>中国的中文编码表。最多两个字节编码所有字符；</li>
+<li><strong>GBK：</strong>中国的中文编码表升级，融合了更多的中文文字符号，最多两个字节编码；</li>
+<li><strong>Unicode：</strong>国际标准码，融合了目前人类使用的所有字符，为每个字符分配唯一的字符码，所有的文字都使用两个字节来表示；</li>
+<li><strong>UTF-8：</strong>变长的国际标准码，定义了庞大的、全球通用的字符集，为每个字符规定了唯一确定的编码，可用1-4个字节来表示一个字符。</li>
+</ul>
+<h1 id="字库表、编码字符集、字符编码"><a href="#字库表、编码字符集、字符编码" class="headerlink" title="字库表、编码字符集、字符编码"></a>字库表、编码字符集、字符编码</h1><p><strong>字库表（character repertoire）</strong>：相当于所有可读或者可显示字符的数据库，字库表决定了整个字符集能够展现表示的所有字符的范围。</p>
+<p><strong>编码字符集（coded character set</strong>）：用一个编码值<code>code point</code>来表示一个字符在字库中的位置。</p>
+<p><strong>字符编码（character encoding form）</strong>：将编码字符集和实际存储数值之间的转换关系。一般来说都会直接将code point的值作为编码后的值直接存储。例如在ASCII中<code>A</code>在表中排第65位，而编码后<code>A</code>的数值是<code>0100 0001</code>也即十进制的65的二进制转换结果。</p>
+<p><code>字库表</code>和<code>编码字符集</code>看来是必不可少的，那既然字库表中的每一个字符都有一个自己的序号，直接把序号作为存储内容就好了。为什么还要多此一举通过<code>字符编码</code>把序号转换成另外一种存储格式呢？其实原因也比较容易理解：统一字库表的目的是为了能够涵盖世界上所有的字符，但实际使用过程中会发现真正用的上的字符相对整个字库表来说比例非常低。例如中文地区的程序几乎不会需要日语字符，而一些英语国家甚至简单的ASCII字库表就能满足基本需求。而如果把每个字符都用字库表中的序号来存储的话，每个字符就需要3个字节（这里以Unicode字库为例），这样对于原本用仅占一个字符的ASCII编码的英语地区国家显然是一个额外成本（存储体积是原来的三倍）。算的直接一些，同样一块硬盘，用ASCII可以存1500篇文章，而用3字节Unicode序号存储只能存500篇。于是就出现了UTF-8这样的变长编码。在UTF-8编码中原本只需要一个字节的ASCII字符，仍然只占一个字节。而像中文及日语这样的复杂字符就需要2个到3个字节来存储。</p>
+<h1 id="UTF-8和Unicode的关系"><a href="#UTF-8和Unicode的关系" class="headerlink" title="UTF-8和Unicode的关系"></a>UTF-8和Unicode的关系</h1><p>Unicode就是上文中提到的编码字符集，而UTF-8就是字符编码，即Unicode规则字库的一种实现形式。随着互联网的发展，对同一字库集的要求越来越迫切，Unicode标准也就自然而然的出现。它几乎涵盖了各个国家语言可能出现的符号和文字，并将为他们编号。Unicode的编号从0000开始一直到10FFFF共分为16个Plane，每个Plane中有65536个字符。而UTF-8则只实现了第一个Plane，可见UTF-8虽然是一个当今接受度最广的字符集编码，但是它并没有涵盖整个Unicode的字库。</p>
+<h2 id="UTF-8编码简介"><a href="#UTF-8编码简介" class="headerlink" title="UTF-8编码简介"></a>UTF-8编码简介</h2><ul>
+<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的 Unicode 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的。</li>
+<li>对于n字节的符号（n &gt; 1），第一个字节的前n位都设为1，第n + 1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的 Unicode 码。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Unicode符号范围（十六进制）</th>
+<th>UTF-8编码方式（二进制）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000 0000-0000 0007F</td>
+<td>0xxxxxxx</td>
+</tr>
+<tr>
+<td>0000 0080-0000 07FF</td>
+<td>110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0000 0800-0000 FFFF</td>
+<td>1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0001 0000-0010 FFFF</td>
+<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>IO流</category>
+      </categories>
+      <tags>
+        <tag>字符集</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>枚举类</title>
     <url>/p/20039.html</url>
     <content><![CDATA[<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><ul>
@@ -849,6 +849,69 @@
       </categories>
       <tags>
         <tag>枚举类</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>死锁</title>
+    <url>/p/28384.html</url>
+    <content><![CDATA[<h1 id="死锁的定义"><a href="#死锁的定义" class="headerlink" title="死锁的定义"></a><strong>死锁的定义</strong></h1><p>多线程以及多进程改善了系统资源的利用率并提高了系统 的处理能力。然而，并发执行也带来了新的问题——死锁。所谓死锁是指多个线程因竞争资源而造成的一种僵局（互相等待），若无外力作用，这些进程都将无法向前推进。</p>
+<a id="more"></a>
+
+<h1 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a><strong>死锁产生的原因</strong></h1><p><strong>1.系统资源的竞争</strong></p>
+<p>通常系统中拥有的不可剥夺资源，其数量不足以满足多个进程运行的需要，使得进程在运行过程中，会因争夺资源而陷入僵局，如磁带机、打印机等。只有对不可剥夺资源的竞争才可能产生死锁，对可剥夺资源的竞争是不会引起死锁的。</p>
+<p><strong>2.进程推进顺序非法</strong></p>
+<p>Java中死锁最简单的情况是，一个线程T1持有锁L1并且申请获得锁L2，而另一个线程T2持有锁L2并且申请获得锁L1，因为默认的锁申请操作都是阻塞的，所以线程T1和T2永远被阻塞了。导致了死锁。</p>
+<p>总而言之，产生死锁可能性的最根本原因是：<strong>线程在获得一个锁L1的情况下再去申请另外一个锁L2，也就是锁L1想要包含了锁L2，也就是说在获得了锁L1，并且没有释放锁L1的情况下，又去申请获得锁L2，这个是产生死锁的最根本原因</strong>。另一个原因是<strong>默认的锁申请操作是阻塞的</strong>。</p>
+<h1 id="死锁产生的必要条件"><a href="#死锁产生的必要条件" class="headerlink" title="死锁产生的必要条件"></a><strong>死锁产生的必要条件</strong></h1><p><strong>1.互斥条件</strong>：一个资源每次只能被一个线程使用。此时若有其他进程请求该资源，则请求进程只能等待。</p>
+<p><strong>2.不剥夺条件：</strong>进程所获得的资源在未使用完毕之前，不能被其他进程强行夺走，即只能由获得该资源的进程自己来释放（只能是主动释放)。</p>
+<p><strong>3.请求和保持条件</strong>：进程已经保持了至少一个资源，但又提出了新的资源请求，而该资源已被其他进程占有，此时请求进程被阻塞，但对自己已获得的资源保持不放。</p>
+<p><strong>4.循环等待条件：</strong>若干进程之间形成一种头尾相接的循环等待资源关系。</p>
+<p>注：循环等待条件和死锁的区别</p>
+<p>循环等待条件是存在一种进程资源的循环等待链，链中每一个进程已获得的资源同时被链中下一个进程所请求。即存在一个处于等待状态的进程集合{Pl, P2, …, pn}，其中Pi等 待的资源被P(i+1)占有（i=0, 1, …, n-1)，Pn等待的资源被P0占有。</p>
+<p>直观上看，循环等待条件似乎和死锁的定义一样，其实不然。按死锁定义构成等待环所 要求的条件更严，它要求Pi等待的资源必须由P(i+1)来满足，而循环等待条件则无此限制。 例如，系统中有两台输出设备，P0占有一台，PK占有另一台，且K不属于集合{0, 1, …, n}。</p>
+<p> Pn等待一台输出设备，它可以从P0获得，也可能从PK获得。因此，虽然Pn、P0和其他 一些进程形成了循环等待圈，但PK不在圈内，若PK释放了输出设备，则可打破循环等待。因此循环等待只是死锁的必要条件。</p>
+<p>总的来说，<strong>死锁要求当前进程只能从循环链的下一个来满足，而循环等待条件是可以从循环链下一个来获取，也可以从其他途径获得。</strong></p>
+<h1 id="死锁的实例"><a href="#死锁的实例" class="headerlink" title="死锁的实例"></a>死锁的实例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLockTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Object lock1 = <span class="keyword">new</span> Object();</span><br><span class="line">        Object lock2 = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1, want lock2&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">100</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1 and lock2&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2, want lock1&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2 and lock1&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread-0 got lock1, want lock2</span><br><span class="line">Thread-1 got lock2, want lock1</span><br></pre></td></tr></table></figure>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h1 id="如何避免死锁"><a href="#如何避免死锁" class="headerlink" title="如何避免死锁"></a><strong>如何避免死锁</strong></h1><p>死锁是由四个必要条件导致的，所以一般来说，只要破坏这四个必要条件中的一个条件，死锁情况就应该不会发生。</p>
+<ul>
+<li>加锁顺序（线程按照一定的顺序加锁）</li>
+<li>加锁时限（线程尝试获取锁的时候加上一定的时限，超过时限则放弃对该锁的请求，并释放自己占有的锁）</li>
+<li>死锁检测</li>
+</ul>
+<h2 id="1-加锁顺序"><a href="#1-加锁顺序" class="headerlink" title="1.加锁顺序"></a>1.加锁顺序</h2><p>当多个线程需要相同的一些锁，但是按照不同的顺序加锁，死锁就很容易发生。如果能确保所有的线程都是按照相同的顺序获得锁，那么死锁就不会发生。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread 1:</span><br><span class="line">  lock A </span><br><span class="line">  lock B</span><br><span class="line"></span><br><span class="line">Thread 2:</span><br><span class="line">   wait for A</span><br><span class="line">   lock C (when A locked)</span><br><span class="line"></span><br><span class="line">Thread 3:</span><br><span class="line">   wait for A</span><br><span class="line">   wait for B</span><br><span class="line">   wait for C</span><br></pre></td></tr></table></figure>
+<p>如果一个线程（比如线程3）需要一些锁，那么它必须按照确定的顺序获取锁。它只有获得了从顺序上排在前面的锁之后，才能获取后面的锁。</p>
+<p>例如，线程2和线程3只有在获取了锁A之后才能尝试获取锁C(<em>获取锁A是获取锁C的必要条件</em>)。因为线程1已经拥有了锁A，所以线程2和3需要一直等到锁A被释放。然后在它们尝试对B或C加锁之前，必须成功地对A加了锁。</p>
+<p>按照顺序加锁是一种有效的死锁预防机制。但是，这种方式需要你事先知道所有可能会用到的锁(<em>并对这些锁做适当的排序</em>)，但总有些时候是无法预知的。</p>
+<h2 id="2-加锁时限"><a href="#2-加锁时限" class="headerlink" title="2.加锁时限"></a>2.加锁时限</h2><p>另外一个可以避免死锁的方法是在尝试获取锁的时候加一个超时时间，这也就意味着在尝试获取锁的过程中若超过了这个时限该线程则放弃对该锁请求。若一个线程没有在给定的时限内成功获得所有需要的锁，则会进行回退并释放所有已经获得的锁，然后等待一段随机的时间再重试。这段随机的等待时间让其它线程有机会尝试获取相同的这些锁，并且让该应用在没有获得锁的时候可以继续运行(<em>加锁超时后可以先继续运行干点其它事情，再回头来重复之前加锁的逻辑</em>)。</p>
+<p>这种机制存在一个问题，在Java中不能对synchronized同步块设置超时时间。你需要创建一个自定义锁，或使用Java5中java.util.concurrent包下的工具。</p>
+<h2 id="3-死锁检测"><a href="#3-死锁检测" class="headerlink" title="3.死锁检测"></a><strong>3.死锁检测</strong></h2><p>死锁检测是一个更好的死锁预防机制，它主要是针对那些不可能实现按序加锁并且锁超时也不可行的场景。</p>
+<p>每当一个线程获得了锁，会在线程和锁相关的数据结构中（map、graph等等）将其记下。除此之外，每当有线程请求锁，也需要记录在这个数据结构中。当一个线程请求锁失败时，这个线程可以遍历锁的关系图看看是否有死锁发生。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线程的安全问题</title>
+    <url>/p/55922.html</url>
+    <content><![CDATA[<a id="more"></a>]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -941,56 +1004,6 @@
       </tags>
   </entry>
   <entry>
-    <title>死锁</title>
-    <url>/p/28384.html</url>
-    <content><![CDATA[<h1 id="死锁的定义"><a href="#死锁的定义" class="headerlink" title="死锁的定义"></a><strong>死锁的定义</strong></h1><p>多线程以及多进程改善了系统资源的利用率并提高了系统 的处理能力。然而，并发执行也带来了新的问题——死锁。所谓死锁是指多个线程因竞争资源而造成的一种僵局（互相等待），若无外力作用，这些进程都将无法向前推进。</p>
-<a id="more"></a>
-
-<h1 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a><strong>死锁产生的原因</strong></h1><p><strong>1.系统资源的竞争</strong></p>
-<p>通常系统中拥有的不可剥夺资源，其数量不足以满足多个进程运行的需要，使得进程在运行过程中，会因争夺资源而陷入僵局，如磁带机、打印机等。只有对不可剥夺资源的竞争才可能产生死锁，对可剥夺资源的竞争是不会引起死锁的。</p>
-<p><strong>2.进程推进顺序非法</strong></p>
-<p>Java中死锁最简单的情况是，一个线程T1持有锁L1并且申请获得锁L2，而另一个线程T2持有锁L2并且申请获得锁L1，因为默认的锁申请操作都是阻塞的，所以线程T1和T2永远被阻塞了。导致了死锁。</p>
-<p>总而言之，产生死锁可能性的最根本原因是：<strong>线程在获得一个锁L1的情况下再去申请另外一个锁L2，也就是锁L1想要包含了锁L2，也就是说在获得了锁L1，并且没有释放锁L1的情况下，又去申请获得锁L2，这个是产生死锁的最根本原因</strong>。另一个原因是<strong>默认的锁申请操作是阻塞的</strong>。</p>
-<h1 id="死锁产生的必要条件"><a href="#死锁产生的必要条件" class="headerlink" title="死锁产生的必要条件"></a><strong>死锁产生的必要条件</strong></h1><p><strong>1.互斥条件</strong>：一个资源每次只能被一个线程使用。此时若有其他进程请求该资源，则请求进程只能等待。</p>
-<p><strong>2.不剥夺条件：</strong>进程所获得的资源在未使用完毕之前，不能被其他进程强行夺走，即只能由获得该资源的进程自己来释放（只能是主动释放)。</p>
-<p><strong>3.请求和保持条件</strong>：进程已经保持了至少一个资源，但又提出了新的资源请求，而该资源已被其他进程占有，此时请求进程被阻塞，但对自己已获得的资源保持不放。</p>
-<p><strong>4.循环等待条件：</strong>若干进程之间形成一种头尾相接的循环等待资源关系。</p>
-<p>注：循环等待条件和死锁的区别</p>
-<p>循环等待条件是存在一种进程资源的循环等待链，链中每一个进程已获得的资源同时被链中下一个进程所请求。即存在一个处于等待状态的进程集合{Pl, P2, …, pn}，其中Pi等 待的资源被P(i+1)占有（i=0, 1, …, n-1)，Pn等待的资源被P0占有。</p>
-<p>直观上看，循环等待条件似乎和死锁的定义一样，其实不然。按死锁定义构成等待环所 要求的条件更严，它要求Pi等待的资源必须由P(i+1)来满足，而循环等待条件则无此限制。 例如，系统中有两台输出设备，P0占有一台，PK占有另一台，且K不属于集合{0, 1, …, n}。</p>
-<p> Pn等待一台输出设备，它可以从P0获得，也可能从PK获得。因此，虽然Pn、P0和其他 一些进程形成了循环等待圈，但PK不在圈内，若PK释放了输出设备，则可打破循环等待。因此循环等待只是死锁的必要条件。</p>
-<p>总的来说，<strong>死锁要求当前进程只能从循环链的下一个来满足，而循环等待条件是可以从循环链下一个来获取，也可以从其他途径获得。</strong></p>
-<h1 id="死锁的实例"><a href="#死锁的实例" class="headerlink" title="死锁的实例"></a>死锁的实例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadLockTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Object lock1 = <span class="keyword">new</span> Object();</span><br><span class="line">        Object lock2 = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1, want lock2&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">100</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1 and lock2&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock2) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2, want lock1&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">synchronized</span> (lock1) &#123;</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock1&quot;</span>);</span><br><span class="line">                        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; got lock2 and lock1&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
-<p>结果：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread-0 got lock1, want lock2</span><br><span class="line">Thread-1 got lock2, want lock1</span><br></pre></td></tr></table></figure>
-<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
-<h1 id="如何避免死锁"><a href="#如何避免死锁" class="headerlink" title="如何避免死锁"></a><strong>如何避免死锁</strong></h1><p>死锁是由四个必要条件导致的，所以一般来说，只要破坏这四个必要条件中的一个条件，死锁情况就应该不会发生。</p>
-<ul>
-<li>加锁顺序（线程按照一定的顺序加锁）</li>
-<li>加锁时限（线程尝试获取锁的时候加上一定的时限，超过时限则放弃对该锁的请求，并释放自己占有的锁）</li>
-<li>死锁检测</li>
-</ul>
-<h2 id="1-加锁顺序"><a href="#1-加锁顺序" class="headerlink" title="1.加锁顺序"></a>1.加锁顺序</h2><p>当多个线程需要相同的一些锁，但是按照不同的顺序加锁，死锁就很容易发生。如果能确保所有的线程都是按照相同的顺序获得锁，那么死锁就不会发生。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thread 1:</span><br><span class="line">  lock A </span><br><span class="line">  lock B</span><br><span class="line"></span><br><span class="line">Thread 2:</span><br><span class="line">   wait for A</span><br><span class="line">   lock C (when A locked)</span><br><span class="line"></span><br><span class="line">Thread 3:</span><br><span class="line">   wait for A</span><br><span class="line">   wait for B</span><br><span class="line">   wait for C</span><br></pre></td></tr></table></figure>
-<p>如果一个线程（比如线程3）需要一些锁，那么它必须按照确定的顺序获取锁。它只有获得了从顺序上排在前面的锁之后，才能获取后面的锁。</p>
-<p>例如，线程2和线程3只有在获取了锁A之后才能尝试获取锁C(<em>获取锁A是获取锁C的必要条件</em>)。因为线程1已经拥有了锁A，所以线程2和3需要一直等到锁A被释放。然后在它们尝试对B或C加锁之前，必须成功地对A加了锁。</p>
-<p>按照顺序加锁是一种有效的死锁预防机制。但是，这种方式需要你事先知道所有可能会用到的锁(<em>并对这些锁做适当的排序</em>)，但总有些时候是无法预知的。</p>
-<h2 id="2-加锁时限"><a href="#2-加锁时限" class="headerlink" title="2.加锁时限"></a>2.加锁时限</h2><p>另外一个可以避免死锁的方法是在尝试获取锁的时候加一个超时时间，这也就意味着在尝试获取锁的过程中若超过了这个时限该线程则放弃对该锁请求。若一个线程没有在给定的时限内成功获得所有需要的锁，则会进行回退并释放所有已经获得的锁，然后等待一段随机的时间再重试。这段随机的等待时间让其它线程有机会尝试获取相同的这些锁，并且让该应用在没有获得锁的时候可以继续运行(<em>加锁超时后可以先继续运行干点其它事情，再回头来重复之前加锁的逻辑</em>)。</p>
-<p>这种机制存在一个问题，在Java中不能对synchronized同步块设置超时时间。你需要创建一个自定义锁，或使用Java5中java.util.concurrent包下的工具。</p>
-<h2 id="3-死锁检测"><a href="#3-死锁检测" class="headerlink" title="3.死锁检测"></a><strong>3.死锁检测</strong></h2><p>死锁检测是一个更好的死锁预防机制，它主要是针对那些不可能实现按序加锁并且锁超时也不可行的场景。</p>
-<p>每当一个线程获得了锁，会在线程和锁相关的数据结构中（map、graph等等）将其记下。除此之外，每当有线程请求锁，也需要记录在这个数据结构中。当一个线程请求锁失败时，这个线程可以遍历锁的关系图看看是否有死锁发生。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>注解</title>
     <url>/p/49545.html</url>
     <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
@@ -1069,43 +1082,6 @@
       </tags>
   </entry>
   <entry>
-    <title>线程的安全问题</title>
-    <url>/p/55922.html</url>
-    <content><![CDATA[<a id="more"></a>]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>线程的生命周期</title>
-    <url>/p/37913.html</url>
-    <content><![CDATA[<h4 id="线程的5种状态："><a href="#线程的5种状态：" class="headerlink" title="线程的5种状态："></a>线程的5种状态：</h4><p>JDK种使用Thread.state类定义了线程的5种状态：</p>
-<a id="more"></a>
-
-<ol>
-<li><strong>新建：</strong>当一个Thread类或者其子类的对象被声明并创建时，新生的线程对象属于新建状态；</li>
-<li><strong>就绪：</strong>处于新建状态的线程被start之后，将进入线程队列等待CPU世间品，此时已具备运行的条件，但未被分配到CPU资源；</li>
-<li><strong>运行：</strong>当就绪的线程被调度获得CPU资源时，便进入了运行状态，run()方法提供了该线程的操作和使用；</li>
-<li><strong>阻塞：</strong>在某种特殊情况下，被人挂起或进行I/O操作时，让出CPU并临时终端自己的执行，进入阻塞状态；阻塞状态是一个临时状态，不可以作为最终状态，线程最终状态都是死亡；</li>
-<li><strong>死亡：</strong>完成工作或者被强行退出或者出现异常导致线程结束。</li>
-</ol>
-<p><img src="/p/blog\picture\线程状态转换.png"></p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>线程通信</title>
     <url>/p/27168.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -1140,6 +1116,52 @@
       <tags>
         <tag>Java</tag>
         <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线程的生命周期</title>
+    <url>/p/37913.html</url>
+    <content><![CDATA[<h4 id="线程的5种状态："><a href="#线程的5种状态：" class="headerlink" title="线程的5种状态："></a>线程的5种状态：</h4><p>JDK种使用Thread.state类定义了线程的5种状态：</p>
+<a id="more"></a>
+
+<ol>
+<li><strong>新建：</strong>当一个Thread类或者其子类的对象被声明并创建时，新生的线程对象属于新建状态；</li>
+<li><strong>就绪：</strong>处于新建状态的线程被start之后，将进入线程队列等待CPU世间品，此时已具备运行的条件，但未被分配到CPU资源；</li>
+<li><strong>运行：</strong>当就绪的线程被调度获得CPU资源时，便进入了运行状态，run()方法提供了该线程的操作和使用；</li>
+<li><strong>阻塞：</strong>在某种特殊情况下，被人挂起或进行I/O操作时，让出CPU并临时终端自己的执行，进入阻塞状态；阻塞状态是一个临时状态，不可以作为最终状态，线程最终状态都是死亡；</li>
+<li><strong>死亡：</strong>完成工作或者被强行退出或者出现异常导致线程结束。</li>
+</ol>
+<p><img src="/p/blog\picture\线程状态转换.png"></p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>获取一个字符串在另一个字符串中出现的次数</title>
+    <url>/p/4524.html</url>
+    <content><![CDATA[<p><strong>问题：</strong>获取一个字符串在另一个字符串中出现的次数。比如字符串“abkkcadkabkebfkabkskabdjahkjldghabab”中“ab”出现的次数。</p>
+<a id="more"></a>
+
+<p><strong>解法一：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String str1 = <span class="string">&quot;abkkcadkabkebfkabkskabdjahkjldghabab&quot;</span>;</span><br><span class="line">        String str2 = <span class="string">&quot;ab&quot;</span>;</span><br><span class="line">        System.out.print(<span class="string">&quot;字符串&quot;</span> + str1 + <span class="string">&quot;中&quot;</span>);</span><br><span class="line">        System.out.println(str2 + <span class="string">&quot;出现几次？&quot;</span>);</span><br><span class="line">        System.out.println(getCount(str1, str2));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取str1中str2出现的次数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">        <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">            <span class="keyword">while</span> (str1.indexOf(str2) != -<span class="number">1</span>)&#123;</span><br><span class="line">                str1 = str1.substring(str1.indexOf(str2) + str2Length);</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>解法二：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount1</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">    <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">        <span class="keyword">while</span> ((index = str1.indexOf(str2,index)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            index += str2Length;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效率更高。因为没有频繁创建新对象。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -1219,28 +1241,6 @@
       </categories>
       <tags>
         <tag>网络编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>获取一个字符串在另一个字符串中出现的次数</title>
-    <url>/p/4524.html</url>
-    <content><![CDATA[<p><strong>问题：</strong>获取一个字符串在另一个字符串中出现的次数。比如字符串“abkkcadkabkebfkabkskabdjahkjldghabab”中“ab”出现的次数。</p>
-<a id="more"></a>
-
-<p><strong>解法一：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String str1 = <span class="string">&quot;abkkcadkabkebfkabkskabdjahkjldghabab&quot;</span>;</span><br><span class="line">        String str2 = <span class="string">&quot;ab&quot;</span>;</span><br><span class="line">        System.out.print(<span class="string">&quot;字符串&quot;</span> + str1 + <span class="string">&quot;中&quot;</span>);</span><br><span class="line">        System.out.println(str2 + <span class="string">&quot;出现几次？&quot;</span>);</span><br><span class="line">        System.out.println(getCount(str1, str2));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取str1中str2出现的次数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">        <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">            <span class="keyword">while</span> (str1.indexOf(str2) != -<span class="number">1</span>)&#123;</span><br><span class="line">                str1 = str1.substring(str1.indexOf(str2) + str2Length);</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>解法二：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount1</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">    <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">        <span class="keyword">while</span> ((index = str1.indexOf(str2,index)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            index += str2Length;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>效率更高。因为没有频繁创建新对象。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
       </tags>
   </entry>
   <entry>
