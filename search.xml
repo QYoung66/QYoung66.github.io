@@ -405,82 +405,16 @@
       </tags>
   </entry>
   <entry>
-    <title>多线程的创建方式</title>
-    <url>/p/24227.html</url>
-    <content><![CDATA[<h3 id="多线程的创建方式"><a href="#多线程的创建方式" class="headerlink" title="多线程的创建方式"></a>多线程的创建方式</h3><a id="more"></a>
-
-<h4 id="创建线程的方式一：继承Thread类"><a href="#创建线程的方式一：继承Thread类" class="headerlink" title="创建线程的方式一：继承Thread类"></a>创建线程的方式一：继承Thread类</h4><p><strong>创建步骤：</strong></p>
-<ol>
-<li>创建一个继承于Thread类的子类；</li>
-<li>重写Thread类中的run()方法，将该线程要执行的操作声明在run()中；</li>
-<li>创建Thread子类的对象；</li>
-<li>通过此对象调用start()方法：启动当前线程；调用当先线程的run()方法。</li>
-</ol>
-<p><strong>注：</strong></p>
-<ol>
-<li>启动一个线程，必须使用start()方法，不能调用run()的方式启动线程；</li>
-<li>如果再启动一个线程，需要再创建一个Thread子类对象，然后调用start()方法，不能对用一个对象调用多次start()。</li>
-</ol>
-<h4 id="创建线程的方式二：实现Runnable接口"><a href="#创建线程的方式二：实现Runnable接口" class="headerlink" title="创建线程的方式二：实现Runnable接口"></a>创建线程的方式二：实现Runnable接口</h4><p><strong>创建步骤：</strong></p>
-<ol>
-<li>创建一个实现Runnable接口的类；</li>
-<li>实现类去实现Runnable接口中的抽象方法run()；</li>
-<li>创建实现类的对象；</li>
-<li>将创建的实现类的对象作为参数，传递到Thread类的构造器中，创建Thread类的对象；</li>
-<li>通过Thread类对象调用start()方法启动线程。</li>
-</ol>
-<p><strong>注：</strong></p>
-<ol>
-<li>可以使用同一个实现类对象创建多个线程；</li>
-<li>相比于创建方式一，优先使用创建方式二，因为①实现的方式没有类的但继承性的局限性；②实现的方式更适合来处理多个线程又共享数据的情况，因为多线程可以使用同一个Runnable实现类对象来创建线程。</li>
-</ol>
-<p><strong>继承Thread类①和实现Runnable接口②的创建多线程方式有什么区别？</strong></p>
-<p>①继承Thread类，并且覆写了Thread类中的run()方法，而Thread类又是Runnable的实现类，又覆写了Runnable接口中的抽象方法run()；</p>
-<p>②直接重写了Runnable接口的抽象方法run()，调用Thread类的start()方法启动线程时，Thread类判断然后使用实现类的run()方法。</p>
-<h4 id="创建线程的方式三：实现Callable接口（JDK5-0新增）"><a href="#创建线程的方式三：实现Callable接口（JDK5-0新增）" class="headerlink" title="创建线程的方式三：实现Callable接口（JDK5.0新增）"></a>创建线程的方式三：实现Callable接口（JDK5.0新增）</h4><p><strong>与实现Runnable接口方法相比的区别：</strong></p>
-<ul>
-<li>相比run()方法，可以有返回值；</li>
-<li>方法可以抛出异常，被外面的操作捕获，获取异常信息；</li>
-<li>支持泛型的返回值；</li>
-<li>需要借助FutureTask嘞，比如获取返回结果。</li>
-</ul>
-<p><strong>创建步骤：</strong></p>
-<ol>
-<li>创建一个实现Callable的实现类；</li>
-<li>实现call()方法，将此线程需要执行的操作声明在call()方法中；</li>
-<li>创建Callable接口实现类的对象；</li>
-<li>将此Callable接口类对象作为传递到FutureTask构造器中，创建FutureTask的对象；</li>
-<li>将FutureTask的对象作为参数传递到Thread类中，创建Thread对象，并调用start()方法；</li>
-<li>如果需要返回值，则使用FutureTask.get()返回FutureTask构造器参数Callbable实现类重写的call<br>()方法的返回值；如果不需要返回值，则Callable实现类中重写的call()方法返回null。</li>
-</ol>
-<p><strong>实现代码：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumThread</span> <span class="keyword">implements</span> <span class="title">Callable</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">100</span>; i++) &#123;</span><br><span class="line">            sum += i;</span><br><span class="line">            System.out.println(sum);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">threadCallableTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String [] args)</span></span>&#123;</span><br><span class="line">        NumThread numThread = <span class="keyword">new</span> NumThread();</span><br><span class="line">        FutureTask futureTask = <span class="keyword">new</span> FutureTask(numThread);</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(futureTask);</span><br><span class="line">        t.start();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Object sum = futureTask.get();</span><br><span class="line">            System.out.println(sum);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="创建线程的方式四：使用线程池"><a href="#创建线程的方式四：使用线程池" class="headerlink" title="创建线程的方式四：使用线程池"></a>创建线程的方式四：使用线程池</h4><p>经常创建和销毁，使用量特别大的资源，比如并发情况下的线程，对性能影响很大。</p>
-<p>考虑提前创建好多个线程，放入线程池中，使用时直接获取，使用完放回池中。可以避免频繁创建销毁，实现重复利用。</p>
-<p>这样做的好处是：</p>
-<ol>
-<li>提高了响应速度（减少了创建新线程的时间）；</li>
-<li>降低了资源消耗（重复利用线程池中线程，不需要每次都创建）；</li>
-<li>便于线程管理（设置核心池大小corePollSize，最大线程数maximumPoolSize，线程没有任务时最多保持多长时间后会终止KeepAliveTime）。</li>
-</ol>
-<p>所以开发中多用线程池。</p>
-<p><strong>创建步骤：</strong></p>
-<ol>
-<li>提供指定线程数量的线程池；</li>
-<li>执行指定的线程的操作，此时需要提供Runnable接口或者Callbable接口实现类的对象（即确定阿要执行的线程要做些什么）；</li>
-<li>关闭连接池。</li>
-</ol>
-<p><strong>实现代码：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThreadPool</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>)&#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot;:&quot;</span> + i);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThreadPool1</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i % <span class="number">2</span> != <span class="number">0</span>)&#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot;:&quot;</span> + i);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ExecutorService service = Executors.newFixedThreadPool(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        service.submit(<span class="keyword">new</span> MyThreadPool());<span class="comment">//适合Callable</span></span><br><span class="line"><span class="comment">//        service.execute();//适合Runnable</span></span><br><span class="line">        service.submit(<span class="keyword">new</span> MyThreadPool1());</span><br><span class="line">        service.shutdown();<span class="comment">//关闭连接池</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注：</strong>ExecutorService是一个接口，service是类ThreadPoolExecutor的实例化对象，ThreadPoolExecutor继承AbstractExecutorService，AbstractExecutorService又实现了ExecutorService。要设置线程池的一些参数的化，可以先将线程池强制类型转换为ThreadPoolExecutor类，利用其中的方法来进行线程池管理设置。</p>
-]]></content>
+    <title>单链表</title>
+    <url>/p/71c610d3.html</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="/p/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.jpg" alt="单链表基本结构"></p>
+<a id="more"></a> ]]></content>
       <categories>
-        <category>Java</category>
-        <category>多线程</category>
+        <category>算法与数据结构</category>
+        <category>单链表</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
+        <tag>单链表</tag>
       </tags>
   </entry>
   <entry>
@@ -588,32 +522,82 @@
       </tags>
   </entry>
   <entry>
-    <title>字符串反转</title>
-    <url>/p/34837.html</url>
-    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
-<a id="more"></a>
+    <title>多线程的创建方式</title>
+    <url>/p/24227.html</url>
+    <content><![CDATA[<h3 id="多线程的创建方式"><a href="#多线程的创建方式" class="headerlink" title="多线程的创建方式"></a>多线程的创建方式</h3><a id="more"></a>
 
-<p><strong>解法一：转换为char[]</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>①将字符串转换为char[]类型；</p>
-<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
-<p>③将不需要反转的头和尾再按顺序加上。</p>
-<p><strong>解法二：使用String的拼接</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
-<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
+<h4 id="创建线程的方式一：继承Thread类"><a href="#创建线程的方式一：继承Thread类" class="headerlink" title="创建线程的方式一：继承Thread类"></a>创建线程的方式一：继承Thread类</h4><p><strong>创建步骤：</strong></p>
+<ol>
+<li>创建一个继承于Thread类的子类；</li>
+<li>重写Thread类中的run()方法，将该线程要执行的操作声明在run()中；</li>
+<li>创建Thread子类的对象；</li>
+<li>通过此对象调用start()方法：启动当前线程；调用当先线程的run()方法。</li>
+</ol>
+<p><strong>注：</strong></p>
+<ol>
+<li>启动一个线程，必须使用start()方法，不能调用run()的方式启动线程；</li>
+<li>如果再启动一个线程，需要再创建一个Thread子类对象，然后调用start()方法，不能对用一个对象调用多次start()。</li>
+</ol>
+<h4 id="创建线程的方式二：实现Runnable接口"><a href="#创建线程的方式二：实现Runnable接口" class="headerlink" title="创建线程的方式二：实现Runnable接口"></a>创建线程的方式二：实现Runnable接口</h4><p><strong>创建步骤：</strong></p>
+<ol>
+<li>创建一个实现Runnable接口的类；</li>
+<li>实现类去实现Runnable接口中的抽象方法run()；</li>
+<li>创建实现类的对象；</li>
+<li>将创建的实现类的对象作为参数，传递到Thread类的构造器中，创建Thread类的对象；</li>
+<li>通过Thread类对象调用start()方法启动线程。</li>
+</ol>
+<p><strong>注：</strong></p>
+<ol>
+<li>可以使用同一个实现类对象创建多个线程；</li>
+<li>相比于创建方式一，优先使用创建方式二，因为①实现的方式没有类的但继承性的局限性；②实现的方式更适合来处理多个线程又共享数据的情况，因为多线程可以使用同一个Runnable实现类对象来创建线程。</li>
+</ol>
+<p><strong>继承Thread类①和实现Runnable接口②的创建多线程方式有什么区别？</strong></p>
+<p>①继承Thread类，并且覆写了Thread类中的run()方法，而Thread类又是Runnable的实现类，又覆写了Runnable接口中的抽象方法run()；</p>
+<p>②直接重写了Runnable接口的抽象方法run()，调用Thread类的start()方法启动线程时，Thread类判断然后使用实现类的run()方法。</p>
+<h4 id="创建线程的方式三：实现Callable接口（JDK5-0新增）"><a href="#创建线程的方式三：实现Callable接口（JDK5-0新增）" class="headerlink" title="创建线程的方式三：实现Callable接口（JDK5.0新增）"></a>创建线程的方式三：实现Callable接口（JDK5.0新增）</h4><p><strong>与实现Runnable接口方法相比的区别：</strong></p>
+<ul>
+<li>相比run()方法，可以有返回值；</li>
+<li>方法可以抛出异常，被外面的操作捕获，获取异常信息；</li>
+<li>支持泛型的返回值；</li>
+<li>需要借助FutureTask嘞，比如获取返回结果。</li>
+</ul>
+<p><strong>创建步骤：</strong></p>
+<ol>
+<li>创建一个实现Callable的实现类；</li>
+<li>实现call()方法，将此线程需要执行的操作声明在call()方法中；</li>
+<li>创建Callable接口实现类的对象；</li>
+<li>将此Callable接口类对象作为传递到FutureTask构造器中，创建FutureTask的对象；</li>
+<li>将FutureTask的对象作为参数传递到Thread类中，创建Thread对象，并调用start()方法；</li>
+<li>如果需要返回值，则使用FutureTask.get()返回FutureTask构造器参数Callbable实现类重写的call<br>()方法的返回值；如果不需要返回值，则Callable实现类中重写的call()方法返回null。</li>
+</ol>
+<p><strong>实现代码：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumThread</span> <span class="keyword">implements</span> <span class="title">Callable</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">100</span>; i++) &#123;</span><br><span class="line">            sum += i;</span><br><span class="line">            System.out.println(sum);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">threadCallableTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String [] args)</span></span>&#123;</span><br><span class="line">        NumThread numThread = <span class="keyword">new</span> NumThread();</span><br><span class="line">        FutureTask futureTask = <span class="keyword">new</span> FutureTask(numThread);</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(futureTask);</span><br><span class="line">        t.start();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Object sum = futureTask.get();</span><br><span class="line">            System.out.println(sum);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="创建线程的方式四：使用线程池"><a href="#创建线程的方式四：使用线程池" class="headerlink" title="创建线程的方式四：使用线程池"></a>创建线程的方式四：使用线程池</h4><p>经常创建和销毁，使用量特别大的资源，比如并发情况下的线程，对性能影响很大。</p>
+<p>考虑提前创建好多个线程，放入线程池中，使用时直接获取，使用完放回池中。可以避免频繁创建销毁，实现重复利用。</p>
+<p>这样做的好处是：</p>
+<ol>
+<li>提高了响应速度（减少了创建新线程的时间）；</li>
+<li>降低了资源消耗（重复利用线程池中线程，不需要每次都创建）；</li>
+<li>便于线程管理（设置核心池大小corePollSize，最大线程数maximumPoolSize，线程没有任务时最多保持多长时间后会终止KeepAliveTime）。</li>
+</ol>
+<p>所以开发中多用线程池。</p>
+<p><strong>创建步骤：</strong></p>
+<ol>
+<li>提供指定线程数量的线程池；</li>
+<li>执行指定的线程的操作，此时需要提供Runnable接口或者Callbable接口实现类的对象（即确定阿要执行的线程要做些什么）；</li>
+<li>关闭连接池。</li>
+</ol>
+<p><strong>实现代码：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThreadPool</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>)&#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot;:&quot;</span> + i);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThreadPool1</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i % <span class="number">2</span> != <span class="number">0</span>)&#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot;:&quot;</span> + i);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ExecutorService service = Executors.newFixedThreadPool(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        service.submit(<span class="keyword">new</span> MyThreadPool());<span class="comment">//适合Callable</span></span><br><span class="line"><span class="comment">//        service.execute();//适合Runnable</span></span><br><span class="line">        service.submit(<span class="keyword">new</span> MyThreadPool1());</span><br><span class="line">        service.shutdown();<span class="comment">//关闭连接池</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong>ExecutorService是一个接口，service是类ThreadPoolExecutor的实例化对象，ThreadPoolExecutor继承AbstractExecutorService，AbstractExecutorService又实现了ExecutorService。要设置线程池的一些参数的化，可以先将线程池强制类型转换为ThreadPoolExecutor类，利用其中的方法来进行线程池管理设置。</p>
 ]]></content>
       <categories>
         <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
+        <category>多线程</category>
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>String</tag>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -670,6 +654,35 @@
       </categories>
       <tags>
         <tag>字符集</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串反转</title>
+    <url>/p/34837.html</url>
+    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
+<a id="more"></a>
+
+<p><strong>解法一：转换为char[]</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>①将字符串转换为char[]类型；</p>
+<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
+<p>③将不需要反转的头和尾再按顺序加上。</p>
+<p><strong>解法二：使用String的拼接</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
+<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -976,19 +989,6 @@
       </tags>
   </entry>
   <entry>
-    <title>线程的安全问题</title>
-    <url>/p/55922.html</url>
-    <content><![CDATA[<a id="more"></a>]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>注解</title>
     <url>/p/49545.html</url>
     <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
@@ -1067,52 +1067,6 @@
       </tags>
   </entry>
   <entry>
-    <title>线程的生命周期</title>
-    <url>/p/37913.html</url>
-    <content><![CDATA[<h4 id="线程的5种状态："><a href="#线程的5种状态：" class="headerlink" title="线程的5种状态："></a>线程的5种状态：</h4><p>JDK种使用Thread.state类定义了线程的5种状态：</p>
-<a id="more"></a>
-
-<ol>
-<li><strong>新建：</strong>当一个Thread类或者其子类的对象被声明并创建时，新生的线程对象属于新建状态；</li>
-<li><strong>就绪：</strong>处于新建状态的线程被start之后，将进入线程队列等待CPU世间品，此时已具备运行的条件，但未被分配到CPU资源；</li>
-<li><strong>运行：</strong>当就绪的线程被调度获得CPU资源时，便进入了运行状态，run()方法提供了该线程的操作和使用；</li>
-<li><strong>阻塞：</strong>在某种特殊情况下，被人挂起或进行I/O操作时，让出CPU并临时终端自己的执行，进入阻塞状态；阻塞状态是一个临时状态，不可以作为最终状态，线程最终状态都是死亡；</li>
-<li><strong>死亡：</strong>完成工作或者被强行退出或者出现异常导致线程结束。</li>
-</ol>
-<p><img src="/p/blog\picture\线程状态转换.png"></p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>获取一个字符串在另一个字符串中出现的次数</title>
-    <url>/p/4524.html</url>
-    <content><![CDATA[<p><strong>问题：</strong>获取一个字符串在另一个字符串中出现的次数。比如字符串“abkkcadkabkebfkabkskabdjahkjldghabab”中“ab”出现的次数。</p>
-<a id="more"></a>
-
-<p><strong>解法一：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String str1 = <span class="string">&quot;abkkcadkabkebfkabkskabdjahkjldghabab&quot;</span>;</span><br><span class="line">        String str2 = <span class="string">&quot;ab&quot;</span>;</span><br><span class="line">        System.out.print(<span class="string">&quot;字符串&quot;</span> + str1 + <span class="string">&quot;中&quot;</span>);</span><br><span class="line">        System.out.println(str2 + <span class="string">&quot;出现几次？&quot;</span>);</span><br><span class="line">        System.out.println(getCount(str1, str2));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取str1中str2出现的次数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">        <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">            <span class="keyword">while</span> (str1.indexOf(str2) != -<span class="number">1</span>)&#123;</span><br><span class="line">                str1 = str1.substring(str1.indexOf(str2) + str2Length);</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>解法二：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount1</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">    <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">        <span class="keyword">while</span> ((index = str1.indexOf(str2,index)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            index += str2Length;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>效率更高。因为没有频繁创建新对象。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>线程通信</title>
     <url>/p/27168.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -1139,6 +1093,43 @@
 <h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><p><strong>分析：</strong>多线程问题，多个线程为生产者线程、消费者线程，至少两个；有共享数据产品数量，可能存在线程安全问题；使用同步机制来解决线程安全问题；涉及线程通信问题。</p>
 <p><strong>实现代码：</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//店员</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Clerk</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> productNum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">produceProduct</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (productNum &lt; <span class="number">20</span>) &#123;</span><br><span class="line">            productNum++;</span><br><span class="line">            notifyAll();</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;:生产第&quot;</span> + productNum + <span class="string">&quot;个产品&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                wait();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">consumeProduct</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (productNum &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;:消费第&quot;</span> + productNum + <span class="string">&quot;个产品&quot;</span>);</span><br><span class="line">            productNum--;</span><br><span class="line">            notifyAll();</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                wait();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//生产者----必须对应一个店员</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Clerk clerk = <span class="keyword">new</span> Clerk();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(Clerk clerk)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.clerk = clerk;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">10</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            clerk.produceProduct();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//消费者----必须对应一个店员</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Clerk clerk = <span class="keyword">new</span> Clerk();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(Clerk clerk)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.clerk = clerk;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">20</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            clerk.consumeProduct();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Clerk c = <span class="keyword">new</span> Clerk();</span><br><span class="line">        Producer p1 = <span class="keyword">new</span> Producer(c);</span><br><span class="line">        p1.setName(<span class="string">&quot;生产者1&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Consumer c1 = <span class="keyword">new</span> Consumer(c);</span><br><span class="line">        c1.setName(<span class="string">&quot;消费者1&quot;</span>);</span><br><span class="line">        Consumer c2 = <span class="keyword">new</span> Consumer(c);</span><br><span class="line">        c2.setName(<span class="string">&quot;消费者2&quot;</span>);</span><br><span class="line"></span><br><span class="line">        p1.start();</span><br><span class="line">        c1.start();</span><br><span class="line">        c2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线程的安全问题</title>
+    <url>/p/55922.html</url>
+    <content><![CDATA[<a id="more"></a>]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线程的生命周期</title>
+    <url>/p/37913.html</url>
+    <content><![CDATA[<h4 id="线程的5种状态："><a href="#线程的5种状态：" class="headerlink" title="线程的5种状态："></a>线程的5种状态：</h4><p>JDK种使用Thread.state类定义了线程的5种状态：</p>
+<a id="more"></a>
+
+<ol>
+<li><strong>新建：</strong>当一个Thread类或者其子类的对象被声明并创建时，新生的线程对象属于新建状态；</li>
+<li><strong>就绪：</strong>处于新建状态的线程被start之后，将进入线程队列等待CPU世间品，此时已具备运行的条件，但未被分配到CPU资源；</li>
+<li><strong>运行：</strong>当就绪的线程被调度获得CPU资源时，便进入了运行状态，run()方法提供了该线程的操作和使用；</li>
+<li><strong>阻塞：</strong>在某种特殊情况下，被人挂起或进行I/O操作时，让出CPU并临时终端自己的执行，进入阻塞状态；阻塞状态是一个临时状态，不可以作为最终状态，线程最终状态都是死亡；</li>
+<li><strong>死亡：</strong>完成工作或者被强行退出或者出现异常导致线程结束。</li>
+</ol>
+<p><img src="/p/blog\picture\线程状态转换.png"></p>
 ]]></content>
       <categories>
         <category>Java</category>
@@ -1244,6 +1235,28 @@
 <p>而针对提取出子串，需要用到substring()方法，这就需要确定startIndex和endIndex，其中startIndex从0开始，endIndex则需要从minStr.length()-第几次迭代长度len。</p>
 <p>如果在maxStr中存在minStr提取出的子串，那么由于我们是依据子串从长到短进行查找的，那么找到的应该就是两个字符串最大相同子串。</p>
 <p><strong>注：</strong>以上只适用于单个最大相同子串。如果有多个，则需要使用集合的概念。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>获取一个字符串在另一个字符串中出现的次数</title>
+    <url>/p/4524.html</url>
+    <content><![CDATA[<p><strong>问题：</strong>获取一个字符串在另一个字符串中出现的次数。比如字符串“abkkcadkabkebfkabkskabdjahkjldghabab”中“ab”出现的次数。</p>
+<a id="more"></a>
+
+<p><strong>解法一：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String str1 = <span class="string">&quot;abkkcadkabkebfkabkskabdjahkjldghabab&quot;</span>;</span><br><span class="line">        String str2 = <span class="string">&quot;ab&quot;</span>;</span><br><span class="line">        System.out.print(<span class="string">&quot;字符串&quot;</span> + str1 + <span class="string">&quot;中&quot;</span>);</span><br><span class="line">        System.out.println(str2 + <span class="string">&quot;出现几次？&quot;</span>);</span><br><span class="line">        System.out.println(getCount(str1, str2));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取str1中str2出现的次数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">        <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">            <span class="keyword">while</span> (str1.indexOf(str2) != -<span class="number">1</span>)&#123;</span><br><span class="line">                str1 = str1.substring(str1.indexOf(str2) + str2Length);</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>解法二：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount1</span><span class="params">(String str1, String str2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> str1Length = str1.length();</span><br><span class="line">    <span class="keyword">int</span> str2Length = str2.length();</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (str1Length &gt;= str2Length)&#123;</span><br><span class="line">        <span class="keyword">while</span> ((index = str1.indexOf(str2,index)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            index += str2Length;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效率更高。因为没有频繁创建新对象。</p>
 ]]></content>
       <categories>
         <category>Java</category>
