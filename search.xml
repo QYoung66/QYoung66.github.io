@@ -117,35 +117,6 @@
       </tags>
   </entry>
   <entry>
-    <title>String类与其他结构之间的转换</title>
-    <url>/p/37668.html</url>
-    <content><![CDATA[<h3 id="String类与其他结构之间的转换"><a href="#String类与其他结构之间的转换" class="headerlink" title="String类与其他结构之间的转换"></a>String类与其他结构之间的转换</h3><h4 id="String与基本数据类型、包装类之间的转换"><a href="#String与基本数据类型、包装类之间的转换" class="headerlink" title="String与基本数据类型、包装类之间的转换"></a>String与基本数据类型、包装类之间的转换</h4><a id="more"></a>
-
-<h5 id="String类-–-gt-基本数据类型、包装类："><a href="#String类-–-gt-基本数据类型、包装类：" class="headerlink" title="String类 –&gt; 基本数据类型、包装类："></a>String类 –&gt; 基本数据类型、包装类：</h5><p><strong>调用包装类的静态方法：parseXxx(str)</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"><span class="comment">//        int num = (int) s1;//error</span></span><br><span class="line">        <span class="keyword">int</span> b1 = Integer.parseInt(s1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="基本数据类型、包装类-–-gt-String类："><a href="#基本数据类型、包装类-–-gt-String类：" class="headerlink" title="基本数据类型、包装类 –&gt; String类："></a>基本数据类型、包装类 –&gt; String类：</h5><p><strong>调用String重载的valueOf(xxx)</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//两种都可以</span></span><br><span class="line">String c1 = String.valueOf(b1);</span><br><span class="line">String c2 = b1 + <span class="string">&quot;&quot;</span>;</span><br></pre></td></tr></table></figure>
-<h4 id="String与字符数组转换"><a href="#String与字符数组转换" class="headerlink" title="String与字符数组转换"></a>String与字符数组转换</h4><h5 id="String-–-gt-char-："><a href="#String-–-gt-char-：" class="headerlink" title="String –&gt; char[]："></a>String –&gt; char[]：</h5><p><strong>调用String中的toCharArray()方法</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">char</span>[] c1 = s1.toCharArray();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; c1.length; i++) &#123;</span><br><span class="line">        System.out.println(c1[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="char-–-gt-String："><a href="#char-–-gt-String：" class="headerlink" title="char[] –&gt; String："></a>char[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> [] arr1 = <span class="keyword">new</span> <span class="keyword">char</span>[] &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>&#125;;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(arr1);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
-<h4 id="String与字节数组转换"><a href="#String与字节数组转换" class="headerlink" title="String与字节数组转换"></a>String与字节数组转换</h4><h5 id="String-–-gt-byte-："><a href="#String-–-gt-byte-：" class="headerlink" title="String –&gt; byte[]："></a>String –&gt; byte[]：</h5><p><strong>调用String的getBytes()方法</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = s1.getBytes();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bytes.length; i++) &#123;</span><br><span class="line">        System.out.println(bytes[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="byte-–-gt-String："><a href="#byte-–-gt-String：" class="headerlink" title="byte[] –&gt; String："></a>byte[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s2 = <span class="keyword">new</span> String(bytes);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
-<p><strong>注</strong>：String与字节数组转换可以看作一个编解码的过程，在此过程中，必须保证使用的字符集相同，否则会出现乱码。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>StringBuffer和StringBuilder</title>
     <url>/p/31461.html</url>
     <content><![CDATA[<h3 id="StringBuffer、StringBuilder和String的异同？"><a href="#StringBuffer、StringBuilder和String的异同？" class="headerlink" title="StringBuffer、StringBuilder和String的异同？"></a>StringBuffer、StringBuilder和String的异同？</h3><a id="more"></a>
@@ -226,6 +197,35 @@
 <li>返回指定字符串在此字符串中第一次出现的索引值</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(String str)</span></span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>String类与其他结构之间的转换</title>
+    <url>/p/37668.html</url>
+    <content><![CDATA[<h3 id="String类与其他结构之间的转换"><a href="#String类与其他结构之间的转换" class="headerlink" title="String类与其他结构之间的转换"></a>String类与其他结构之间的转换</h3><h4 id="String与基本数据类型、包装类之间的转换"><a href="#String与基本数据类型、包装类之间的转换" class="headerlink" title="String与基本数据类型、包装类之间的转换"></a>String与基本数据类型、包装类之间的转换</h4><a id="more"></a>
+
+<h5 id="String类-–-gt-基本数据类型、包装类："><a href="#String类-–-gt-基本数据类型、包装类：" class="headerlink" title="String类 –&gt; 基本数据类型、包装类："></a>String类 –&gt; 基本数据类型、包装类：</h5><p><strong>调用包装类的静态方法：parseXxx(str)</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringTest3</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"><span class="comment">//        int num = (int) s1;//error</span></span><br><span class="line">        <span class="keyword">int</span> b1 = Integer.parseInt(s1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="基本数据类型、包装类-–-gt-String类："><a href="#基本数据类型、包装类-–-gt-String类：" class="headerlink" title="基本数据类型、包装类 –&gt; String类："></a>基本数据类型、包装类 –&gt; String类：</h5><p><strong>调用String重载的valueOf(xxx)</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//两种都可以</span></span><br><span class="line">String c1 = String.valueOf(b1);</span><br><span class="line">String c2 = b1 + <span class="string">&quot;&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="String与字符数组转换"><a href="#String与字符数组转换" class="headerlink" title="String与字符数组转换"></a>String与字符数组转换</h4><h5 id="String-–-gt-char-："><a href="#String-–-gt-char-：" class="headerlink" title="String –&gt; char[]："></a>String –&gt; char[]：</h5><p><strong>调用String中的toCharArray()方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">char</span>[] c1 = s1.toCharArray();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; c1.length; i++) &#123;</span><br><span class="line">        System.out.println(c1[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="char-–-gt-String："><a href="#char-–-gt-String：" class="headerlink" title="char[] –&gt; String："></a>char[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> [] arr1 = <span class="keyword">new</span> <span class="keyword">char</span>[] &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>&#125;;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(arr1);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
+<h4 id="String与字节数组转换"><a href="#String与字节数组转换" class="headerlink" title="String与字节数组转换"></a>String与字节数组转换</h4><h5 id="String-–-gt-byte-："><a href="#String-–-gt-byte-：" class="headerlink" title="String –&gt; byte[]："></a>String –&gt; byte[]：</h5><p><strong>调用String的getBytes()方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = s1.getBytes();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bytes.length; i++) &#123;</span><br><span class="line">        System.out.println(bytes[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="byte-–-gt-String："><a href="#byte-–-gt-String：" class="headerlink" title="byte[] –&gt; String："></a>byte[] –&gt; String：</h5><p><strong>调用String的构造器</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s2 = <span class="keyword">new</span> String(bytes);</span><br><span class="line">System.out.println(s2);</span><br></pre></td></tr></table></figure>
+<p><strong>注</strong>：String与字节数组转换可以看作一个编解码的过程，在此过程中，必须保证使用的字符集相同，否则会出现乱码。</p>
+]]></content>
       <categories>
         <category>Java</category>
         <category>Java基础</category>
@@ -345,6 +345,26 @@
       </tags>
   </entry>
   <entry>
+    <title>单链表</title>
+    <url>/p/71c610d3.html</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="/71c610d3/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.jpg" alt="单链表基本结构"></p>
+<ul>
+<li>链表是以节点的方式来存储</li>
+<li>每个节点包含data域，next域（用于指向下一个节点）</li>
+<li>链表的各个节点不一定是连续存放</li>
+</ul>
+<a id="more"></a> 
+
+]]></content>
+      <categories>
+        <category>算法与数据结构</category>
+        <category>单链表</category>
+      </categories>
+      <tags>
+        <tag>单链表</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>String类的创建和拼接</title>
     <url>/p/52765.html</url>
     <content><![CDATA[<h3 id="String类：字符串"><a href="#String类：字符串" class="headerlink" title="String类：字符串"></a><strong>String类：字符串</strong></h3><a id="more"></a>
@@ -402,26 +422,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>单链表</title>
-    <url>/p/71c610d3.html</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="/abbrlink/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.jpg" alt="单链表基本结构"></p>
-<ul>
-<li>链表是以节点的方式来存储</li>
-<li>每个节点包含data域，next域（用于指向下一个节点）</li>
-<li>链表的各个节点不一定是连续存放</li>
-</ul>
-<a id="more"></a> 
-
-]]></content>
-      <categories>
-        <category>算法与数据结构</category>
-        <category>单链表</category>
-      </categories>
-      <tags>
-        <tag>单链表</tag>
       </tags>
   </entry>
   <entry>
@@ -526,6 +526,35 @@
       </categories>
       <tags>
         <tag>反射</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串反转</title>
+    <url>/p/34837.html</url>
+    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
+<a id="more"></a>
+
+<p><strong>解法一：转换为char[]</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>①将字符串转换为char[]类型；</p>
+<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
+<p>③将不需要反转的头和尾再按顺序加上。</p>
+<p><strong>解法二：使用String的拼接</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
+<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -661,35 +690,6 @@
       </categories>
       <tags>
         <tag>字符集</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符串反转</title>
-    <url>/p/34837.html</url>
-    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
-<a id="more"></a>
-
-<p><strong>解法一：转换为char[]</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>①将字符串转换为char[]类型；</p>
-<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
-<p>③将不需要反转的头和尾再按顺序加上。</p>
-<p><strong>解法二：使用String的拼接</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
-<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -907,84 +907,6 @@
       </tags>
   </entry>
   <entry>
-    <title>注解</title>
-    <url>/p/49545.html</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
-<li>JDK5.0开始引入的一种注释机制。</li>
-<li>代码中的特殊标记，这些标记可以在编译，类加载，运行时被读取，并执行相应的处理。通过使用Annotation，可以在不改变原有罗技的情况下，在源文件中嵌入一些补充信息。</li>
-<li>Annotation可以像修饰符一样被使用，可用于修饰包，类，构造器，方法，成员变量，参数，局部变量的声明。</li>
-</ul>
-<a id="more"></a>
-
-<h1 id="常用Annotation示例"><a href="#常用Annotation示例" class="headerlink" title="常用Annotation示例"></a>常用Annotation示例</h1><ul>
-<li><strong>@Override：</strong>限定重写父类方法，该注解<strong>只能用于方法</strong>；</li>
-<li><strong>@Deprecated：</strong>用于表示所修饰的元素（类、方法等）已过时。通常是因为所修饰的结构危险或存在更好的选择；</li>
-<li><strong>@SuppressWarnings：</strong>抑制编译器警告。</li>
-</ul>
-<h2 id="Override使用"><a href="#Override使用" class="headerlink" title="@Override使用"></a>@Override使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">annotationTest1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Person p = <span class="keyword">new</span> Person(<span class="string">&quot;Lena&quot;</span>,<span class="number">15</span>);</span><br><span class="line">        p.walk();</span><br><span class="line">        Student s = <span class="keyword">new</span> Student(<span class="string">&quot;Cindy&quot;</span>,<span class="number">12</span>);</span><br><span class="line">        s.walk();</span><br><span class="line">        s.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人吃饭&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;学生走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;22222&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">人走路</span><br><span class="line">学生走路</span><br><span class="line"><span class="number">22222</span></span><br></pre></td></tr></table></figure>
-<p><strong>注：</strong>如果去掉@Override，则编译的时候不会报错。</p>
-<h2 id="Deprecated使用"><a href="#Deprecated使用" class="headerlink" title="@Deprecated使用"></a>@Deprecated使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java.util.Date date = <span class="keyword">new</span> java.util.Date(<span class="number">1992</span>,<span class="number">12</span>,<span class="number">5</span>);<span class="comment">//已过时，但是可以使用</span></span><br><span class="line">System.out.println(date);<span class="comment">//Thu Jan 05 00:00:00 CST 3893</span></span><br></pre></td></tr></table></figure>
-<p><strong>注：</strong>过时还能够使用。</p>
-<h2 id="SuppressWarnings使用"><a href="#SuppressWarnings使用" class="headerlink" title="@SuppressWarnings使用"></a>@SuppressWarnings使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings(&quot;unused&quot;)</span></span><br><span class="line"><span class="keyword">int</span> num = <span class="number">9</span>;</span><br></pre></td></tr></table></figure>
-<p>指示编译器去忽略注解中声明的警告。声明了一个新的变量int，如果没有使用，在IDEA中会显示灰色。使用@SuppressWarnings(“unused”)之后变成正常黑色。</p>
-<p>未注解：</p>
-<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205621901.png" alt="image-20201230205621901"></p>
-<p>注解后：</p>
-<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205638577.png" alt="image-20201230205638577"></p>
-<h1 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h1><ul>
-<li>自定义新的注解类型使用@interface关键字。</li>
-<li>自定义注解自动继承了java.lang.annotation.Annotation接口。</li>
-<li>Annotation的成员变量在Annotation定义中以无参数方法的形式来声明。其方法名和返回值定义了该成员的名字和类型，称之为配置参数。类型只能是8种基本数据类型、String类型、enum类型、Annotation类型、以上所有类型的数组。</li>
-<li>只有一个成员变量时，建议使用value。</li>
-<li>可以指定成员的默认值，使用default定义。</li>
-<li>如果自定义的注解没有成员，表明是一个<strong>标识作用</strong>。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(value = &quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(&quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
-<p>或者可以指定成员的默认值，使用default定义</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &quot;hi&quot;</span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation()</span><span class="comment">//使用默认值</span></span><br></pre></td></tr></table></figure>
-<h1 id="JDK提供的4种元注解"><a href="#JDK提供的4种元注解" class="headerlink" title="JDK提供的4种元注解"></a>JDK提供的4种元注解</h1><ul>
-<li>JDK中的元Annotation用于修饰其他Annotation定义</li>
-<li>JDK5.0提供了4个元注解：@Retention、@Documented、@Target、@Inherited</li>
-</ul>
-<h2 id="4个元注解的解释说明"><a href="#4个元注解的解释说明" class="headerlink" title="4个元注解的解释说明"></a>4个元注解的解释说明</h2><h3 id="Retention："><a href="#Retention：" class="headerlink" title="@Retention："></a><strong>@Retention：</strong></h3><p>标识这个注解怎么保存，是只在代码中，还是编入class文件中，或者是在运行时可以通过反射访问。</p>
-<p>有3种状态：</p>
-<ul>
-<li><strong>SOURCE</strong>：Annotations are to be discarded by the compiler.</li>
-<li><strong>CLASS：**</strong>默认保存状态**。Annotations are to be recorded in the class file by the compiler but need not be retained by the VM at run time.  This is the default behavior.</li>
-<li><strong>RUNTIME：只有声明为RUNTIME的注解才能通过反射获取</strong>。Annotations are to be recorded in the class file by the compiler and retained by the VM at run time, so they may be read reflectively.</li>
-</ul>
-<h3 id="Target："><a href="#Target：" class="headerlink" title="@Target："></a><strong>@Target：</strong></h3><p>用于指定被修饰的Annotation能用于修饰哪些程序元素。@Target也有一个成员变量。</p>
-<ul>
-<li><strong>TYPE：</strong>接口、类、枚举、注解</li>
-<li><strong>FIELD：</strong>字段、枚举的常量</li>
-<li><strong>METHOD：</strong>方法</li>
-<li><strong>PARAMETER：</strong>方法参数</li>
-<li><strong>CONSTRUCTOR：</strong>构造器</li>
-<li><strong>LOCAL_VARIABLE：</strong>局部变量</li>
-<li><strong>ANNOTATION_TYPE：</strong>注解</li>
-<li><strong>PACKAGE：</strong>包</li>
-</ul>
-<p><strong>注：</strong>以上两个使用较多</p>
-<h3 id="Documented："><a href="#Documented：" class="headerlink" title="@Documented："></a><strong>@Documented：</strong></h3><p>表示所修饰的注解在被javadoc解析时，是否包含在javadoc（用户文档）中。</p>
-<h3 id="Inherited："><a href="#Inherited：" class="headerlink" title="@Inherited："></a><strong>@Inherited：</strong></h3><p>被修饰的Annotation将具有继承性。如果某个类使用了被@Inherited修饰的Annotation，则其子类将自动具有该注释。</p>
-<h1 id="通过反射获取注解信息"><a href="#通过反射获取注解信息" class="headerlink" title="通过反射获取注解信息"></a>通过反射获取注解信息</h1><p>后续补充</p>
-<h1 id="JDK8种注解的新特性"><a href="#JDK8种注解的新特性" class="headerlink" title="JDK8种注解的新特性"></a>JDK8种注解的新特性</h1><h2 id="可重复注解"><a href="#可重复注解" class="headerlink" title="可重复注解"></a>可重复注解</h2><h2 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h2>]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>注解</category>
-      </categories>
-      <tags>
-        <tag>注解</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>泛型</title>
     <url>/p/2053.html</url>
     <content><![CDATA[<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><a id="more"></a>
@@ -1071,6 +993,84 @@
       </categories>
       <tags>
         <tag>泛型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>注解</title>
+    <url>/p/49545.html</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
+<li>JDK5.0开始引入的一种注释机制。</li>
+<li>代码中的特殊标记，这些标记可以在编译，类加载，运行时被读取，并执行相应的处理。通过使用Annotation，可以在不改变原有罗技的情况下，在源文件中嵌入一些补充信息。</li>
+<li>Annotation可以像修饰符一样被使用，可用于修饰包，类，构造器，方法，成员变量，参数，局部变量的声明。</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="常用Annotation示例"><a href="#常用Annotation示例" class="headerlink" title="常用Annotation示例"></a>常用Annotation示例</h1><ul>
+<li><strong>@Override：</strong>限定重写父类方法，该注解<strong>只能用于方法</strong>；</li>
+<li><strong>@Deprecated：</strong>用于表示所修饰的元素（类、方法等）已过时。通常是因为所修饰的结构危险或存在更好的选择；</li>
+<li><strong>@SuppressWarnings：</strong>抑制编译器警告。</li>
+</ul>
+<h2 id="Override使用"><a href="#Override使用" class="headerlink" title="@Override使用"></a>@Override使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">annotationTest1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Person p = <span class="keyword">new</span> Person(<span class="string">&quot;Lena&quot;</span>,<span class="number">15</span>);</span><br><span class="line">        p.walk();</span><br><span class="line">        Student s = <span class="keyword">new</span> Student(<span class="string">&quot;Cindy&quot;</span>,<span class="number">12</span>);</span><br><span class="line">        s.walk();</span><br><span class="line">        s.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;人吃饭&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Info</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;学生走路&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;22222&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">人走路</span><br><span class="line">学生走路</span><br><span class="line"><span class="number">22222</span></span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong>如果去掉@Override，则编译的时候不会报错。</p>
+<h2 id="Deprecated使用"><a href="#Deprecated使用" class="headerlink" title="@Deprecated使用"></a>@Deprecated使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java.util.Date date = <span class="keyword">new</span> java.util.Date(<span class="number">1992</span>,<span class="number">12</span>,<span class="number">5</span>);<span class="comment">//已过时，但是可以使用</span></span><br><span class="line">System.out.println(date);<span class="comment">//Thu Jan 05 00:00:00 CST 3893</span></span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong>过时还能够使用。</p>
+<h2 id="SuppressWarnings使用"><a href="#SuppressWarnings使用" class="headerlink" title="@SuppressWarnings使用"></a>@SuppressWarnings使用</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings(&quot;unused&quot;)</span></span><br><span class="line"><span class="keyword">int</span> num = <span class="number">9</span>;</span><br></pre></td></tr></table></figure>
+<p>指示编译器去忽略注解中声明的警告。声明了一个新的变量int，如果没有使用，在IDEA中会显示灰色。使用@SuppressWarnings(“unused”)之后变成正常黑色。</p>
+<p>未注解：</p>
+<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205621901.png" alt="image-20201230205621901"></p>
+<p>注解后：</p>
+<p><img src="/p/Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201230205638577.png" alt="image-20201230205638577"></p>
+<h1 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h1><ul>
+<li>自定义新的注解类型使用@interface关键字。</li>
+<li>自定义注解自动继承了java.lang.annotation.Annotation接口。</li>
+<li>Annotation的成员变量在Annotation定义中以无参数方法的形式来声明。其方法名和返回值定义了该成员的名字和类型，称之为配置参数。类型只能是8种基本数据类型、String类型、enum类型、Annotation类型、以上所有类型的数组。</li>
+<li>只有一个成员变量时，建议使用value。</li>
+<li>可以指定成员的默认值，使用default定义。</li>
+<li>如果自定义的注解没有成员，表明是一个<strong>标识作用</strong>。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(value = &quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation(&quot;hi&quot;)</span><span class="comment">//必须给成员变量赋值</span></span><br></pre></td></tr></table></figure>
+<p>或者可以指定成员的默认值，使用default定义</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> myAnnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &quot;hi&quot;</span>;<span class="comment">//成员变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@myAnnotation()</span><span class="comment">//使用默认值</span></span><br></pre></td></tr></table></figure>
+<h1 id="JDK提供的4种元注解"><a href="#JDK提供的4种元注解" class="headerlink" title="JDK提供的4种元注解"></a>JDK提供的4种元注解</h1><ul>
+<li>JDK中的元Annotation用于修饰其他Annotation定义</li>
+<li>JDK5.0提供了4个元注解：@Retention、@Documented、@Target、@Inherited</li>
+</ul>
+<h2 id="4个元注解的解释说明"><a href="#4个元注解的解释说明" class="headerlink" title="4个元注解的解释说明"></a>4个元注解的解释说明</h2><h3 id="Retention："><a href="#Retention：" class="headerlink" title="@Retention："></a><strong>@Retention：</strong></h3><p>标识这个注解怎么保存，是只在代码中，还是编入class文件中，或者是在运行时可以通过反射访问。</p>
+<p>有3种状态：</p>
+<ul>
+<li><strong>SOURCE</strong>：Annotations are to be discarded by the compiler.</li>
+<li><strong>CLASS：**</strong>默认保存状态**。Annotations are to be recorded in the class file by the compiler but need not be retained by the VM at run time.  This is the default behavior.</li>
+<li><strong>RUNTIME：只有声明为RUNTIME的注解才能通过反射获取</strong>。Annotations are to be recorded in the class file by the compiler and retained by the VM at run time, so they may be read reflectively.</li>
+</ul>
+<h3 id="Target："><a href="#Target：" class="headerlink" title="@Target："></a><strong>@Target：</strong></h3><p>用于指定被修饰的Annotation能用于修饰哪些程序元素。@Target也有一个成员变量。</p>
+<ul>
+<li><strong>TYPE：</strong>接口、类、枚举、注解</li>
+<li><strong>FIELD：</strong>字段、枚举的常量</li>
+<li><strong>METHOD：</strong>方法</li>
+<li><strong>PARAMETER：</strong>方法参数</li>
+<li><strong>CONSTRUCTOR：</strong>构造器</li>
+<li><strong>LOCAL_VARIABLE：</strong>局部变量</li>
+<li><strong>ANNOTATION_TYPE：</strong>注解</li>
+<li><strong>PACKAGE：</strong>包</li>
+</ul>
+<p><strong>注：</strong>以上两个使用较多</p>
+<h3 id="Documented："><a href="#Documented：" class="headerlink" title="@Documented："></a><strong>@Documented：</strong></h3><p>表示所修饰的注解在被javadoc解析时，是否包含在javadoc（用户文档）中。</p>
+<h3 id="Inherited："><a href="#Inherited：" class="headerlink" title="@Inherited："></a><strong>@Inherited：</strong></h3><p>被修饰的Annotation将具有继承性。如果某个类使用了被@Inherited修饰的Annotation，则其子类将自动具有该注释。</p>
+<h1 id="通过反射获取注解信息"><a href="#通过反射获取注解信息" class="headerlink" title="通过反射获取注解信息"></a>通过反射获取注解信息</h1><p>后续补充</p>
+<h1 id="JDK8种注解的新特性"><a href="#JDK8种注解的新特性" class="headerlink" title="JDK8种注解的新特性"></a>JDK8种注解的新特性</h1><h2 id="可重复注解"><a href="#可重复注解" class="headerlink" title="可重复注解"></a>可重复注解</h2><h2 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h2>]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>注解</category>
+      </categories>
+      <tags>
+        <tag>注解</tag>
       </tags>
   </entry>
   <entry>
