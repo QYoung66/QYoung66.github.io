@@ -408,6 +408,11 @@
     <title>单链表</title>
     <url>/p/71c610d3.html</url>
     <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="/p/%5C%E5%8D%95%E9%93%BE%E8%A1%A8%5C%E5%8D%95%E9%93%BE%E8%A1%A8%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.jpg" alt="单链表基本结构"></p>
+<ul>
+<li>链表是以节点的方式来存储</li>
+<li>每个节点包含data域，next域（用于指向下一个节点）</li>
+<li>链表的各个节点不一定是连续存放</li>
+</ul>
 <a id="more"></a> 
 
 ]]></content>
@@ -524,6 +529,35 @@
       </tags>
   </entry>
   <entry>
+    <title>字符串反转</title>
+    <url>/p/34837.html</url>
+    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
+<a id="more"></a>
+
+<p><strong>解法一：转换为char[]</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>①将字符串转换为char[]类型；</p>
+<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
+<p>③将不需要反转的头和尾再按顺序加上。</p>
+<p><strong>解法二：使用String的拼接</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
+<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Java基础</category>
+        <category>String类</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>多线程的创建方式</title>
     <url>/p/24227.html</url>
     <content><![CDATA[<h3 id="多线程的创建方式"><a href="#多线程的创建方式" class="headerlink" title="多线程的创建方式"></a>多线程的创建方式</h3><a id="more"></a>
@@ -600,91 +634,6 @@
       <tags>
         <tag>Java</tag>
         <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符串反转</title>
-    <url>/p/34837.html</url>
-    <content><![CDATA[<p><strong>问题：</strong>将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg”反转为“abfedcg”。</p>
-<a id="more"></a>
-
-<p><strong>解法一：转换为char[]</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringQ2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;反转前：&quot;</span> + str);</span><br><span class="line">        System.out.println(<span class="string">&quot;全部反转后：&quot;</span> + StringQ2.myReverse(str));</span><br><span class="line">        System.out.println(<span class="string">&quot;部分反转后：&quot;</span> + StringQ2.myReverse(str,<span class="number">1</span>,<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">char</span>[] str2arr = str.toCharArray();</span><br><span class="line">            <span class="keyword">int</span> len = str.length();</span><br><span class="line">            <span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[len];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = str2arr[len-i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            str = <span class="keyword">new</span> String(arr);</span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">        String strTemp = str.substring(startIndex, endIndex);</span><br><span class="line">        strTemp = myReverse(strTemp);</span><br><span class="line">        str = str.substring(<span class="number">0</span>,startIndex) + strTemp + str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>①将字符串转换为char[]类型；</p>
-<p>②针对需要反转的字符数组，反着存储到新的字符数组里；</p>
-<p>③将不需要反转的头和尾再按顺序加上。</p>
-<p><strong>解法二：使用String的拼接</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse1</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String strTemp = str.substring(<span class="number">0</span>, startIndex);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strTemp += str.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        strTemp += str.substring(endIndex);</span><br><span class="line">        <span class="keyword">return</span> strTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种解法看起来比解法一要节省内存，但是实际上由于String类的不可变性，每次拼接一个字符都要重新创建一个对象，效率并不高。</p>
-<p><strong>解法三：使用StringBuffer/StringBuilder</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse2</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuffer strBuff = <span class="keyword">new</span> StringBuffer(str);</span><br><span class="line">        StringBuffer strBuffTemp = <span class="keyword">new</span> StringBuffer(strBuff.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuffTemp.append(strBuff.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuffTemp.append(strBuff.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuffTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">myReverse3</span><span class="params">(String str, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str != <span class="keyword">null</span>)&#123;</span><br><span class="line">        StringBuilder strBuil = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">        StringBuilder strBuilTemp = <span class="keyword">new</span> StringBuilder(strBuil.substring(<span class="number">0</span>, startIndex));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = endIndex-<span class="number">1</span>; i &gt;= startIndex; i--) &#123;</span><br><span class="line">            strBuilTemp.append(strBuil.charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        strBuilTemp.append(strBuil.substring(endIndex));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(strBuilTemp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用StringBuffer或者StringBuilder替换String，StringBuffer是线程安全的，StringBuilder是线程不安全的。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>Java基础</category>
-        <category>String类</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>String</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符集</title>
-    <url>/p/40261.html</url>
-    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>我们在计算机屏幕上看到的是实体化的文字，而在计算机存储介质中存放的实际是二进制的比特流。那么在这两者之间的转换规则就需要一个统一的标准。简单的说字符集就规定了某个文字对应的二进制数字存放方式（编码）和某串二进制数值代表了哪个文字（解码）的转换关系。</p>
-<a id="more"></a> 
-
-<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><ul>
-<li><strong>ASCII：</strong>美国标准信息交换码，用一个字节的7位表示（128个）；</li>
-<li><strong>ISO8859-1：</strong>拉丁码表。欧洲码表，用一个字节的8位表示；</li>
-<li><strong>GB2312：</strong>中国的中文编码表。最多两个字节编码所有字符；</li>
-<li><strong>GBK：</strong>中国的中文编码表升级，融合了更多的中文文字符号，最多两个字节编码；</li>
-<li><strong>Unicode：</strong>国际标准码，融合了目前人类使用的所有字符，为每个字符分配唯一的字符码，所有的文字都使用两个字节来表示；</li>
-<li><strong>UTF-8：</strong>变长的国际标准码，定义了庞大的、全球通用的字符集，为每个字符规定了唯一确定的编码，可用1-4个字节来表示一个字符。</li>
-</ul>
-<h1 id="字库表、编码字符集、字符编码"><a href="#字库表、编码字符集、字符编码" class="headerlink" title="字库表、编码字符集、字符编码"></a>字库表、编码字符集、字符编码</h1><p><strong>字库表（character repertoire）</strong>：相当于所有可读或者可显示字符的数据库，字库表决定了整个字符集能够展现表示的所有字符的范围。</p>
-<p><strong>编码字符集（coded character set</strong>）：用一个编码值<code>code point</code>来表示一个字符在字库中的位置。</p>
-<p><strong>字符编码（character encoding form）</strong>：将编码字符集和实际存储数值之间的转换关系。一般来说都会直接将code point的值作为编码后的值直接存储。例如在ASCII中<code>A</code>在表中排第65位，而编码后<code>A</code>的数值是<code>0100 0001</code>也即十进制的65的二进制转换结果。</p>
-<p><code>字库表</code>和<code>编码字符集</code>看来是必不可少的，那既然字库表中的每一个字符都有一个自己的序号，直接把序号作为存储内容就好了。为什么还要多此一举通过<code>字符编码</code>把序号转换成另外一种存储格式呢？其实原因也比较容易理解：统一字库表的目的是为了能够涵盖世界上所有的字符，但实际使用过程中会发现真正用的上的字符相对整个字库表来说比例非常低。例如中文地区的程序几乎不会需要日语字符，而一些英语国家甚至简单的ASCII字库表就能满足基本需求。而如果把每个字符都用字库表中的序号来存储的话，每个字符就需要3个字节（这里以Unicode字库为例），这样对于原本用仅占一个字符的ASCII编码的英语地区国家显然是一个额外成本（存储体积是原来的三倍）。算的直接一些，同样一块硬盘，用ASCII可以存1500篇文章，而用3字节Unicode序号存储只能存500篇。于是就出现了UTF-8这样的变长编码。在UTF-8编码中原本只需要一个字节的ASCII字符，仍然只占一个字节。而像中文及日语这样的复杂字符就需要2个到3个字节来存储。</p>
-<h1 id="UTF-8和Unicode的关系"><a href="#UTF-8和Unicode的关系" class="headerlink" title="UTF-8和Unicode的关系"></a>UTF-8和Unicode的关系</h1><p>Unicode就是上文中提到的编码字符集，而UTF-8就是字符编码，即Unicode规则字库的一种实现形式。随着互联网的发展，对同一字库集的要求越来越迫切，Unicode标准也就自然而然的出现。它几乎涵盖了各个国家语言可能出现的符号和文字，并将为他们编号。Unicode的编号从0000开始一直到10FFFF共分为16个Plane，每个Plane中有65536个字符。而UTF-8则只实现了第一个Plane，可见UTF-8虽然是一个当今接受度最广的字符集编码，但是它并没有涵盖整个Unicode的字库。</p>
-<h2 id="UTF-8编码简介"><a href="#UTF-8编码简介" class="headerlink" title="UTF-8编码简介"></a>UTF-8编码简介</h2><ul>
-<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的 Unicode 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的。</li>
-<li>对于n字节的符号（n &gt; 1），第一个字节的前n位都设为1，第n + 1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的 Unicode 码。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Unicode符号范围（十六进制）</th>
-<th>UTF-8编码方式（二进制）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0000 0000-0000 0007F</td>
-<td>0xxxxxxx</td>
-</tr>
-<tr>
-<td>0000 0080-0000 07FF</td>
-<td>110xxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td>0000 0800-0000 FFFF</td>
-<td>1110xxxx 10xxxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td>0001 0000-0010 FFFF</td>
-<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>IO流</category>
-      </categories>
-      <tags>
-        <tag>字符集</tag>
       </tags>
   </entry>
   <entry>
@@ -812,6 +761,62 @@
         <tag>Java</tag>
         <tag>日期</tag>
         <tag>时间</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符集</title>
+    <url>/p/40261.html</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>我们在计算机屏幕上看到的是实体化的文字，而在计算机存储介质中存放的实际是二进制的比特流。那么在这两者之间的转换规则就需要一个统一的标准。简单的说字符集就规定了某个文字对应的二进制数字存放方式（编码）和某串二进制数值代表了哪个文字（解码）的转换关系。</p>
+<a id="more"></a> 
+
+<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><ul>
+<li><strong>ASCII：</strong>美国标准信息交换码，用一个字节的7位表示（128个）；</li>
+<li><strong>ISO8859-1：</strong>拉丁码表。欧洲码表，用一个字节的8位表示；</li>
+<li><strong>GB2312：</strong>中国的中文编码表。最多两个字节编码所有字符；</li>
+<li><strong>GBK：</strong>中国的中文编码表升级，融合了更多的中文文字符号，最多两个字节编码；</li>
+<li><strong>Unicode：</strong>国际标准码，融合了目前人类使用的所有字符，为每个字符分配唯一的字符码，所有的文字都使用两个字节来表示；</li>
+<li><strong>UTF-8：</strong>变长的国际标准码，定义了庞大的、全球通用的字符集，为每个字符规定了唯一确定的编码，可用1-4个字节来表示一个字符。</li>
+</ul>
+<h1 id="字库表、编码字符集、字符编码"><a href="#字库表、编码字符集、字符编码" class="headerlink" title="字库表、编码字符集、字符编码"></a>字库表、编码字符集、字符编码</h1><p><strong>字库表（character repertoire）</strong>：相当于所有可读或者可显示字符的数据库，字库表决定了整个字符集能够展现表示的所有字符的范围。</p>
+<p><strong>编码字符集（coded character set</strong>）：用一个编码值<code>code point</code>来表示一个字符在字库中的位置。</p>
+<p><strong>字符编码（character encoding form）</strong>：将编码字符集和实际存储数值之间的转换关系。一般来说都会直接将code point的值作为编码后的值直接存储。例如在ASCII中<code>A</code>在表中排第65位，而编码后<code>A</code>的数值是<code>0100 0001</code>也即十进制的65的二进制转换结果。</p>
+<p><code>字库表</code>和<code>编码字符集</code>看来是必不可少的，那既然字库表中的每一个字符都有一个自己的序号，直接把序号作为存储内容就好了。为什么还要多此一举通过<code>字符编码</code>把序号转换成另外一种存储格式呢？其实原因也比较容易理解：统一字库表的目的是为了能够涵盖世界上所有的字符，但实际使用过程中会发现真正用的上的字符相对整个字库表来说比例非常低。例如中文地区的程序几乎不会需要日语字符，而一些英语国家甚至简单的ASCII字库表就能满足基本需求。而如果把每个字符都用字库表中的序号来存储的话，每个字符就需要3个字节（这里以Unicode字库为例），这样对于原本用仅占一个字符的ASCII编码的英语地区国家显然是一个额外成本（存储体积是原来的三倍）。算的直接一些，同样一块硬盘，用ASCII可以存1500篇文章，而用3字节Unicode序号存储只能存500篇。于是就出现了UTF-8这样的变长编码。在UTF-8编码中原本只需要一个字节的ASCII字符，仍然只占一个字节。而像中文及日语这样的复杂字符就需要2个到3个字节来存储。</p>
+<h1 id="UTF-8和Unicode的关系"><a href="#UTF-8和Unicode的关系" class="headerlink" title="UTF-8和Unicode的关系"></a>UTF-8和Unicode的关系</h1><p>Unicode就是上文中提到的编码字符集，而UTF-8就是字符编码，即Unicode规则字库的一种实现形式。随着互联网的发展，对同一字库集的要求越来越迫切，Unicode标准也就自然而然的出现。它几乎涵盖了各个国家语言可能出现的符号和文字，并将为他们编号。Unicode的编号从0000开始一直到10FFFF共分为16个Plane，每个Plane中有65536个字符。而UTF-8则只实现了第一个Plane，可见UTF-8虽然是一个当今接受度最广的字符集编码，但是它并没有涵盖整个Unicode的字库。</p>
+<h2 id="UTF-8编码简介"><a href="#UTF-8编码简介" class="headerlink" title="UTF-8编码简介"></a>UTF-8编码简介</h2><ul>
+<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的 Unicode 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的。</li>
+<li>对于n字节的符号（n &gt; 1），第一个字节的前n位都设为1，第n + 1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的 Unicode 码。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Unicode符号范围（十六进制）</th>
+<th>UTF-8编码方式（二进制）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000 0000-0000 0007F</td>
+<td>0xxxxxxx</td>
+</tr>
+<tr>
+<td>0000 0080-0000 07FF</td>
+<td>110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0000 0800-0000 FFFF</td>
+<td>1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0001 0000-0010 FFFF</td>
+<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>IO流</category>
+      </categories>
+      <tags>
+        <tag>字符集</tag>
       </tags>
   </entry>
   <entry>
@@ -1082,6 +1087,30 @@
       </tags>
   </entry>
   <entry>
+    <title>线程的生命周期</title>
+    <url>/p/37913.html</url>
+    <content><![CDATA[<h4 id="线程的5种状态："><a href="#线程的5种状态：" class="headerlink" title="线程的5种状态："></a>线程的5种状态：</h4><p>JDK种使用Thread.state类定义了线程的5种状态：</p>
+<a id="more"></a>
+
+<ol>
+<li><strong>新建：</strong>当一个Thread类或者其子类的对象被声明并创建时，新生的线程对象属于新建状态；</li>
+<li><strong>就绪：</strong>处于新建状态的线程被start之后，将进入线程队列等待CPU世间品，此时已具备运行的条件，但未被分配到CPU资源；</li>
+<li><strong>运行：</strong>当就绪的线程被调度获得CPU资源时，便进入了运行状态，run()方法提供了该线程的操作和使用；</li>
+<li><strong>阻塞：</strong>在某种特殊情况下，被人挂起或进行I/O操作时，让出CPU并临时终端自己的执行，进入阻塞状态；阻塞状态是一个临时状态，不可以作为最终状态，线程最终状态都是死亡；</li>
+<li><strong>死亡：</strong>完成工作或者被强行退出或者出现异常导致线程结束。</li>
+</ol>
+<p><img src="/p/blog\picture\线程状态转换.png"></p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>线程通信</title>
     <url>/p/27168.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -1108,30 +1137,6 @@
 <h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><p><strong>分析：</strong>多线程问题，多个线程为生产者线程、消费者线程，至少两个；有共享数据产品数量，可能存在线程安全问题；使用同步机制来解决线程安全问题；涉及线程通信问题。</p>
 <p><strong>实现代码：</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//店员</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Clerk</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> productNum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">produceProduct</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (productNum &lt; <span class="number">20</span>) &#123;</span><br><span class="line">            productNum++;</span><br><span class="line">            notifyAll();</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;:生产第&quot;</span> + productNum + <span class="string">&quot;个产品&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                wait();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">consumeProduct</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (productNum &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;:消费第&quot;</span> + productNum + <span class="string">&quot;个产品&quot;</span>);</span><br><span class="line">            productNum--;</span><br><span class="line">            notifyAll();</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                wait();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//生产者----必须对应一个店员</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Clerk clerk = <span class="keyword">new</span> Clerk();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(Clerk clerk)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.clerk = clerk;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">10</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            clerk.produceProduct();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//消费者----必须对应一个店员</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Clerk clerk = <span class="keyword">new</span> Clerk();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(Clerk clerk)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.clerk = clerk;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">20</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            clerk.consumeProduct();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Clerk c = <span class="keyword">new</span> Clerk();</span><br><span class="line">        Producer p1 = <span class="keyword">new</span> Producer(c);</span><br><span class="line">        p1.setName(<span class="string">&quot;生产者1&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Consumer c1 = <span class="keyword">new</span> Consumer(c);</span><br><span class="line">        c1.setName(<span class="string">&quot;消费者1&quot;</span>);</span><br><span class="line">        Consumer c2 = <span class="keyword">new</span> Consumer(c);</span><br><span class="line">        c2.setName(<span class="string">&quot;消费者2&quot;</span>);</span><br><span class="line"></span><br><span class="line">        p1.start();</span><br><span class="line">        c1.start();</span><br><span class="line">        c2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>线程的生命周期</title>
-    <url>/p/37913.html</url>
-    <content><![CDATA[<h4 id="线程的5种状态："><a href="#线程的5种状态：" class="headerlink" title="线程的5种状态："></a>线程的5种状态：</h4><p>JDK种使用Thread.state类定义了线程的5种状态：</p>
-<a id="more"></a>
-
-<ol>
-<li><strong>新建：</strong>当一个Thread类或者其子类的对象被声明并创建时，新生的线程对象属于新建状态；</li>
-<li><strong>就绪：</strong>处于新建状态的线程被start之后，将进入线程队列等待CPU世间品，此时已具备运行的条件，但未被分配到CPU资源；</li>
-<li><strong>运行：</strong>当就绪的线程被调度获得CPU资源时，便进入了运行状态，run()方法提供了该线程的操作和使用；</li>
-<li><strong>阻塞：</strong>在某种特殊情况下，被人挂起或进行I/O操作时，让出CPU并临时终端自己的执行，进入阻塞状态；阻塞状态是一个临时状态，不可以作为最终状态，线程最终状态都是死亡；</li>
-<li><strong>死亡：</strong>完成工作或者被强行退出或者出现异常导致线程结束。</li>
-</ol>
-<p><img src="/p/blog\picture\线程状态转换.png"></p>
 ]]></content>
       <categories>
         <category>Java</category>
